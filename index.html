@@ -23,7 +23,7 @@
       <h1>Mechanics near you</h1>
       <div class="row">
         <button id="btn-refresh">📍 Refresh my location</button>
-        <a href="index.html"><button>＋ Add my garage</button></a>
+        <a href="join.html"><button>＋ Add my garage</button></a>
       </div>
     </div>
     <div id="status" class="muted">Loading…</div>
@@ -48,7 +48,7 @@
         localStorage.setItem('gofix.ownerLoc', JSON.stringify({ ...ownerLoc, at: Date.now() }));
         render();
       } catch(e) {
-        statusEl.textContent = 'Couldn’t get location: ' + e.message;
+        statusEl.textContent = 'Couldn't get location: ' + e.message;
       }
     };
 
@@ -63,7 +63,7 @@
     function render(){
       const records = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
       if (!records.length) {
-        statusEl.innerHTML = 'No mechanics yet. <a href="index.html">Be the first to join</a>.';
+        statusEl.innerHTML = 'No mechanics yet. <a href="join.html">Be the first to join</a>.';
         listEl.innerHTML = '';
         return;
       }
@@ -73,7 +73,7 @@
         records.sort((a,b)=> (a._km??1e9) - (b._km??1e9));
         statusEl.textContent = `Sorted by distance from you${ownerLoc.at ? ' ~' + kmText(0) : ''}.`;
       } else {
-        statusEl.innerHTML = 'Tip: click “Refresh my location” to sort by distance.';
+        statusEl.innerHTML = 'Tip: click "Refresh my location" to sort by distance.';
       }
 
       listEl.innerHTML = records.map(r => `
