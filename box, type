@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join GoFixAfrica</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #000, #1a1a1a);
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.4);
+    }
+    h1 { color: #ff0000; margin-bottom: 10px; }
+    p { color: #ccc; }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #0c0c0c;
+      color: #fff;
+    }
+    button {
+      display: block;
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff0000;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    small { color: #999; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Join GoFixAfrica</h1>
+    <p>Register your workshop or yourself as a mobile mechanic. Your profile will appear on the public list.</p>
+
+    <form id="joinForm">
+      <input name="name" placeholder="Your Name" required />
+      <input name="phone" placeholder="WhatsApp (e.g. +2547...)" required />
+      <select name="speciality" required>
+        <option value="" disabled selected>Select Speciality</option>
+        <option>General Service</option>
+        <option>Electrical</option>
+        <option>Diagnostics / OBD2</option>
+        <option>Body & Paint</option>
+        <option>Tyres & Brakes</option>
+      </select>
+      <input name="till" placeholder="M-PESA Till (optional)" />
+      <button type="button" id="btnLocation">📍 Use my location</button>
+      <button type="submit">Join</button>
+      <p id="status"></p>
+      <small>After joining, go back to <a href="index.html">mechanics list</a> to verify your profile.</small>
+    </form>
+  </div>
+
+  <script>
+    const DB_KEY = 'gofix.mechanics.v1';
+    let loc = null;
+    const status = document.getElementById('status');
+    const btnLoc = document.getElementById('btnLocation');
+    btnLoc.onclick = async () => {
+      status.textContent = 'Requesting location...';
+      try {
+        const pos = await new Promise((res, rej) => 
+          navigator.geolocation.getCurrentPosition(res, rej, { enableHighAccuracy: true, timeout: 10000 })
+        );
+        loc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        status.innerHTML = `✅ Location pinned: ${loc.lat.toFixed(4)}, ${loc.lon.toFixed(4)}`;
+      } catch(e) {
+        status.textContent = '❌ Failed to get location.';
+      }
+    };
+    document.getElementById('joinForm').onsubmit = e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      if(!loc){ status.textContent = 'Please use your location first.'; return; }
+      const rec = {
+        id: crypto.randomUUID(),
+        ...data,
+        lat: loc.lat, lon: loc.lon,
+        verified: false,
+        createdAt: new Date().toISOString()
+      };
+      const all = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+      all.push(rec);
+      localStorage.setItem(DB_KEY, JSON.stringify(all));
+      status.innerHTML = '🎉 Added successfully!';
+      e.target.reset();
+    };
+  </script>
+</body>
+</html>
