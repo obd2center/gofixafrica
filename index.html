@@ -3,26 +3,105 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GoFixAfrica</title>
+  <title>Mechanics near you • GoFixAfrica</title>
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: #f6f8fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    h1 { color: #ff9900; } /* AWS orange */
-    p { color: #232f3e; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#0c0c0c; color:#eee; margin:0; }
+    .wrap { max-width:900px; margin:32px auto; padding:0 16px; }
+    h1 { font-size:26px; margin:0 0 12px; color:#ff0000; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); margin-top:16px; }
+    .card { background:#121212; border:1px solid #1f1f1f; border-radius:14px; padding:14px; }
+    .muted { color:#b3b3b3; font-size:14px; }
+    a.btn { display:inline-block; margin-top:8px; padding:10px 12px; border-radius:10px; background:#25D366; color:#111; text-decoration:none; font-weight:700; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    button { border:0; background:#232323; color:#fff; padding:10px 12px; border-radius:10px; cursor:pointer; }
   </style>
 </head>
 <body>
-  <div style="text-align:center">
-    <h1>GoFixAfrica</h1>
-    <p>Marketplace that connects car-owners, mechanics &amp; parts vendors in East Africa.</p>
-    <p><strong>Coming soon...</strong></p>
+  <div class="wrap">
+    <div class="topbar">
+      <h1>Mechanics near you</h1>
+      <div class="row">
+        <button id="btn-refresh">📍 Refresh my location</button>
+        <a href="index.html"><button>＋ Add my garage</button></a>
+      </div>
+    </div>
+    <div id="status" class="muted">Loading…</div>
+    <div id="list" class="grid"></div>
   </div>
+
+  <script>
+    const DB_KEY = 'gofix.mechanics.v1';
+    const statusEl = document.getElementById('status');
+    const listEl = document.getElementById('list');
+    const btnRefresh = document.getElementById('btn-refresh');
+
+    let ownerLoc = null;
+
+    init();
+
+    btnRefresh.onclick = async ()=> {
+      statusEl.textContent = 'Updating location…';
+      try {
+        const pos = await getGeo();
+        ownerLoc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        localStorage.setItem('gofix.ownerLoc', JSON.stringify({ ...ownerLoc, at: Date.now() }));
+        render();
+      } catch(e) {
+        statusEl.textContent = 'Couldn’t get location: ' + e.message;
+      }
+    };
+
+    async function init(){
+      try {
+        const raw = localStorage.getItem('gofix.ownerLoc');
+        if (raw) ownerLoc = JSON.parse(raw);
+      } catch {}
+      render();
+    }
+
+    function render(){
+      const records = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+      if (!records.length) {
+        statusEl.innerHTML = 'No mechanics yet. <a href="index.html">Be the first to join</a>.';
+        listEl.innerHTML = '';
+        return;
+      }
+
+      if (ownerLoc) {
+        records.forEach(r => r._km = haversine(ownerLoc.lat, ownerLoc.lon, r.lat, r.lon));
+        records.sort((a,b)=> (a._km??1e9) - (b._km??1e9));
+        statusEl.textContent = `Sorted by distance from you${ownerLoc.at ? ' ~' + kmText(0) : ''}.`;
+      } else {
+        statusEl.innerHTML = 'Tip: click “Refresh my location” to sort by distance.';
+      }
+
+      listEl.innerHTML = records.map(r => `
+        <div class="card">
+          <div style="font-weight:700">${escapeHtml(r.name)}</div>
+          <div class="muted">${escapeHtml(r.speciality)} ${r._km!==undefined ? ' • ' + kmText(r._km) : ''}</div>
+          ${r.till ? `<div class="muted">M-PESA Till: ${escapeHtml(r.till)}</div>` : ''}
+          <a class="btn" href="https://wa.me/${encodeURIComponent(r.phone.replace(/\D/g,''))}?text=${encodeURIComponent('Habari ' + r.name + '! Naomba msaada wa gari karibu nami via GoFixAfrica.')}" target="_blank">WhatsApp</a>
+        </div>
+      `).join('');
+    }
+
+    // Haversine in km
+    function haversine(lat1, lon1, lat2, lon2){
+      const toRad = d => d * Math.PI / 180;
+      const R = 6371;
+      const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+    function kmText(km){ return `~${(km).toFixed(1)} km away`; }
+    function getGeo() {
+      return new Promise((resolve, reject)=>{
+        if (!navigator.geolocation) return reject(new Error('Geolocation not supported'));
+        navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy:true, timeout:10000 });
+      });
+    }
+    function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m])); }
+  </script>
 </body>
 </html>
