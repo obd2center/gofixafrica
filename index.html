@@ -361,39 +361,71 @@
                                 </div>
 
                                 <div className="mt-8">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Available Mechanics</h3>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-xl font-bold text-gray-900">Available Mechanics</h3>
+                                        <select 
+                                            className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                            onChange={(e) => {
+                                                const filterLocation = e.target.value;
+                                                if (filterLocation === 'all') {
+                                                    loadData();
+                                                } else {
+                                                    const filtered = mechanics.filter(m => 
+                                                        m.location.toLowerCase().includes(filterLocation.toLowerCase())
+                                                    );
+                                                    setMechanics(filtered);
+                                                }
+                                            }}
+                                        >
+                                            <option value="all">All Locations</option>
+                                            <option value="westlands">Westlands</option>
+                                            <option value="industrial">Industrial Area</option>
+                                            <option value="nairobi">Nairobi CBD</option>
+                                            <option value="karen">Karen</option>
+                                            <option value="ngong">Ngong Road</option>
+                                        </select>
+                                    </div>
                                     {mechanics.length === 0 ? (
-                                        <p className="text-gray-500">No mechanics registered yet.</p>
+                                        <p className="text-gray-500">No mechanics found in this area.</p>
                                     ) : (
                                         <div className="space-y-3">
-                                            {mechanics.map((mechanic) => (
-                                                <div key={mechanic.id} className="border border-gray-200 rounded-lg p-4">
-                                                    <div className="flex items-start justify-between">
-                                                        <div>
-                                                            <h4 className="font-semibold text-gray-900">{mechanic.name}</h4>
-                                                            <p className="text-sm text-gray-600 flex items-center mt-1">
-                                                                <MapPin size={14} /> <span className="ml-1">{mechanic.location}</span>
-                                                            </p>
-                                                            <p className="text-sm text-gray-600 flex items-center mt-1">
-                                                                <Phone size={14} /> <span className="ml-1">{mechanic.phone}</span>
-                                                            </p>
-                                                            {mechanic.specialties && (
-                                                                <div className="flex flex-wrap gap-2 mt-2">
-                                                                    {mechanic.specialties.map((specialty, idx) => (
-                                                                        <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                                                                            {specialty}
-                                                                        </span>
-                                                                    ))}
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                        <div className="flex items-center">
-                                                            <Star size={16} />
-                                                            <span className="ml-1 font-semibold">{mechanic.rating || 0}</span>
+                                            {mechanics.map((mechanic) => {
+                                                const isNearby = customerForm.location && 
+                                                    mechanic.location.toLowerCase().includes(customerForm.location.split(',')[0].toLowerCase());
+                                                return (
+                                                    <div key={mechanic.id} className="border border-gray-200 rounded-lg p-4 relative">
+                                                        {isNearby && (
+                                                            <span className="absolute top-2 right-2 px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                                                                📍 Nearby
+                                                            </span>
+                                                        )}
+                                                        <div className="flex items-start justify-between">
+                                                            <div>
+                                                                <h4 className="font-semibold text-gray-900">{mechanic.name}</h4>
+                                                                <p className="text-sm text-gray-600 flex items-center mt-1">
+                                                                    <MapPin size={14} /> <span className="ml-1">{mechanic.location}</span>
+                                                                </p>
+                                                                <p className="text-sm text-gray-600 flex items-center mt-1">
+                                                                    <Phone size={14} /> <span className="ml-1">{mechanic.phone}</span>
+                                                                </p>
+                                                                {mechanic.specialties && (
+                                                                    <div className="flex flex-wrap gap-2 mt-2">
+                                                                        {mechanic.specialties.map((specialty, idx) => (
+                                                                            <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                                                                                {specialty}
+                                                                            </span>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <Star size={16} />
+                                                                <span className="ml-1 font-semibold">{mechanic.rating || 0}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     )}
                                 </div>
