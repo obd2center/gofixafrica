@@ -1,449 +1,521 @@
-import React, { useState, useEffect } from 'react';
-import { Wrench, Car, MapPin, Phone, Star, Clock, CheckCircle } from 'lucide-react';
-
-const SUPABASE_URL = 'https://ukhpwivvhywewoclnhco.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVraHB3aXZ2aHl3ZXdvY2xuaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1NzcsImV4cCI6MjA3NTQ4OTU3N30.h9IlWgNYOV9NPGOGAixFE_oJ3FMJX5i_4YZ4LlEK088';
-
-const App = () => {
-  const [view, setView] = useState('customer');
-  const [jobs, setJobs] = useState([]);
-  const [mechanics, setMechanics] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const [customerForm, setCustomerForm] = useState({
-    name: '', phone: '', location: '', carMake: '', carModel: '', issue: ''
-  });
-
-  const [mechanicForm, setMechanicForm] = useState({
-    name: '', phone: '', location: '', specialties: ''
-  });
-
-  const supabase = {
-    from: (table) => ({
-      select: async (columns = '*') => {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}`, {
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          }
-        });
-        const data = await response.json();
-        return { data, error: null };
-      },
-      insert: async (values) => {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-          },
-          body: JSON.stringify(values)
-        });
-        const data = await response.json();
-        return { data, error: null };
-      },
-      update: async (values) => ({
-        eq: async (column, value) => {
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${column}=eq.${value}`, {
-            method: 'PATCH',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
-          });
-          const data = await response.json();
-          return { data, error: null };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoFixAfrica - Vehicle Repair Marketplace</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
         }
-      })
-    })
-  };
+    </style>
+</head>
+<body>
+    <div id="root"></div>
 
-  useEffect(() => {
-    loadData();
-  }, [view]);
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      if (view === 'mechanic') {
-        const { data } = await supabase.from('jobs').select('*');
-        setJobs(data || []);
-      } else {
-        const { data } = await supabase.from('mechanics').select('*');
-        setMechanics(data || []);
-      }
-    } catch (error) {
-      console.error('Error loading data:', error);
-    }
-    setLoading(false);
-  };
+        const SUPABASE_URL = 'https://ukhpwivvhywewoclnhco.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVraHB3aXZ2aHl3ZXdvY2xuaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1NzcsImV4cCI6MjA3NTQ4OTU3N30.h9IlWgNYOV9NPGOGAixFE_oJ3FMJX5i_4YZ4LlEK088';
 
-  const handleCustomerSubmit = async () => {
-    if (!customerForm.name || !customerForm.phone || !customerForm.location || 
-        !customerForm.carMake || !customerForm.carModel || !customerForm.issue) {
-      setMessage('❌ Please fill out all fields');
-      return;
-    }
+        // Lucide React icons as SVG components
+        const Wrench = () => (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+        );
 
-    setLoading(true);
-    setMessage('');
+        const Car = () => (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                <circle cx="7" cy="17" r="2"/>
+                <path d="M9 17h6"/>
+                <circle cx="17" cy="17" r="2"/>
+            </svg>
+        );
 
-    try {
-      const { data: ownerData } = await supabase.from('car_owners').insert({
-        name: customerForm.name,
-        phone: customerForm.phone,
-        location: customerForm.location
-      });
+        const MapPin = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
+        );
 
-      await supabase.from('jobs').insert({
-        owner_id: ownerData?.[0]?.id,
-        car_make: customerForm.carMake,
-        car_model: customerForm.carModel,
-        issue_description: customerForm.issue,
-        location: customerForm.location,
-        status: 'pending'
-      });
+        const Phone = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+        );
 
-      setMessage('✅ Job request submitted! A mechanic will contact you soon.');
-      setCustomerForm({ name: '', phone: '', location: '', carMake: '', carModel: '', issue: '' });
-      loadData();
-    } catch (error) {
-      setMessage('❌ Error submitting request. Please try again.');
-      console.error(error);
-    }
-    setLoading(false);
-  };
+        const Star = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+        );
 
-  const handleMechanicRegister = async () => {
-    if (!mechanicForm.name || !mechanicForm.phone || !mechanicForm.location || !mechanicForm.specialties) {
-      setMessage('❌ Please fill out all fields');
-      return;
-    }
+        const Clock = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+            </svg>
+        );
 
-    setLoading(true);
-    setMessage('');
+        const CheckCircle = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+        );
 
-    try {
-      const specialtiesArray = mechanicForm.specialties.split(',').map(s => s.trim());
-      
-      await supabase.from('mechanics').insert({
-        name: mechanicForm.name,
-        phone: mechanicForm.phone,
-        location: mechanicForm.location,
-        specialties: specialtiesArray
-      });
+        function App() {
+            const [view, setView] = useState('customer');
+            const [jobs, setJobs] = useState([]);
+            const [mechanics, setMechanics] = useState([]);
+            const [loading, setLoading] = useState(false);
+            const [message, setMessage] = useState('');
 
-      setMessage('✅ Mechanic registered successfully!');
-      setMechanicForm({ name: '', phone: '', location: '', specialties: '' });
-      loadData();
-    } catch (error) {
-      setMessage('❌ Error registering. Please try again.');
-      console.error(error);
-    }
-    setLoading(false);
-  };
+            const [customerForm, setCustomerForm] = useState({
+                name: '', phone: '', location: '', carMake: '', carModel: '', issue: ''
+            });
 
-  const acceptJob = async (jobId) => {
-    setLoading(true);
-    try {
-      await supabase.from('jobs').update({ status: 'accepted' }).eq('id', jobId);
-      setMessage('✅ Job accepted!');
-      loadData();
-    } catch (error) {
-      setMessage('❌ Error accepting job.');
-    }
-    setLoading(false);
-  };
+            const [mechanicForm, setMechanicForm] = useState({
+                name: '', phone: '', location: '', specialties: ''
+            });
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Wrench className="text-blue-600" size={32} />
-              <h1 className="text-2xl font-bold text-gray-900">GoFixAfrica</h1>
-            </div>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => setView('customer')}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
-                  view === 'customer'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                <Car className="inline mr-2" size={18} />
-                Car Owner
-              </button>
-              <button
-                onClick={() => setView('mechanic')}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
-                  view === 'mechanic'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                <Wrench className="inline mr-2" size={18} />
-                Mechanic
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+            const supabase = {
+                from: (table) => ({
+                    select: async (columns = '*') => {
+                        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}`, {
+                            headers: {
+                                'apikey': SUPABASE_ANON_KEY,
+                                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                            }
+                        });
+                        const data = await response.json();
+                        return { data, error: null };
+                    },
+                    insert: async (values) => {
+                        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+                            method: 'POST',
+                            headers: {
+                                'apikey': SUPABASE_ANON_KEY,
+                                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                                'Content-Type': 'application/json',
+                                'Prefer': 'return=representation'
+                            },
+                            body: JSON.stringify(values)
+                        });
+                        const data = await response.json();
+                        return { data, error: null };
+                    },
+                    update: async (values) => ({
+                        eq: async (column, value) => {
+                            const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${column}=eq.${value}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'apikey': SUPABASE_ANON_KEY,
+                                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(values)
+                            });
+                            const data = await response.json();
+                            return { data, error: null };
+                        }
+                    })
+                })
+            };
 
-      {message && (
-        <div className="max-w-3xl mx-auto mt-4 px-4">
-          <div className={`p-4 rounded-lg ${
-            message.includes('✅') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
-          }`}>
-            {message}
-          </div>
-        </div>
-      )}
+            useEffect(() => {
+                loadData();
+            }, [view]);
 
-      <main className="max-w-3xl mx-auto px-4 py-8">
-        {view === 'customer' ? (
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Request a Mechanic</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-                <input
-                  type="text"
-                  value={customerForm.name}
-                  onChange={(e) => setCustomerForm({...customerForm, name: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="John Kamau"
-                />
-              </div>
+            const loadData = async () => {
+                setLoading(true);
+                try {
+                    if (view === 'mechanic') {
+                        const { data } = await supabase.from('jobs').select('*');
+                        setJobs(data || []);
+                    } else {
+                        const { data } = await supabase.from('mechanics').select('*');
+                        setMechanics(data || []);
+                    }
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                }
+                setLoading(false);
+            };
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  value={customerForm.phone}
-                  onChange={(e) => setCustomerForm({...customerForm, phone: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="0712345678"
-                />
-              </div>
+            const handleCustomerSubmit = async () => {
+                if (!customerForm.name || !customerForm.phone || !customerForm.location || 
+                    !customerForm.carMake || !customerForm.carModel || !customerForm.issue) {
+                    setMessage('❌ Please fill out all fields');
+                    return;
+                }
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <input
-                  type="text"
-                  value={customerForm.location}
-                  onChange={(e) => setCustomerForm({...customerForm, location: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Westlands, Nairobi"
-                />
-              </div>
+                setLoading(true);
+                setMessage('');
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Car Make</label>
-                  <input
-                    type="text"
-                    value={customerForm.carMake}
-                    onChange={(e) => setCustomerForm({...customerForm, carMake: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Toyota"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Car Model</label>
-                  <input
-                    type="text"
-                    value={customerForm.carModel}
-                    onChange={(e) => setCustomerForm({...customerForm, carModel: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Fielder"
-                  />
-                </div>
-              </div>
+                try {
+                    const { data: ownerData } = await supabase.from('car_owners').insert({
+                        name: customerForm.name,
+                        phone: customerForm.phone,
+                        location: customerForm.location
+                    });
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">What's the Issue?</label>
-                <textarea
-                  value={customerForm.issue}
-                  onChange={(e) => setCustomerForm({...customerForm, issue: e.target.value})}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Describe the problem with your car..."
-                />
-              </div>
+                    await supabase.from('jobs').insert({
+                        owner_id: ownerData?.[0]?.id,
+                        car_make: customerForm.carMake,
+                        car_model: customerForm.carModel,
+                        issue_description: customerForm.issue,
+                        location: customerForm.location,
+                        status: 'pending'
+                    });
 
-              <button
-                onClick={handleCustomerSubmit}
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-              >
-                {loading ? 'Submitting...' : 'Find a Mechanic'}
-              </button>
-            </div>
+                    setMessage('✅ Job request submitted! A mechanic will contact you soon.');
+                    setCustomerForm({ name: '', phone: '', location: '', carMake: '', carModel: '', issue: '' });
+                    loadData();
+                } catch (error) {
+                    setMessage('❌ Error submitting request. Please try again.');
+                    console.error(error);
+                }
+                setLoading(false);
+            };
 
-            <div className="mt-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Available Mechanics</h3>
-              {mechanics.length === 0 ? (
-                <p className="text-gray-500">No mechanics registered yet.</p>
-              ) : (
-                <div className="space-y-3">
-                  {mechanics.map((mechanic) => (
-                    <div key={mechanic.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-semibold text-gray-900">{mechanic.name}</h4>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <MapPin size={14} className="mr-1" />
-                            {mechanic.location}
-                          </p>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <Phone size={14} className="mr-1" />
-                            {mechanic.phone}
-                          </p>
-                          {mechanic.specialties && (
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {mechanic.specialties.map((specialty, idx) => (
-                                <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                                  {specialty}
-                                </span>
-                              ))}
+            const handleMechanicRegister = async () => {
+                if (!mechanicForm.name || !mechanicForm.phone || !mechanicForm.location || !mechanicForm.specialties) {
+                    setMessage('❌ Please fill out all fields');
+                    return;
+                }
+
+                setLoading(true);
+                setMessage('');
+
+                try {
+                    const specialtiesArray = mechanicForm.specialties.split(',').map(s => s.trim());
+                    
+                    await supabase.from('mechanics').insert({
+                        name: mechanicForm.name,
+                        phone: mechanicForm.phone,
+                        location: mechanicForm.location,
+                        specialties: specialtiesArray
+                    });
+
+                    setMessage('✅ Mechanic registered successfully!');
+                    setMechanicForm({ name: '', phone: '', location: '', specialties: '' });
+                    loadData();
+                } catch (error) {
+                    setMessage('❌ Error registering. Please try again.');
+                    console.error(error);
+                }
+                setLoading(false);
+            };
+
+            const acceptJob = async (jobId) => {
+                setLoading(true);
+                try {
+                    await supabase.from('jobs').update({ status: 'accepted' }).eq('id', jobId);
+                    setMessage('✅ Job accepted!');
+                    loadData();
+                } catch (error) {
+                    setMessage('❌ Error accepting job.');
+                }
+                setLoading(false);
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    <header className="bg-white shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="text-blue-600"><Wrench /></div>
+                                    <h1 className="text-2xl font-bold text-gray-900">GoFixAfrica</h1>
+                                </div>
+                                <div className="flex space-x-2">
+                                    <button
+                                        onClick={() => setView('customer')}
+                                        className={`px-4 py-2 rounded-lg font-medium transition ${
+                                            view === 'customer'
+                                                ? 'bg-blue-600 text-white'
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                        }`}
+                                    >
+                                        <span className="inline-flex items-center gap-2">
+                                            <Car /> Car Owner
+                                        </span>
+                                    </button>
+                                    <button
+                                        onClick={() => setView('mechanic')}
+                                        className={`px-4 py-2 rounded-lg font-medium transition ${
+                                            view === 'mechanic'
+                                                ? 'bg-blue-600 text-white'
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                        }`}
+                                    >
+                                        <span className="inline-flex items-center gap-2">
+                                            <Wrench /> Mechanic
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
-                          )}
                         </div>
-                        <div className="flex items-center">
-                          <Star size={16} className="text-yellow-500 mr-1" />
-                          <span className="font-semibold">{mechanic.rating || 0}</span>
+                    </header>
+
+                    {message && (
+                        <div className="max-w-3xl mx-auto mt-4 px-4">
+                            <div className={`p-4 rounded-lg ${
+                                message.includes('✅') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                            }`}>
+                                {message}
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Mechanic Registration</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-                  <input
-                    type="text"
-                    value={mechanicForm.name}
-                    onChange={(e) => setMechanicForm({...mechanicForm, name: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Peter Ochieng"
-                  />
-                </div>
+                    )}
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    value={mechanicForm.phone}
-                    onChange={(e) => setMechanicForm({...mechanicForm, phone: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="0723456789"
-                  />
-                </div>
+                    <main className="max-w-3xl mx-auto px-4 py-8">
+                        {view === 'customer' ? (
+                            <div className="bg-white rounded-2xl shadow-xl p-8">
+                                <h2 className="text-3xl font-bold text-gray-900 mb-6">Request a Mechanic</h2>
+                                
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                        <input
+                                            type="text"
+                                            value={customerForm.name}
+                                            onChange={(e) => setCustomerForm({...customerForm, name: e.target.value})}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="John Kamau"
+                                        />
+                                    </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                  <input
-                    type="text"
-                    value={mechanicForm.location}
-                    onChange={(e) => setMechanicForm({...mechanicForm, location: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Industrial Area, Nairobi"
-                  />
-                </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            value={customerForm.phone}
+                                            onChange={(e) => setCustomerForm({...customerForm, phone: e.target.value})}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="0712345678"
+                                        />
+                                    </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Specialties (comma-separated)</label>
-                  <input
-                    type="text"
-                    value={mechanicForm.specialties}
-                    onChange={(e) => setMechanicForm({...mechanicForm, specialties: e.target.value})}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="engine, brakes, electrical"
-                  />
-                </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                                        <input
+                                            type="text"
+                                            value={customerForm.location}
+                                            onChange={(e) => setCustomerForm({...customerForm, location: e.target.value})}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Westlands, Nairobi"
+                                        />
+                                    </div>
 
-                <button
-                  onClick={handleMechanicRegister}
-                  disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-                >
-                  {loading ? 'Registering...' : 'Register as Mechanic'}
-                </button>
-              </div>
-            </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Car Make</label>
+                                            <input
+                                                type="text"
+                                                value={customerForm.carMake}
+                                                onChange={(e) => setCustomerForm({...customerForm, carMake: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Toyota"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Car Model</label>
+                                            <input
+                                                type="text"
+                                                value={customerForm.carModel}
+                                                onChange={(e) => setCustomerForm({...customerForm, carModel: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Fielder"
+                                            />
+                                        </div>
+                                    </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Jobs</h2>
-              
-              {jobs.length === 0 ? (
-                <div className="text-center py-8">
-                  <Clock size={48} className="mx-auto text-gray-400 mb-3" />
-                  <p className="text-gray-500">No jobs available yet. Check back soon!</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {jobs.map((job) => (
-                    <div key={job.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h4 className="font-semibold text-gray-900">
-                            {job.car_make} {job.car_model}
-                          </h4>
-                          <p className="text-sm text-gray-600 flex items-center mt-1">
-                            <MapPin size={14} className="mr-1" />
-                            {job.location}
-                          </p>
-                        </div>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          job.status === 'pending' 
-                            ? 'bg-yellow-100 text-yellow-800' 
-                            : job.status === 'accepted'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-blue-100 text-blue-800'
-                        }`}>
-                          {job.status}
-                        </span>
-                      </div>
-                      
-                      <p className="text-gray-700 mb-3">{job.issue_description}</p>
-                      
-                      {job.status === 'pending' && (
-                        <button
-                          onClick={() => acceptJob(job.id)}
-                          disabled={loading}
-                          className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center"
-                        >
-                          <CheckCircle size={18} className="mr-2" />
-                          Accept Job
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-};
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">What's the Issue?</label>
+                                        <textarea
+                                            value={customerForm.issue}
+                                            onChange={(e) => setCustomerForm({...customerForm, issue: e.target.value})}
+                                            rows={4}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Describe the problem with your car..."
+                                        />
+                                    </div>
 
-export default App;
+                                    <button
+                                        onClick={handleCustomerSubmit}
+                                        disabled={loading}
+                                        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                                    >
+                                        {loading ? 'Submitting...' : 'Find a Mechanic'}
+                                    </button>
+                                </div>
+
+                                <div className="mt-8">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Available Mechanics</h3>
+                                    {mechanics.length === 0 ? (
+                                        <p className="text-gray-500">No mechanics registered yet.</p>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            {mechanics.map((mechanic) => (
+                                                <div key={mechanic.id} className="border border-gray-200 rounded-lg p-4">
+                                                    <div className="flex items-start justify-between">
+                                                        <div>
+                                                            <h4 className="font-semibold text-gray-900">{mechanic.name}</h4>
+                                                            <p className="text-sm text-gray-600 flex items-center mt-1">
+                                                                <MapPin size={14} /> <span className="ml-1">{mechanic.location}</span>
+                                                            </p>
+                                                            <p className="text-sm text-gray-600 flex items-center mt-1">
+                                                                <Phone size={14} /> <span className="ml-1">{mechanic.phone}</span>
+                                                            </p>
+                                                            {mechanic.specialties && (
+                                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                                    {mechanic.specialties.map((specialty, idx) => (
+                                                                        <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                                                                            {specialty}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <div className="flex items-center">
+                                                            <Star size={16} />
+                                                            <span className="ml-1 font-semibold">{mechanic.rating || 0}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-2xl shadow-xl p-8">
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Mechanic Registration</h2>
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                            <input
+                                                type="text"
+                                                value={mechanicForm.name}
+                                                onChange={(e) => setMechanicForm({...mechanicForm, name: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Peter Ochieng"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                            <input
+                                                type="tel"
+                                                value={mechanicForm.phone}
+                                                onChange={(e) => setMechanicForm({...mechanicForm, phone: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="0723456789"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                                            <input
+                                                type="text"
+                                                value={mechanicForm.location}
+                                                onChange={(e) => setMechanicForm({...mechanicForm, location: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Industrial Area, Nairobi"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Specialties (comma-separated)</label>
+                                            <input
+                                                type="text"
+                                                value={mechanicForm.specialties}
+                                                onChange={(e) => setMechanicForm({...mechanicForm, specialties: e.target.value})}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="engine, brakes, electrical"
+                                            />
+                                        </div>
+
+                                        <button
+                                            onClick={handleMechanicRegister}
+                                            disabled={loading}
+                                            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                                        >
+                                            {loading ? 'Registering...' : 'Register as Mechanic'}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-2xl shadow-xl p-8">
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Jobs</h2>
+                                    
+                                    {jobs.length === 0 ? (
+                                        <div className="text-center py-8">
+                                            <Clock size={48} />
+                                            <p className="text-gray-500 mt-3">No jobs available yet. Check back soon!</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {jobs.map((job) => (
+                                                <div key={job.id} className="border border-gray-200 rounded-lg p-4">
+                                                    <div className="flex items-start justify-between mb-3">
+                                                        <div>
+                                                            <h4 className="font-semibold text-gray-900">
+                                                                {job.car_make} {job.car_model}
+                                                            </h4>
+                                                            <p className="text-sm text-gray-600 flex items-center mt-1">
+                                                                <MapPin size={14} /> <span className="ml-1">{job.location}</span>
+                                                            </p>
+                                                        </div>
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                                            job.status === 'pending' 
+                                                                ? 'bg-yellow-100 text-yellow-800' 
+                                                                : job.status === 'accepted'
+                                                                ? 'bg-green-100 text-green-800'
+                                                                : 'bg-blue-100 text-blue-800'
+                                                        }`}>
+                                                            {job.status}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <p className="text-gray-700 mb-3">{job.issue_description}</p>
+                                                    
+                                                    {job.status === 'pending' && (
+                                                        <button
+                                                            onClick={() => acceptJob(job.id)}
+                                                            disabled={loading}
+                                                            className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center"
+                                                        >
+                                                            <CheckCircle size={18} />
+                                                            <span className="ml-2">Accept Job</span>
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
