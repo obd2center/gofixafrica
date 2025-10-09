@@ -1,107 +1,449 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mechanics near you • GoFixAfrica</title>
-  <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#0c0c0c; color:#eee; margin:0; }
-    .wrap { max-width:900px; margin:32px auto; padding:0 16px; }
-    h1 { font-size:26px; margin:0 0 12px; color:#ff0000; }
-    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); margin-top:16px; }
-    .card { background:#121212; border:1px solid #1f1f1f; border-radius:14px; padding:14px; }
-    .muted { color:#b3b3b3; font-size:14px; }
-    a.btn { display:inline-block; margin-top:8px; padding:10px 12px; border-radius:10px; background:#25D366; color:#111; text-decoration:none; font-weight:700; }
-    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    button { border:0; background:#232323; color:#fff; padding:10px 12px; border-radius:10px; cursor:pointer; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="topbar">
-      <h1>Mechanics near you</h1>
-      <div class="row">
-        <button id="btn-refresh">📍 Refresh my location</button>
-        <a href="join.html"><button>＋ Add my garage</button></a>
-      </div>
-    </div>
-    <div id="status" class="muted">Loading…</div>
-    <div id="list" class="grid"></div>
-  </div>
+import React, { useState, useEffect } from 'react';
+import { Wrench, Car, MapPin, Phone, Star, Clock, CheckCircle } from 'lucide-react';
 
-  <script>
-    const DB_KEY = 'gofix.mechanics.v1';
-    const statusEl = document.getElementById('status');
-    const listEl = document.getElementById('list');
-    const btnRefresh = document.getElementById('btn-refresh');
+const SUPABASE_URL = 'https://ukhpwivvhywewoclnhco.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVraHB3aXZ2aHl3ZXdvY2xuaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTM1NzcsImV4cCI6MjA3NTQ4OTU3N30.h9IlWgNYOV9NPGOGAixFE_oJ3FMJX5i_4YZ4LlEK088';
 
-    let ownerLoc = null;
+const App = () => {
+  const [view, setView] = useState('customer');
+  const [jobs, setJobs] = useState([]);
+  const [mechanics, setMechanics] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-    init();
+  const [customerForm, setCustomerForm] = useState({
+    name: '', phone: '', location: '', carMake: '', carModel: '', issue: ''
+  });
 
-    btnRefresh.onclick = async ()=> {
-      statusEl.textContent = 'Updating location…';
-      try {
-        const pos = await getGeo();
-        ownerLoc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-        localStorage.setItem('gofix.ownerLoc', JSON.stringify({ ...ownerLoc, at: Date.now() }));
-        render();
-      } catch(e) {
-        statusEl.textContent = 'Couldn't get location: ' + e.message;
-      }
-    };
+  const [mechanicForm, setMechanicForm] = useState({
+    name: '', phone: '', location: '', specialties: ''
+  });
 
-    async function init(){
-      try {
-        const raw = localStorage.getItem('gofix.ownerLoc');
-        if (raw) ownerLoc = JSON.parse(raw);
-      } catch {}
-      render();
-    }
+  const supabase = {
+    from: (table) => ({
+      select: async (columns = '*') => {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        const data = await response.json();
+        return { data, error: null };
+      },
+      insert: async (values) => {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(values)
+        });
+        const data = await response.json();
+        return { data, error: null };
+      },
+      update: async (values) => ({
+        eq: async (column, value) => {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${column}=eq.${value}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+          });
+          const data = await response.json();
+          return { data, error: null };
+        }
+      })
+    })
+  };
 
-    function render(){
-      const records = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-      if (!records.length) {
-        statusEl.innerHTML = 'No mechanics yet. <a href="join.html">Be the first to join</a>.';
-        listEl.innerHTML = '';
-        return;
-      }
+  useEffect(() => {
+    loadData();
+  }, [view]);
 
-      if (ownerLoc) {
-        records.forEach(r => r._km = haversine(ownerLoc.lat, ownerLoc.lon, r.lat, r.lon));
-        records.sort((a,b)=> (a._km??1e9) - (b._km??1e9));
-        statusEl.textContent = `Sorted by distance from you${ownerLoc.at ? ' ~' + kmText(0) : ''}.`;
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      if (view === 'mechanic') {
+        const { data } = await supabase.from('jobs').select('*');
+        setJobs(data || []);
       } else {
-        statusEl.innerHTML = 'Tip: click "Refresh my location" to sort by distance.';
+        const { data } = await supabase.from('mechanics').select('*');
+        setMechanics(data || []);
       }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+    setLoading(false);
+  };
 
-      listEl.innerHTML = records.map(r => `
-        <div class="card">
-          <div style="font-weight:700">${escapeHtml(r.name)}</div>
-          <div class="muted">${escapeHtml(r.speciality)} ${r._km!==undefined ? ' • ' + kmText(r._km) : ''}</div>
-          ${r.till ? `<div class="muted">M-PESA Till: ${escapeHtml(r.till)}</div>` : ''}
-          <a class="btn" href="https://wa.me/${encodeURIComponent(r.phone.replace(/\D/g,''))}?text=${encodeURIComponent('Habari ' + r.name + '! Naomba msaada wa gari karibu nami via GoFixAfrica.')}" target="_blank">WhatsApp</a>
-        </div>
-      `).join('');
+  const handleCustomerSubmit = async () => {
+    if (!customerForm.name || !customerForm.phone || !customerForm.location || 
+        !customerForm.carMake || !customerForm.carModel || !customerForm.issue) {
+      setMessage('❌ Please fill out all fields');
+      return;
     }
 
-    // Haversine in km
-    function haversine(lat1, lon1, lat2, lon2){
-      const toRad = d => d * Math.PI / 180;
-      const R = 6371;
-      const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
-      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    }
-    function kmText(km){ return `~${(km).toFixed(1)} km away`; }
-    function getGeo() {
-      return new Promise((resolve, reject)=>{
-        if (!navigator.geolocation) return reject(new Error('Geolocation not supported'));
-        navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy:true, timeout:10000 });
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const { data: ownerData } = await supabase.from('car_owners').insert({
+        name: customerForm.name,
+        phone: customerForm.phone,
+        location: customerForm.location
       });
+
+      await supabase.from('jobs').insert({
+        owner_id: ownerData?.[0]?.id,
+        car_make: customerForm.carMake,
+        car_model: customerForm.carModel,
+        issue_description: customerForm.issue,
+        location: customerForm.location,
+        status: 'pending'
+      });
+
+      setMessage('✅ Job request submitted! A mechanic will contact you soon.');
+      setCustomerForm({ name: '', phone: '', location: '', carMake: '', carModel: '', issue: '' });
+      loadData();
+    } catch (error) {
+      setMessage('❌ Error submitting request. Please try again.');
+      console.error(error);
     }
-    function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m])); }
-  </script>
-</body>
-</html>
+    setLoading(false);
+  };
+
+  const handleMechanicRegister = async () => {
+    if (!mechanicForm.name || !mechanicForm.phone || !mechanicForm.location || !mechanicForm.specialties) {
+      setMessage('❌ Please fill out all fields');
+      return;
+    }
+
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const specialtiesArray = mechanicForm.specialties.split(',').map(s => s.trim());
+      
+      await supabase.from('mechanics').insert({
+        name: mechanicForm.name,
+        phone: mechanicForm.phone,
+        location: mechanicForm.location,
+        specialties: specialtiesArray
+      });
+
+      setMessage('✅ Mechanic registered successfully!');
+      setMechanicForm({ name: '', phone: '', location: '', specialties: '' });
+      loadData();
+    } catch (error) {
+      setMessage('❌ Error registering. Please try again.');
+      console.error(error);
+    }
+    setLoading(false);
+  };
+
+  const acceptJob = async (jobId) => {
+    setLoading(true);
+    try {
+      await supabase.from('jobs').update({ status: 'accepted' }).eq('id', jobId);
+      setMessage('✅ Job accepted!');
+      loadData();
+    } catch (error) {
+      setMessage('❌ Error accepting job.');
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Wrench className="text-blue-600" size={32} />
+              <h1 className="text-2xl font-bold text-gray-900">GoFixAfrica</h1>
+            </div>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setView('customer')}
+                className={`px-4 py-2 rounded-lg font-medium transition ${
+                  view === 'customer'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                <Car className="inline mr-2" size={18} />
+                Car Owner
+              </button>
+              <button
+                onClick={() => setView('mechanic')}
+                className={`px-4 py-2 rounded-lg font-medium transition ${
+                  view === 'mechanic'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                <Wrench className="inline mr-2" size={18} />
+                Mechanic
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {message && (
+        <div className="max-w-3xl mx-auto mt-4 px-4">
+          <div className={`p-4 rounded-lg ${
+            message.includes('✅') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+          }`}>
+            {message}
+          </div>
+        </div>
+      )}
+
+      <main className="max-w-3xl mx-auto px-4 py-8">
+        {view === 'customer' ? (
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Request a Mechanic</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                <input
+                  type="text"
+                  value={customerForm.name}
+                  onChange={(e) => setCustomerForm({...customerForm, name: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="John Kamau"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  value={customerForm.phone}
+                  onChange={(e) => setCustomerForm({...customerForm, phone: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="0712345678"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <input
+                  type="text"
+                  value={customerForm.location}
+                  onChange={(e) => setCustomerForm({...customerForm, location: e.target.value})}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Westlands, Nairobi"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Car Make</label>
+                  <input
+                    type="text"
+                    value={customerForm.carMake}
+                    onChange={(e) => setCustomerForm({...customerForm, carMake: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Toyota"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Car Model</label>
+                  <input
+                    type="text"
+                    value={customerForm.carModel}
+                    onChange={(e) => setCustomerForm({...customerForm, carModel: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Fielder"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">What's the Issue?</label>
+                <textarea
+                  value={customerForm.issue}
+                  onChange={(e) => setCustomerForm({...customerForm, issue: e.target.value})}
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Describe the problem with your car..."
+                />
+              </div>
+
+              <button
+                onClick={handleCustomerSubmit}
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+              >
+                {loading ? 'Submitting...' : 'Find a Mechanic'}
+              </button>
+            </div>
+
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Available Mechanics</h3>
+              {mechanics.length === 0 ? (
+                <p className="text-gray-500">No mechanics registered yet.</p>
+              ) : (
+                <div className="space-y-3">
+                  {mechanics.map((mechanic) => (
+                    <div key={mechanic.id} className="border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">{mechanic.name}</h4>
+                          <p className="text-sm text-gray-600 flex items-center mt-1">
+                            <MapPin size={14} className="mr-1" />
+                            {mechanic.location}
+                          </p>
+                          <p className="text-sm text-gray-600 flex items-center mt-1">
+                            <Phone size={14} className="mr-1" />
+                            {mechanic.phone}
+                          </p>
+                          {mechanic.specialties && (
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {mechanic.specialties.map((specialty, idx) => (
+                                <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                                  {specialty}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center">
+                          <Star size={16} className="text-yellow-500 mr-1" />
+                          <span className="font-semibold">{mechanic.rating || 0}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            <div className="bg-white rounded-2xl shadow-xl p-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Mechanic Registration</h2>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                  <input
+                    type="text"
+                    value={mechanicForm.name}
+                    onChange={(e) => setMechanicForm({...mechanicForm, name: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Peter Ochieng"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={mechanicForm.phone}
+                    onChange={(e) => setMechanicForm({...mechanicForm, phone: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="0723456789"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <input
+                    type="text"
+                    value={mechanicForm.location}
+                    onChange={(e) => setMechanicForm({...mechanicForm, location: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Industrial Area, Nairobi"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Specialties (comma-separated)</label>
+                  <input
+                    type="text"
+                    value={mechanicForm.specialties}
+                    onChange={(e) => setMechanicForm({...mechanicForm, specialties: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="engine, brakes, electrical"
+                  />
+                </div>
+
+                <button
+                  onClick={handleMechanicRegister}
+                  disabled={loading}
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                >
+                  {loading ? 'Registering...' : 'Register as Mechanic'}
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-xl p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Jobs</h2>
+              
+              {jobs.length === 0 ? (
+                <div className="text-center py-8">
+                  <Clock size={48} className="mx-auto text-gray-400 mb-3" />
+                  <p className="text-gray-500">No jobs available yet. Check back soon!</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {jobs.map((job) => (
+                    <div key={job.id} className="border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h4 className="font-semibold text-gray-900">
+                            {job.car_make} {job.car_model}
+                          </h4>
+                          <p className="text-sm text-gray-600 flex items-center mt-1">
+                            <MapPin size={14} className="mr-1" />
+                            {job.location}
+                          </p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          job.status === 'pending' 
+                            ? 'bg-yellow-100 text-yellow-800' 
+                            : job.status === 'accepted'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-blue-100 text-blue-800'
+                        }`}>
+                          {job.status}
+                        </span>
+                      </div>
+                      
+                      <p className="text-gray-700 mb-3">{job.issue_description}</p>
+                      
+                      {job.status === 'pending' && (
+                        <button
+                          onClick={() => acceptJob(job.id)}
+                          disabled={loading}
+                          className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center"
+                        >
+                          <CheckCircle size={18} className="mr-2" />
+                          Accept Job
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default App;
