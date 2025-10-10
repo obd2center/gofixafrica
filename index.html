@@ -1,525 +1,643 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GoFixAfrica - Find Mechanics & Car Parts</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      color: #333;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    
-    /* Header */
-    .header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    }
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .logo { font-size: 24px; font-weight: 700; color: #5a67d8; }
-    .auth-section { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .btn-primary { background: #5a67d8; color: white; }
-    .btn-primary:hover { background: #4c51bf; transform: translateY(-2px); }
-    .btn-success { background: #48bb78; color: white; }
-    .btn-success:hover { background: #38a169; transform: translateY(-2px); }
-    .btn-outline { background: transparent; color: #5a67d8; border: 2px solid #5a67d8; }
-    .btn-outline:hover { background: #5a67d8; color: white; }
-    
-    .search-bar {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .search-input {
-      flex: 1;
-      min-width: 300px;
-      padding: 15px 20px;
-      border: none;
-      border-radius: 25px;
-      background: #f7fafc;
-      font-size: 16px;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
-    }
-    .search-input:focus {
-      outline: none;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06), 0 0 0 3px rgba(90,103,216,0.1);
-    }
-    
-    /* Logged-in user info */
-    .user-info {
-      background: #e6fffa;
-      border: 2px solid #4fd1c7;
-      border-radius: 15px;
-      padding: 10px 15px;
-      font-size: 14px;
-      color: #234e52;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    /* Cards Grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 25px;
-      margin-bottom: 30px;
-    }
-    
-    .card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    .card:hover { transform: translateY(-5px); }
-    .card h2 {
-      font-size: 22px;
-      margin-bottom: 15px;
-      color: #2d3748;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    /* Find Mechanic Section */
-    .find-mechanic {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    .find-mechanic h2 { color: white; }
-    .issue-input {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      font-size: 16px;
-      resize: vertical;
-      min-height: 80px;
-    }
-    .find-btn {
-      width: 100%;
-      padding: 15px;
-      background: rgba(255,255,255,0.2);
-      border: 2px solid rgba(255,255,255,0.3);
-      color: white;
-      border-radius: 15px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .find-btn:hover {
-      background: rgba(255,255,255,0.3);
-      transform: translateY(-2px);
-    }
-    
-    /* Mechanics List */
-    .mechanics-list {
-      display: grid;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .mechanic-card {
-      background: #f8f9fa;
-      border-radius: 15px;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-    .mechanic-card:hover {
-      background: #e9ecef;
-      transform: translateX(5px);
-    }
-    .mechanic-info h3 {
-      margin: 0 0 5px 0;
-      color: #2d3748;
-      font-size: 16px;
-    }
-    .mechanic-details {
-      font-size: 14px;
-      color: #718096;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-    .speciality-tag {
-      background: #e6fffa;
-      color: #234e52;
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: 12px;
-    }
-    .whatsapp-btn {
-      background: #25d366;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .whatsapp-btn:hover {
-      background: #20b858;
-      transform: scale(1.05);
-    }
-    
-    /* Parts Finder */
-    .parts-finder .search-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .parts-finder .search-row input {
-      flex: 1;
-      padding: 12px 15px;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-    .parts-finder .search-row input:focus {
-      outline: none;
-      border-color: #5a67d8;
-    }
-    .request-btn {
-      background: #805ad5;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .request-btn:hover {
-      background: #6b46c1;
-      transform: translateY(-2px);
-    }
-    
-    /* Jobs Section */
-    .jobs-list {
-      display: grid;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .job-item {
-      background: #f8f9fa;
-      border-radius: 15px;
-      padding: 15px;
-      border-left: 4px solid #ffd700;
-    }
-    .job-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .job-title {
-      font-weight: 600;
-      color: #2d3748;
-      font-size: 16px;
-    }
-    .job-status {
-      background: #fed7d7;
-      color: #c53030;
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .job-location {
-      color: #718096;
-      font-size: 14px;
-    }
-    
-    /* Create Garage Button */
-    .create-garage {
-      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-      color: white;
-      margin-bottom: 25px;
-    }
-    .create-garage h2 { color: white; }
-    .create-garage .btn {
-      background: rgba(255,255,255,0.2);
-      border: 2px solid rgba(255,255,255,0.3);
-      color: white;
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-    }
-    .create-garage .btn:hover {
-      background: rgba(255,255,255,0.3);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 15px; }
-      .header-top { flex-direction: column; text-align: center; }
-      .search-bar { flex-direction: column; }
-      .search-input { min-width: 100%; }
-      .auth-section { width: 100%; justify-content: center; }
-      .mechanic-card { flex-direction: column; text-align: center; gap: 10px; }
-      .parts-finder .search-row { flex-direction: column; }
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoFixAfrica - Find Mechanics & Car Parts</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .logo { font-size: 24px; font-weight: 700; color: #5a67d8; }
+    .auth-section { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-primary { background: #5a67d8; color: white; }
+    .btn-primary:hover { background: #4c51bf; transform: translateY(-2px); }
+    .btn-success { background: #48bb78; color: white; }
+    .btn-success:hover { background: #38a169; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: #5a67d8; border: 2px solid #5a67d8; }
+    .btn-outline:hover { background: #5a67d8; color: white; }
+    
+    .search-bar {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 300px;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 25px;
+      background: #f7fafc;
+      font-size: 16px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .search-input:focus {
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06), 0 0 0 3px rgba(90,103,216,0.1);
+    }
+    
+    /* Logged-in user info */
+    .user-info {
+      background: #e6fffa;
+      border: 2px solid #4fd1c7;
+      border-radius: 15px;
+      padding: 10px 15px;
+      font-size: 14px;
+      color: #234e52;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Find Mechanic Section */
+    .find-mechanic {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .find-mechanic h2 { color: white; }
+    .issue-input {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      resize: vertical;
+      min-height: 80px;
+    }
+    .find-btn {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .find-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+    
+    /* Mechanics List */
+    .mechanics-list {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .mechanic-card {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .mechanic-card:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+    .mechanic-info h3 {
+      margin: 0 0 5px 0;
+      color: #2d3748;
+      font-size: 16px;
+    }
+    .mechanic-details {
+      font-size: 14px;
+      color: #718096;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .speciality-tag {
+      background: #e6fffa;
+      color: #234e52;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .whatsapp-btn {
+      background: #25d366;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .whatsapp-btn:hover {
+      background: #20b858;
+      transform: scale(1.05);
+    }
+    
+    /* Parts Finder */
+    .parts-finder .search-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .parts-finder .search-row input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .parts-finder .search-row input:focus {
+      outline: none;
+      border-color: #5a67d8;
+    }
+    .request-btn {
+      background: #805ad5;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .request-btn:hover {
+      background: #6b46c1;
+      transform: translateY(-2px);
+    }
+    
+    /* Jobs Section */
+    .jobs-list {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .job-item {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 15px;
+      border-left: 4px solid #ffd700;
+    }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .job-title {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 16px;
+    }
+    .job-status {
+      background: #fed7d7;
+      color: #c53030;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .job-location {
+      color: #718096;
+      font-size: 14px;
+    }
+    
+    /* Create Garage Button */
+    .create-garage {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+      margin-bottom: 25px;
+    }
+    .create-garage h2 { color: white; }
+    .create-garage .btn {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+    }
+    .create-garage .btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    /* Loading states */
+    .loading {
+      text-align: center;
+      color: #718096;
+      font-style: italic;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 15px; }
+      .header-top { flex-direction: column; text-align: center; }
+      .search-bar { flex-direction: column; }
+      .search-input { min-width: 100%; }
+      .auth-section { width: 100%; justify-content: center; }
+      .mechanic-card { flex-direction: column; text-align: center; gap: 10px; }
+      .parts-finder .search-row { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <div class="header-top">
-        <div class="logo">🔧 GoFixAfrica</div>
-        <div class="auth-section">
-          <!-- Default auth buttons -->
-          <div id="auth-buttons" style="display: flex; gap: 10px;">
-            <a href="join.html" class="btn btn-success">+ Add my garage</a>
-            <a href="mechanic-login.html" class="btn btn-primary">Mechanic Login</a>
-          </div>
-          
-          <!-- Logged-in user info -->
-          <div id="user-info" class="user-info" style="display: none;">
-            <span>✓ Logged in as <span id="user-name"></span></span>
-            <a href="mechanic-dashboard.html" class="btn btn-outline">Dashboard</a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="search-bar">
-        <textarea class="search-input" placeholder="Describe the issue..." id="issueInput"></textarea>
-        <button class="btn btn-primary" onclick="findMechanic()">Find a Mechanic</button>
-      </div>
-    </div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="logo"> GoFixAfrica</div>
+        <div class="auth-section">
+          <!-- Default auth buttons -->
+          <div id="auth-buttons" style="display: flex; gap: 10px;">
+            <a href="join.html" class="btn btn-success">+ Add my garage</a>
+            <a href="mechanic-login.html" class="btn btn-primary">Mechanic Login</a>
+          </div>
+          
+          <!-- Logged-in user info -->
+          <div id="user-info" class="user-info" style="display: none;">
+            <span>✓ Logged in as <span id="user-name"></span></span>
+            <a href="mechanic-dashboard.html" class="btn btn-outline">Dashboard</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="search-bar">
+        <textarea class="search-input" placeholder="Describe the issue..." id="issueInput"></textarea>
+        <button class="btn btn-primary" onclick="findMechanic()">Find a Mechanic</button>
+      </div>
+    </div>
 
-    <!-- Create Digital Garage -->
-    <div class="card create-garage">
-      <h2>🏪 Create Digital Garage</h2>
-      <p style="margin-bottom: 15px; opacity: 0.9;">Join our network of trusted mechanics and grow your business</p>
-      <a href="join.html" class="btn">Create Digital Garage</a>
-    </div>
+    <!-- Create Digital Garage -->
+    <div class="card create-garage">
+      <h2> Create Digital Garage</h2>
+      <p style="margin-bottom: 15px; opacity: 0.9;">Join our network of trusted mechanics and grow your business</p>
+      <a href="join.html" class="btn">Create Digital Garage</a>
+    </div>
 
-    <!-- Main Cards Grid -->
-    <div class="cards-grid">
-      <!-- Find Parts -->
-      <div class="card parts-finder">
-        <h2>🔍 Find Parts</h2>
-        <div class="search-row">
-          <input type="text" placeholder="Search parts (e.g., Corolla 2009 brake pads)" id="partsInput">
-        </div>
-        <button class="request-btn" onclick="requestPrice()">🔍 Request Price</button>
-        <p style="margin-top: 10px; font-size: 14px; color: #718096;">
-          💡 Search for any part - vendors will WhatsApp you with prices!
-        </p>
-        
-        <div id="parts-results" style="margin-top: 15px;">
-          <h3 style="font-size: 16px; margin-bottom: 10px;">Available Parts:</h3>
-          <p style="color: #718096; font-style: italic;">Enter a search to find parts...</p>
-        </div>
-      </div>
+    <!-- Main Cards Grid -->
+    <div class="cards-grid">
+      <!-- Find Parts -->
+      <div class="card parts-finder">
+        <h2> Find Parts</h2>
+        <div class="search-row">
+          <input type="text" placeholder="Search parts (e.g., Corolla 2009 brake pads)" id="partsInput">
+        </div>
+        <button class="request-btn" onclick="requestPrice()"> Request Price</button>
+        <p style="margin-top: 10px; font-size: 14px; color: #718096;">
+          Search for any part - vendors will WhatsApp you with prices!
+        </p>
+        
+        <div id="parts-results" style="margin-top: 15px;">
+          <h3 style="font-size: 16px; margin-bottom: 10px;">Available Parts:</h3>
+          <p style="color: #718096; font-style: italic;">Enter a search to find parts...</p>
+        </div>
+      </div>
 
-      <!-- Available Jobs -->
-      <div class="card">
-        <h2>📋 Available Jobs</h2>
-        <div class="jobs-list" id="jobsList">
-          <div class="job-item">
-            <div class="job-header">
-              <span class="job-title">Vw Mk6</span>
-              <span class="job-status">pending</span>
-            </div>
-            <div class="job-location">Gearbox • Inda</div>
-          </div>
-          <div class="job-item">
-            <div class="job-header">
-              <span class="job-title">Toyota 1st</span>
-              <span class="job-status">pending</span>
-            </div>
-            <div class="job-location">Hard start • Mombasa</div>
-          </div>
-          <div class="job-item">
-            <div class="job-header">
-              <span class="job-title">Mercedes W205 c300</span>
-              <span class="job-status">pending</span>
-            </div>
-            <div class="job-location">I need to renew the vgs • RWANDA</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- Available Jobs -->
+      <div class="card">
+        <h2> Available Jobs</h2>
+        <div class="jobs-list" id="jobsList">
+          <div class="loading">Loading jobs...</div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Available Mechanics -->
-    <div class="card">
-      <h2>👥 Available Mechanics</h2>
-      <div id="status" style="margin-bottom: 15px; color: #718096;">Loading mechanics...</div>
-      <button class="btn btn-outline" onclick="refreshLocation()" style="margin-bottom: 15px;">
-        📍 Refresh my location
-      </button>
-      <div class="mechanics-list" id="mechanicsList"></div>
-    </div>
-  </div>
+    <!-- Available Mechanics -->
+    <div class="card">
+      <h2> Available Mechanics</h2>
+      <div id="status" style="margin-bottom: 15px; color: #718096;">Loading mechanics...</div>
+      <button class="btn btn-outline" onclick="refreshLocation()" style="margin-bottom: 15px;">
+        Refresh my location
+      </button>
+      <div class="mechanics-list" id="mechanicsList"></div>
+    </div>
+  </div>
 
-  <script>
-    const DB_KEY = 'gofix.mechanics.v1';
-    const AUTH_KEY = 'gofix.auth';
-    const statusEl = document.getElementById('status');
-    const mechanicsListEl = document.getElementById('mechanicsList');
-    let ownerLoc = null;
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Supabase Configuration -->
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://ukhpwivhywewoclnhco.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVraHB3aXZoeXdld29jbG5oY28iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczNTIzNjU4NSwiZXhwIjoyMDUwODEyNTg1fQ.tZ2FzSIsl1nlZlI6InYval';
 
-    // Check if mechanic is logged in
-    function checkAuth() {
-      const auth = localStorage.getItem(AUTH_KEY);
-      if (auth) {
-        const userData = JSON.parse(auth);
-        document.getElementById('auth-buttons').style.display = 'none';
-        document.getElementById('user-info').style.display = 'flex';
-        document.getElementById('user-name').textContent = userData.name;
-      }
-    }
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Initialize
-    async function init() {
-      checkAuth();
-      try {
-        const raw = localStorage.getItem('gofix.ownerLoc');
-        if (raw) ownerLoc = JSON.parse(raw);
-      } catch {}
-      loadMechanics();
-    }
+    // Database helper functions
+    const Database = {
+      async getMechanics() {
+        try {
+          const { data, error } = await supabase
+            .from('mechanics')
+            .select('*')
+            .order('created_at', { ascending: false });
+          
+          if (error) throw error;
+          return data || [];
+        } catch (error) {
+          console.error('Error fetching mechanics:', error);
+          return [];
+        }
+      },
 
-    // Refresh location
-    async function refreshLocation() {
-      statusEl.textContent = 'Updating location...';
-      try {
-        const pos = await getGeoLocation();
-        ownerLoc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-        localStorage.setItem('gofix.ownerLoc', JSON.stringify({ ...ownerLoc, at: Date.now() }));
-        loadMechanics();
-      } catch(e) {
-        statusEl.textContent = 'Couldn\'t get location: ' + e.message;
-      }
-    }
+      async addPartInquiry(inquiry) {
+        try {
+          const { data, error } = await supabase
+            .from('price_inquiries')
+            .insert([{
+              part_name: inquiry.part_name,
+              customer_phone: inquiry.customer_phone || 'Anonymous',
+              description: inquiry.description,
+              status: 'pending',
+              created_at: new Date().toISOString()
+            }])
+            .select()
+            .single();
+          
+          if (error) throw error;
+          return data;
+        } catch (error) {
+          console.error('Error adding part inquiry:', error);
+          throw error;
+        }
+      },
 
-    // Load mechanics
-    function loadMechanics() {
-      const mechanics = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-      
-      if (mechanics.length === 0) {
-        statusEl.innerHTML = 'No mechanics registered yet. <a href="join.html" style="color:#5a67d8;">Be the first to join</a>.';
-        mechanicsListEl.innerHTML = '';
-        return;
-      }
+      async getJobs() {
+        try {
+          const { data, error } = await supabase
+            .from('jobs')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(10);
+          
+          if (error) throw error;
+          return data || [];
+        } catch (error) {
+          console.error('Error fetching jobs:', error);
+          return [];
+        }
+      }
+    };
 
-      if (ownerLoc) {
-        mechanics.forEach(m => m._km = haversine(ownerLoc.lat, ownerLoc.lon, m.lat, m.lon));
-        mechanics.sort((a,b) => (a._km || 1e9) - (b._km || 1e9));
-        statusEl.textContent = `Found ${mechanics.length} mechanics, sorted by distance from you.`;
-      } else {
-        statusEl.textContent = `Found ${mechanics.length} mechanics. Click "Refresh my location" to sort by distance.`;
-      }
+    // Authentication helper
+    const Auth = {
+      getCurrentUser() {
+        try {
+          const session = localStorage.getItem('auth_session');
+          return session ? JSON.parse(session) : null;
+        } catch {
+          return null;
+        }
+      },
 
-      mechanicsListEl.innerHTML = mechanics.map(mechanic => `
-        <div class="mechanic-card">
-          <div class="mechanic-info">
-            <h3>${escapeHtml(mechanic.name)}</h3>
-            <div class="mechanic-details">
-              <span class="speciality-tag">${escapeHtml(mechanic.speciality)}</span>
-              ${mechanic._km !== undefined ? `<span>~${mechanic._km.toFixed(1)} km away</span>` : ''}
-              ${mechanic.till ? `<span>M-PESA: ${escapeHtml(mechanic.till)}</span>` : ''}
-            </div>
-          </div>
-          <a href="https://wa.me/${encodeURIComponent(mechanic.phone.replace(/\D/g,''))}?text=${encodeURIComponent('Habari ' + mechanic.name + '! Naomba msaada wa gari karibu nami via GoFixAfrica.')}" 
-             target="_blank" class="whatsapp-btn">WhatsApp</a>
-        </div>
-      `).join('');
-    }
+      isLoggedIn() {
+        return this.getCurrentUser() !== null;
+      }
+    };
 
-    // Find mechanic based on issue description
-    function findMechanic() {
-      const issue = document.getElementById('issueInput').value.trim();
-      if (!issue) {
-        alert('Please describe your car issue first');
-        return;
-      }
-      
-      // Scroll to mechanics section
-      document.getElementById('mechanicsList').scrollIntoView({ behavior: 'smooth' });
-      
-      // Optional: Filter mechanics based on issue keywords
-      loadMechanics();
-    }
+    // Global variables
+    const statusEl = document.getElementById('status');
+    const mechanicsListEl = document.getElementById('mechanicsList');
+    const jobsListEl = document.getElementById('jobsList');
+    let ownerLoc = null;
 
-    // Request price for parts
-    function requestPrice() {
-      const parts = document.getElementById('partsInput').value.trim();
-      if (!parts) {
-        alert('Please enter the part you\'re looking for');
-        return;
-      }
-      
-      // Simulate parts search results
-      document.getElementById('parts-results').innerHTML = `
-        <h3 style="font-size: 16px; margin-bottom: 10px;">Search Results for "${parts}":</h3>
-        <p style="color: #718096;">Vendors will be notified about your request. Expect WhatsApp messages with quotes within 24 hours.</p>
-        <div style="background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 8px; padding: 10px; margin-top: 10px;">
-          <strong>✓ Request sent!</strong> Local parts vendors will contact you via WhatsApp with availability and pricing.
-        </div>
-      `;
-    }
+    // Check if mechanic is logged in
+    function checkAuth() {
+      const user = Auth.getCurrentUser();
+      if (user) {
+        document.getElementById('auth-buttons').style.display = 'none';
+        document.getElementById('user-info').style.display = 'flex';
+        document.getElementById('user-name').textContent = user.user.name;
+      }
+    }
 
-    // Utility functions
-    function haversine(lat1, lon1, lat2, lon2) {
-      const toRad = d => d * Math.PI / 180;
-      const R = 6371;
-      const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
-      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    }
+    // Initialize
+    async function init() {
+      checkAuth();
+      try {
+        const raw = localStorage.getItem('gofix.ownerLoc');
+        if (raw) ownerLoc = JSON.parse(raw);
+      } catch {}
+      
+      await Promise.all([
+        loadMechanics(),
+        loadJobs()
+      ]);
+    }
 
-    function getGeoLocation() {
-      return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) return reject(new Error('Geolocation not supported'));
-        navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 10000 });
-      });
-    }
+    // Refresh location
+    async function refreshLocation() {
+      statusEl.textContent = 'Updating location...';
+      try {
+        const pos = await getGeoLocation();
+        ownerLoc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        localStorage.setItem('gofix.ownerLoc', JSON.stringify({ ...ownerLoc, at: Date.now() }));
+        loadMechanics();
+      } catch(e) {
+        statusEl.textContent = 'Couldn\'t get location: ' + e.message;
+      }
+    }
 
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text || '';
-      return div.innerHTML;
-    }
+    // Load mechanics from database
+    async function loadMechanics() {
+      statusEl.textContent = 'Loading mechanics...';
+      
+      try {
+        const mechanics = await Database.getMechanics();
+        
+        if (mechanics.length === 0) {
+          statusEl.innerHTML = 'No mechanics registered yet. <a href="join.html" style="color:#5a67d8;">Be the first to join</a>.';
+          mechanicsListEl.innerHTML = '';
+          return;
+        }
 
-    // Initialize on page load
-    init();
-  </script>
+        if (ownerLoc) {
+          mechanics.forEach(m => m._km = haversine(ownerLoc.lat, ownerLoc.lon, m.lat, m.lon));
+          mechanics.sort((a,b) => (a._km || 1e9) - (b._km || 1e9));
+          statusEl.textContent = `Found ${mechanics.length} mechanics, sorted by distance from you.`;
+        } else {
+          statusEl.textContent = `Found ${mechanics.length} mechanics. Click "Refresh my location" to sort by distance.`;
+        }
+
+        mechanicsListEl.innerHTML = mechanics.map(mechanic => `
+          <div class="mechanic-card">
+            <div class="mechanic-info">
+              <h3>${escapeHtml(mechanic.name)}</h3>
+              <div class="mechanic-details">
+                <span class="speciality-tag">${escapeHtml(mechanic.speciality)}</span>
+                ${mechanic._km !== undefined ? `<span>~${mechanic._km.toFixed(1)} km away</span>` : ''}
+                ${mechanic.till ? `<span>M-PESA: ${escapeHtml(mechanic.till)}</span>` : ''}
+                ${mechanic.verified ? '<span style="color: #25d366;">✓ Verified</span>' : ''}
+              </div>
+            </div>
+            <a href="https://wa.me/${encodeURIComponent(mechanic.phone.replace(/\D/g,''))}?text=${encodeURIComponent('Habari ' + mechanic.name + '! Naomba msaada wa gari karibu nami via GoFixAfrica.')}" 
+               target="_blank" class="whatsapp-btn">WhatsApp</a>
+          </div>
+        `).join('');
+      } catch (error) {
+        statusEl.textContent = 'Error loading mechanics. Please try again.';
+        console.error('Error loading mechanics:', error);
+      }
+    }
+
+    // Load jobs from database
+    async function loadJobs() {
+      try {
+        const jobs = await Database.getJobs();
+        
+        if (jobs.length === 0) {
+          jobsListEl.innerHTML = '<div class="loading">No jobs available at the moment.</div>';
+          return;
+        }
+
+        jobsListEl.innerHTML = jobs.map(job => `
+          <div class="job-item">
+            <div class="job-header">
+              <span class="job-title">${escapeHtml(job.title || 'Service Required')}</span>
+              <span class="job-status">${escapeHtml(job.status)}</span>
+            </div>
+            <div class="job-location">${escapeHtml(job.description)} • ${escapeHtml(job.location || 'Location not specified')}</div>
+          </div>
+        `).join('');
+      } catch (error) {
+        jobsListEl.innerHTML = '<div class="loading">Error loading jobs.</div>';
+        console.error('Error loading jobs:', error);
+      }
+    }
+
+    // Find mechanic based on issue description
+    function findMechanic() {
+      const issue = document.getElementById('issueInput').value.trim();
+      if (!issue) {
+        alert('Please describe your car issue first');
+        return;
+      }
+      
+      // Scroll to mechanics section
+      document.getElementById('mechanicsList').scrollIntoView({ behavior: 'smooth' });
+      
+      // Reload mechanics (could add filtering based on issue keywords)
+      loadMechanics();
+    }
+
+    // Request price for parts
+    async function requestPrice() {
+      const parts = document.getElementById('partsInput').value.trim();
+      if (!parts) {
+        alert('Please enter the part you\'re looking for');
+        return;
+      }
+      
+      try {
+        await Database.addPartInquiry({
+          part_name: parts,
+          description: `Customer looking for: ${parts}`,
+          customer_phone: 'Anonymous'
+        });
+
+        document.getElementById('parts-results').innerHTML = `
+          <h3 style="font-size: 16px; margin-bottom: 10px;">Search Results for "${parts}":</h3>
+          <div style="background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 8px; padding: 10px; margin-top: 10px;">
+            <strong>✓ Request sent!</strong> Local parts vendors will be notified and will contact you via WhatsApp with availability and pricing.
+          </div>
+        `;
+      } catch (error) {
+        document.getElementById('parts-results').innerHTML = `
+          <div style="background: #fed7d7; border: 1px solid #e53e3e; border-radius: 8px; padding: 10px; margin-top: 10px;">
+            <strong>Error:</strong> Could not send request. Please try again.
+          </div>
+        `;
+      }
+    }
+
+    // Utility functions
+    function haversine(lat1, lon1, lat2, lon2) {
+      const toRad = d => d * Math.PI / 180;
+      const R = 6371;
+      const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function getGeoLocation() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) return reject(new Error('Geolocation not supported'));
+        navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    // Initialize on page load
+    init();
+  </script>
 </body>
 </html>
