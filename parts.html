@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Parts Marketplace | GoFixAfrica</title>
+  <meta name="description" content="Find genuine and OEM auto parts from verified vendors across Africa. Request quotes, compare prices, and get same-day delivery.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layouts.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  
+  <style>
+    /* Parts Search Hero */
+    .parts-hero {
+      background: var(--gradient-hero);
+      padding: var(--space-12) 0 var(--space-16);
+      text-align: center;
+    }
+    
+    .parts-hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+    
+    .parts-hero h1 span {
+      color: var(--color-primary-500);
+    }
+    
+    .parts-hero p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-8);
+    }
+    
+    /* Search Box */
+    .parts-search-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: var(--radius-4xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-default);
+    }
+    
+    .search-row {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    
+    @media (max-width: 768px) {
+      .search-row {
+        flex-direction: column;
+      }
+    }
+    
+    .search-input-wrapper {
+      flex: 2;
+      position: relative;
+    }
+    
+    .search-input-wrapper .input-icon {
+      left: var(--space-4);
+    }
+    
+    .search-input-wrapper .form-input {
+      padding-left: var(--space-12);
+    }
+    
+    .vehicle-selectors {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+    
+    @media (max-width: 640px) {
+      .vehicle-selectors {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Popular Searches */
+    .popular-searches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      justify-content: center;
+      margin-top: var(--space-6);
+    }
+    
+    .popular-search-tag {
+      padding: var(--space-2) var(--space-4);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .popular-search-tag:hover {
+      border-color: var(--color-primary-500);
+      color: var(--color-primary-500);
+    }
+    
+    /* Main Content */
+    .parts-content {
+      padding: var(--space-10) 0;
+    }
+    
+    .parts-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--space-8);
+    }
+    
+    @media (max-width: 1024px) {
+      .parts-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Filters Sidebar */
+    .filters-sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+      height: fit-content;
+    }
+    
+    @media (max-width: 1024px) {
+      .filters-sidebar {
+        position: static;
+        display: none;
+      }
+      
+      .filters-sidebar.open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        top: var(--header-height);
+        z-index: var(--z-modal);
+        background: var(--bg-page);
+        padding: var(--space-6);
+        overflow-y: auto;
+      }
+    }
+    
+    .filter-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+    
+    .filter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    
+    .filter-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+    }
+    
+    .filter-clear {
+      font-size: var(--text-xs);
+      color: var(--color-primary-500);
+      cursor: pointer;
+    }
+    
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    
+    .filter-option:hover {
+      color: var(--text-primary);
+    }
+    
+    .filter-count {
+      margin-left: auto;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    /* Price Range Slider */
+    .price-range {
+      padding: var(--space-2) 0;
+    }
+    
+    .price-inputs {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    
+    .price-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 var(--space-3);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+    
+    .price-separator {
+      color: var(--text-muted);
+    }
+    
+    /* Mobile Filter Toggle */
+    .mobile-filter-toggle {
+      display: none;
+      position: fixed;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: var(--z-fixed);
+      padding: var(--space-3) var(--space-6);
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-xl);
+      cursor: pointer;
+    }
+    
+    @media (max-width: 1024px) {
+      .mobile-filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+    }
+    
+    /* Results Header */
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    
+    .results-count {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    
+    .results-count strong {
+      color: var(--text-primary);
+    }
+    
+    .results-sort {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    
+    .sort-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    
+    .sort-select {
+      height: 40px;
+      padding: 0 var(--space-8) 0 var(--space-4);
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+    
+    /* Parts Grid */
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-5);
+    }
+    
+    /* Part Card */
+    .part-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+    
+    .part-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .part-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    
+    .part-badge {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+    }
+    
+    .part-wishlist {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      width: 36px;
+      height: 36px;
+      background: var(--bg-card);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border: 1px solid var(--border-default);
+    }
+    
+    .part-wishlist:hover {
+      background: var(--color-error-500);
+      border-color: var(--color-error-500);
+      color: white;
+    }
+    
+    .part-content {
+      padding: var(--space-5);
+    }
+    
+    .part-vendor {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-bottom: var(--space-2);
+    }
+    
+    .part-vendor-verified {
+      color: var(--color-accent-500);
+    }
+    
+    .part-name {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      line-height: var(--leading-snug);
+    }
+    
+    .part-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    
+    .part-meta-item {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-md);
+    }
+    
+    .part-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+    
+    .part-price {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary-500);
+    }
+    
+    .part-price-original {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-weight: var(--font-normal);
+    }
+    
+    .part-stock {
+      font-size: var(--text-xs);
+      color: var(--color-success-500);
+    }
+    
+    .part-stock.low {
+      color: var(--color-warning-500);
+    }
+    
+    .part-stock.out {
+      color: var(--color-error-500);
+    }
+    
+    /* Request Quote Button */
+    .btn-quote {
+      width: 100%;
+      margin-top: var(--space-4);
+    }
+    
+    /* Featured Vendors Section */
+    .featured-vendors {
+      padding: var(--space-16) 0;
+      background: var(--bg-card);
+    }
+    
+    .vendor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+    
+    .vendor-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-6);
+      transition: var(--transition-base);
+    }
+    
+    .vendor-card:hover {
+      border-color: var(--color-primary-500);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .vendor-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    
+    .vendor-avatar {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .vendor-info h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+    
+    .vendor-info p {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .vendor-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-sm);
+      color: #FFD700;
+    }
+    
+    .vendor-rating span {
+      color: var(--text-secondary);
+    }
+    
+    .vendor-specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    
+    .vendor-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-default);
+    }
+    
+    .vendor-stat {
+      text-align: center;
+    }
+    
+    .vendor-stat-value {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+    }
+    
+    .vendor-stat-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    /* Quote Request Modal */
+    .quote-modal .modal {
+      max-width: 500px;
+    }
+    
+    .quote-part-preview {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-6);
+    }
+    
+    .quote-part-image {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    
+    .quote-part-info h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+    
+    .quote-part-info p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    /* How It Works */
+    .how-it-works {
+      padding: var(--space-16) 0;
+    }
+    
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+    
+    @media (max-width: 1024px) {
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .step-card {
+      text-align: center;
+      position: relative;
+    }
+    
+    .step-number {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-4);
+      background: var(--gradient-primary);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: white;
+    }
+    
+    .step-card h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+    
+    .step-card p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    /* Category Pills */
+    .category-pills {
+      display: flex;
+      gap: var(--space-3);
+      overflow-x: auto;
+      padding-bottom: var(--space-4);
+      margin-bottom: var(--space-6);
+      scrollbar-width: none;
+    }
+    
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .category-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .category-pill:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+    
+    .category-pill.active {
+      background: var(--color-primary-500);
+      border-color: var(--color-primary-500);
+      color: white;
+    }
+    
+    .category-pill-icon {
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🔧</div>
+          <div class="logo-text">GoFix<span>Africa</span></div>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="mechanics.html" class="nav-link">Find Mechanics</a>
+          <a href="parts.html" class="nav-link active">Parts</a>
+          <a href="join.html" class="nav-link">Become a Mechanic</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-secondary sm:hidden">Login</a>
+          <a href="index.html#book" class="btn btn-primary lg:hidden">Book Service</a>
+        </div>
+        
+        <button class="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Search Hero -->
+    <section class="parts-hero">
+      <div class="container">
+        <h1>Find <span>Quality Auto Parts</span></h1>
+        <p>Search thousands of genuine and OEM parts from verified vendors across Africa</p>
+        
+        <div class="parts-search-box">
+          <div class="search-row">
+            <div class="search-input-wrapper">
+              <span class="input-icon">🔍</span>
+              <input type="text" class="form-input" placeholder="Search parts by name, OEM number, or keyword...">
+            </div>
+            <button class="btn btn-primary">
+              Search Parts
+            </button>
+          </div>
+          
+          <div class="vehicle-selectors">
+            <select class="form-input form-select">
+              <option value="">Select Make</option>
+              <option value="toyota">Toyota</option>
+              <option value="mercedes">Mercedes-Benz</option>
+              <option value="bmw">BMW</option>
+              <option value="nissan">Nissan</option>
+              <option value="volkswagen">Volkswagen</option>
+              <option value="landrover">Land Rover</option>
+              <option value="audi">Audi</option>
+              <option value="honda">Honda</option>
+              <option value="subaru">Subaru</option>
+              <option value="mazda">Mazda</option>
+            </select>
+            <select class="form-input form-select">
+              <option value="">Select Model</option>
+            </select>
+            <select class="form-input form-select">
+              <option value="">Select Year</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="2015-2019">2015-2019</option>
+              <option value="2010-2014">2010-2014</option>
+              <option value="older">Older</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="popular-searches">
+          <span class="text-muted text-sm mr-2">Popular:</span>
+          <span class="popular-search-tag">Brake Pads</span>
+          <span class="popular-search-tag">Air Filter</span>
+          <span class="popular-search-tag">Oil Filter</span>
+          <span class="popular-search-tag">Spark Plugs</span>
+          <span class="popular-search-tag">Alternator</span>
+          <span class="popular-search-tag">Battery</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Pills -->
+    <section class="section-sm">
+      <div class="container">
+        <div class="category-pills">
+          <button class="category-pill active">
+            <span class="category-pill-icon">📦</span>
+            <span>All Parts</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">⚙️</span>
+            <span>Engine</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">🛞</span>
+            <span>Brakes</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">🔋</span>
+            <span>Electrical</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">💡</span>
+            <span>Lighting</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">❄️</span>
+            <span>Cooling</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">🔩</span>
+            <span>Suspension</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">🚗</span>
+            <span>Body Parts</span>
+          </button>
+          <button class="category-pill">
+            <span class="category-pill-icon">🪞</span>
+            <span>Interior</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="parts-content">
+      <div class="container">
+        <div class="parts-layout">
+          <!-- Filters Sidebar -->
+          <aside class="filters-sidebar" id="filters-sidebar">
+            <!-- Category Filter -->
+            <div class="filter-card">
+              <div class="filter-header">
+                <span class="filter-title">Category</span>
+                <span class="filter-clear">Clear</span>
+              </div>
+              <div class="filter-options">
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Engine Parts</span>
+                  <span class="filter-count">234</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Brakes & Suspension</span>
+                  <span class="filter-count">189</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Electrical</span>
+                  <span class="filter-count">156</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Cooling System</span>
+                  <span class="filter-count">98</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Transmission</span>
+                  <span class="filter-count">67</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Condition Filter -->
+            <div class="filter-card">
+              <div class="filter-header">
+                <span class="filter-title">Condition</span>
+                <span class="filter-clear">Clear</span>
+              </div>
+              <div class="filter-options">
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <span>New / OEM</span>
+                  <span class="filter-count">456</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Aftermarket</span>
+                  <span class="filter-count">321</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Refurbished</span>
+                  <span class="filter-count">87</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Price Range Filter -->
+            <div class="filter-card">
+              <div class="filter-header">
+                <span class="filter-title">Price Range</span>
+                <span class="filter-clear">Clear</span>
+              </div>
+              <div class="price-range">
+                <div class="price-inputs">
+                  <input type="number" class="price-input" placeholder="Min" value="0">
+                  <span class="price-separator">—</span>
+                  <input type="number" class="price-input" placeholder="Max" value="50000">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Vendor Rating Filter -->
+            <div class="filter-card">
+              <div class="filter-header">
+                <span class="filter-title">Vendor Rating</span>
+                <span class="filter-clear">Clear</span>
+              </div>
+              <div class="filter-options">
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>★★★★★ 5 Only</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <span>★★★★☆ 4 & Up</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>★★★☆☆ 3 & Up</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Location Filter -->
+            <div class="filter-card">
+              <div class="filter-header">
+                <span class="filter-title">Vendor Location</span>
+                <span class="filter-clear">Clear</span>
+              </div>
+              <div class="filter-options">
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <span>Nairobi</span>
+                  <span class="filter-count">89</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Mombasa</span>
+                  <span class="filter-count">34</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" class="form-check-input">
+                  <span>Kisumu</span>
+                  <span class="filter-count">12</span>
+                </label>
+              </div>
+            </div>
+            
+            <button class="btn btn-primary btn-block lg:hidden" onclick="document.getElementById('filters-sidebar').classList.remove('open')">
+              Apply Filters
+            </button>
+          </aside>
+          
+          <!-- Results -->
+          <div class="parts-results">
+            <div class="results-header">
+              <div class="results-count">
+                Showing <strong>1-24</strong> of <strong>864</strong> parts
+              </div>
+              <div class="results-sort">
+                <span class="sort-label">Sort by:</span>
+                <select class="sort-select form-select">
+                  <option value="relevance">Relevance</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Vendor Rating</option>
+                  <option value="newest">Newest</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="parts-grid">
+              <!-- Part Card 1 -->
+              <div class="part-card">
+                <div class="part-image">
+                  🛞
+                  <span class="badge badge-solid-accent part-badge">Genuine</span>
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>AutoParts Kenya Ltd</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Front Brake Pads Set - Toyota Land Cruiser</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">OEM: 04465-60320</span>
+                    <span class="part-meta-item">2015-2023</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 12,500</div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 2 -->
+              <div class="part-card">
+                <div class="part-image">
+                  ⚙️
+                  <span class="badge badge-primary part-badge">OEM</span>
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>German Auto Parts</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Air Filter - Mercedes-Benz W204 C-Class</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">A2710940204</span>
+                    <span class="part-meta-item">2007-2014</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 4,800</div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 3 -->
+              <div class="part-card">
+                <div class="part-image">
+                  🔋
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>Battery World Kenya</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Car Battery 75AH - Universal Fit</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">75AH/12V</span>
+                    <span class="part-meta-item">2yr Warranty</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 18,500</div>
+                      <div class="part-stock low">⚠ 3 Left</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 4 -->
+              <div class="part-card">
+                <div class="part-image">
+                  💡
+                  <span class="badge badge-warning part-badge">Sale</span>
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>Lighting Solutions</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">LED Headlight Bulbs H7 - Universal</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">6000K White</span>
+                    <span class="part-meta-item">Pair</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">
+                        KES 3,200
+                        <span class="part-price-original">KES 4,500</span>
+                      </div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 5 -->
+              <div class="part-card">
+                <div class="part-image">
+                  ❄️
+                  <span class="badge badge-solid-accent part-badge">Genuine</span>
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>AutoParts Kenya Ltd</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Radiator Assembly - BMW E90 3 Series</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">17117559273</span>
+                    <span class="part-meta-item">2005-2011</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 45,000</div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 6 -->
+              <div class="part-card">
+                <div class="part-image">
+                  ⚡
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>Japanese Auto Parts</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Alternator - Toyota Prado 120</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">27060-30140</span>
+                    <span class="part-meta-item">2002-2009</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 35,000</div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 7 -->
+              <div class="part-card">
+                <div class="part-image">
+                  🔩
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>Suspension Pro</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Front Shock Absorber - Nissan X-Trail</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">54302-JG01B</span>
+                    <span class="part-meta-item">2007-2014</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 8,500</div>
+                      <div class="part-stock out">✗ Out of Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Part Card 8 -->
+              <div class="part-card">
+                <div class="part-image">
+                  🔧
+                  <span class="badge badge-primary part-badge">OEM</span>
+                  <button class="part-wishlist">♡</button>
+                </div>
+                <div class="part-content">
+                  <div class="part-vendor">
+                    <span>German Auto Parts</span>
+                    <span class="part-vendor-verified">✓ Verified</span>
+                  </div>
+                  <h3 class="part-name">Oil Filter - VW Golf MK7</h3>
+                  <div class="part-meta">
+                    <span class="part-meta-item">06L115562</span>
+                    <span class="part-meta-item">2012-2020</span>
+                  </div>
+                  <div class="part-footer">
+                    <div>
+                      <div class="part-price">KES 2,800</div>
+                      <div class="part-stock">✓ In Stock</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-quote" data-modal="quote-modal">
+                    Request Quote
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination mt-10">
+              <button class="pagination-item" disabled>
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 8H3M8 13l-5-5 5-5"/></svg>
+              </button>
+              <button class="pagination-item active">1</button>
+              <button class="pagination-item">2</button>
+              <button class="pagination-item">3</button>
+              <button class="pagination-item">...</button>
+              <button class="pagination-item">36</button>
+              <button class="pagination-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h12M10 3l5 5-5 5"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Vendors -->
+    <section class="featured-vendors">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Verified Partners</p>
+          <h2 class="section-title">Featured Vendors</h2>
+          <p class="section-description">Trusted suppliers with quality parts and excellent service</p>
+        </div>
+        
+        <div class="vendor-grid">
+          <!-- Vendor Card 1 -->
+          <a href="vendor-profile.html" class="vendor-card">
+            <div class="vendor-header">
+              <div class="vendor-avatar">🏭</div>
+              <div class="vendor-info">
+                <h4>AutoParts Kenya Ltd</h4>
+                <p>Industrial Area, Nairobi</p>
+              </div>
+            </div>
+            <div class="vendor-rating mb-3">
+              ★★★★★ <span>4.9 (2,847 reviews)</span>
+            </div>
+            <div class="vendor-specialties">
+              <span class="badge badge-neutral">Mercedes-Benz</span>
+              <span class="badge badge-neutral">BMW</span>
+              <span class="badge badge-neutral">OEM Parts</span>
+            </div>
+            <div class="vendor-stats">
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">15K+</div>
+                <div class="vendor-stat-label">Parts Sold</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">23</div>
+                <div class="vendor-stat-label">Mechanics</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">~2hr</div>
+                <div class="vendor-stat-label">Response</div>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Vendor Card 2 -->
+          <a href="#" class="vendor-card">
+            <div class="vendor-header">
+              <div class="vendor-avatar">🚗</div>
+              <div class="vendor-info">
+                <h4>Japanese Auto Parts</h4>
+                <p>Eastleigh, Nairobi</p>
+              </div>
+            </div>
+            <div class="vendor-rating mb-3">
+              ★★★★★ <span>4.8 (1,923 reviews)</span>
+            </div>
+            <div class="vendor-specialties">
+              <span class="badge badge-neutral">Toyota</span>
+              <span class="badge badge-neutral">Nissan</span>
+              <span class="badge badge-neutral">Honda</span>
+            </div>
+            <div class="vendor-stats">
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">12K+</div>
+                <div class="vendor-stat-label">Parts Sold</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">18</div>
+                <div class="vendor-stat-label">Mechanics</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">~1hr</div>
+                <div class="vendor-stat-label">Response</div>
+              </div>
+            </div>
+          </a>
+          
+          <!-- Vendor Card 3 -->
+          <a href="#" class="vendor-card">
+            <div class="vendor-header">
+              <div class="vendor-avatar">🔋</div>
+              <div class="vendor-info">
+                <h4>Battery World Kenya</h4>
+                <p>Westlands, Nairobi</p>
+              </div>
+            </div>
+            <div class="vendor-rating mb-3">
+              ★★★★☆ <span>4.7 (876 reviews)</span>
+            </div>
+            <div class="vendor-specialties">
+              <span class="badge badge-neutral">Batteries</span>
+              <span class="badge badge-neutral">Electrical</span>
+              <span class="badge badge-neutral">All Makes</span>
+            </div>
+            <div class="vendor-stats">
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">8K+</div>
+                <div class="vendor-stat-label">Parts Sold</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">12</div>
+                <div class="vendor-stat-label">Mechanics</div>
+              </div>
+              <div class="vendor-stat">
+                <div class="vendor-stat-value">~30m</div>
+                <div class="vendor-stat-label">Response</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        
+        <div class="text-center mt-8">
+          <a href="#" class="btn btn-outline">View All Vendors →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Simple Process</p>
+          <h2 class="section-title">How to Order Parts</h2>
+        </div>
+        
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Search Parts</h4>
+            <p>Enter your vehicle details or part number to find what you need</p>
+          </div>
+          
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h4>Request Quote</h4>
+            <p>Get quotes from multiple verified vendors for the best price</p>
+          </div>
+          
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h4>Compare & Order</h4>
+            <p>Compare prices, reviews, and delivery times before ordering</p>
+          </div>
+          
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h4>Delivery or Pickup</h4>
+            <p>Get same-day delivery in Nairobi or pick up from the vendor</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Quote Request Modal -->
+  <div class="modal-overlay quote-modal" id="quote-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Request Quote</h3>
+        <button class="modal-close" data-modal-close>✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="quote-part-preview">
+          <div class="quote-part-image">🛞</div>
+          <div class="quote-part-info">
+            <h4>Front Brake Pads Set - Toyota Land Cruiser</h4>
+            <p>AutoParts Kenya Ltd • OEM: 04465-60320</p>
+          </div>
+        </div>
+        
+        <form data-validate>
+          <div class="form-group">
+            <label class="form-label form-label-required">Your Name</label>
+            <input type="text" class="form-input" placeholder="Enter your name" data-rules="required">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label form-label-required">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX" data-rules="required|phone">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label form-label-required">Vehicle Details</label>
+            <input type="text" class="form-input" placeholder="e.g. Toyota Land Cruiser 2018 V8">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <select class="form-input form-select">
+              <option value="1">1</option>
+              <option value="2">2 (Pair)</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Additional Notes</label>
+            <textarea class="form-input" rows="3" placeholder="Any specific requirements or questions?"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal-close>Cancel</button>
+        <button class="btn btn-whatsapp">
+          <span>💬</span>
+          Send via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Filter Toggle -->
+  <button class="mobile-filter-toggle" id="filter-toggle">
+    <span>🔍</span>
+    <span>Filters</span>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔧</div>
+            <div class="logo-text">GoFix<span>Africa</span></div>
+          </a>
+          <p>Africa's trusted platform connecting car owners with verified mobile mechanics. Quality service, fair prices, at your doorstep.</p>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">For Customers</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Book a Service</a>
+            <a href="mechanics.html" class="footer-link">Find Mechanics</a>
+            <a href="parts.html" class="footer-link">Parts Marketplace</a>
+            <a href="faq.html" class="footer-link">FAQs</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">For Mechanics</h4>
+          <div class="footer-links">
+            <a href="join.html" class="footer-link">Become a Mechanic</a>
+            <a href="#" class="footer-link">How It Works</a>
+            <a href="#" class="footer-link">Earnings</a>
+            <a href="#" class="footer-link">Support</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 GoFixAfrica. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/254720123456?text=Hi, I need help finding auto parts" class="float-whatsapp" target="_blank">
+    <span>💬</span>
+    <span>Need Help?</span>
+  </a>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Mobile Filter Toggle
+    const filterToggle = document.getElementById('filter-toggle');
+    const filtersSidebar = document.getElementById('filters-sidebar');
+    
+    filterToggle.addEventListener('click', () => {
+      filtersSidebar.classList.toggle('open');
+    });
+    
+    // Category Pills
+    document.querySelectorAll('.category-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      });
+    });
+    
+    // Popular Search Tags
+    document.querySelectorAll('.popular-search-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const searchInput = document.querySelector('.search-input-wrapper input');
+        searchInput.value = tag.textContent;
+        searchInput.focus();
+      });
+    });
+    
+    // Wishlist Toggle
+    document.querySelectorAll('.part-wishlist').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.classList.toggle('active');
+        btn.innerHTML = btn.classList.contains('active') ? '♥' : '♡';
+      });
+    });
+  </script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

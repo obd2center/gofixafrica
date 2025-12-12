@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | GoFixAfrica</title>
+  <meta name="description" content="Get in touch with GoFixAfrica. We're here to help with any questions about our services, mechanic network, or partnership opportunities.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layouts.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  
+  <style>
+    .contact-hero {
+      background: var(--gradient-hero);
+      padding: var(--space-16) 0;
+      text-align: center;
+    }
+    
+    .contact-hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+    
+    .contact-hero h1 span {
+      color: var(--color-primary-500);
+    }
+    
+    .contact-hero p {
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Contact Methods */
+    .contact-methods {
+      padding: var(--space-12) 0;
+    }
+    
+    .contact-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    
+    @media (max-width: 1024px) {
+      .contact-methods-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .contact-methods-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .contact-method {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: var(--transition-base);
+    }
+    
+    .contact-method:hover {
+      border-color: var(--color-primary-500);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .contact-method-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+    
+    .contact-method.whatsapp .contact-method-icon {
+      background: rgba(37, 211, 102, 0.15);
+    }
+    
+    .contact-method.phone .contact-method-icon {
+      background: rgba(0, 212, 170, 0.15);
+    }
+    
+    .contact-method.email .contact-method-icon {
+      background: rgba(255, 107, 0, 0.15);
+    }
+    
+    .contact-method.visit .contact-method-icon {
+      background: rgba(0, 119, 182, 0.15);
+    }
+    
+    .contact-method h3 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+    
+    .contact-method p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+    
+    .contact-method-link {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-primary-500);
+    }
+    
+    .contact-method-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Main Content */
+    .contact-content {
+      padding: var(--space-8) 0 var(--space-20);
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: var(--space-10);
+    }
+    
+    @media (max-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Contact Form */
+    .contact-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-4xl);
+      padding: var(--space-8);
+    }
+    
+    .contact-form-header {
+      margin-bottom: var(--space-6);
+    }
+    
+    .contact-form-header h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+    
+    .contact-form-header p {
+      color: var(--text-muted);
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .topic-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+    
+    @media (max-width: 640px) {
+      .topic-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .topic-option {
+      position: relative;
+    }
+    
+    .topic-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .topic-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+    }
+    
+    .topic-option label:hover {
+      border-color: var(--border-hover);
+    }
+    
+    .topic-option input:checked + label {
+      border-color: var(--color-primary-500);
+      background: rgba(255, 107, 0, 0.1);
+    }
+    
+    .topic-icon {
+      font-size: 1.5rem;
+    }
+    
+    .topic-name {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+    }
+    
+    /* Sidebar */
+    .contact-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-6);
+    }
+    
+    .sidebar-card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    /* Office Locations */
+    .office-item {
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--border-default);
+    }
+    
+    .office-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .office-item:first-child {
+      padding-top: 0;
+    }
+    
+    .office-city {
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-1);
+    }
+    
+    .office-address {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-2);
+    }
+    
+    .office-hours {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    /* FAQ Quick Links */
+    .faq-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-default);
+      transition: var(--transition-fast);
+    }
+    
+    .faq-link:last-child {
+      border-bottom: none;
+    }
+    
+    .faq-link:hover {
+      color: var(--color-primary-500);
+    }
+    
+    .faq-link span {
+      transition: transform 0.2s;
+    }
+    
+    .faq-link:hover span {
+      transform: translateX(4px);
+    }
+    
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: var(--space-3);
+    }
+    
+    .social-link {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      font-size: 1.25rem;
+      transition: var(--transition-fast);
+    }
+    
+    .social-link:hover {
+      border-color: var(--color-primary-500);
+      background: var(--color-primary-500);
+      color: white;
+    }
+    
+    /* Success State */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-10);
+    }
+    
+    .form-success.show {
+      display: block;
+    }
+    
+    .form-success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-6);
+      background: var(--gradient-accent);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    
+    .form-success h3 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-3);
+    }
+    
+    .form-success p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+    }
+    
+    /* Support Hours Banner */
+    .support-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-3xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    
+    .support-banner-content {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    
+    .support-banner-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(0, 212, 170, 0.15);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .support-banner h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+    
+    .support-banner p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    /* Response Time */
+    .response-time {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      padding: var(--space-4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xl);
+      margin-top: var(--space-6);
+    }
+    
+    .response-item {
+      text-align: center;
+    }
+    
+    .response-item-time {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary-500);
+    }
+    
+    .response-item-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🔧</div>
+          <div class="logo-text">GoFix<span>Africa</span></div>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="mechanics.html" class="nav-link">Find Mechanics</a>
+          <a href="parts.html" class="nav-link">Parts</a>
+          <a href="join.html" class="nav-link">Become a Mechanic</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-secondary sm:hidden">Login</a>
+          <a href="index.html#book" class="btn btn-primary lg:hidden">Book Service</a>
+        </div>
+        
+        <button class="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Hero -->
+    <section class="contact-hero">
+      <div class="container">
+        <h1>Get in <span>Touch</span></h1>
+        <p>Have a question or need help? Our team is here to assist you. Choose your preferred way to reach us.</p>
+      </div>
+    </section>
+
+    <!-- Quick Contact Methods -->
+    <section class="contact-methods">
+      <div class="container">
+        <div class="contact-methods-grid">
+          <a href="https://wa.me/254720123456?text=Hi, I need help with GoFixAfrica" class="contact-method whatsapp" target="_blank">
+            <div class="contact-method-icon">💬</div>
+            <h3>WhatsApp</h3>
+            <p>Chat with us instantly</p>
+            <span class="contact-method-link">+254 720 123 456 →</span>
+          </a>
+          
+          <a href="tel:+254720123456" class="contact-method phone">
+            <div class="contact-method-icon">📞</div>
+            <h3>Phone</h3>
+            <p>Call our support line</p>
+            <span class="contact-method-link">+254 720 123 456 →</span>
+          </a>
+          
+          <a href="/cdn-cgi/l/email-protection#95e6e0e5e5fae7e1d5f2faf3fcedf4f3e7fcf6f4bbf6faf8" class="contact-method email">
+            <div class="contact-method-icon">✉️</div>
+            <h3>Email</h3>
+            <p>Send us a message</p>
+            <span class="contact-method-link"><span class="__cf_email__" data-cfemail="f88b8d8888978a8cb89f979e9180999e8a919b99d69b9795">[email&#160;protected]</span> →</span>
+          </a>
+          
+          <div class="contact-method visit">
+            <div class="contact-method-icon">📍</div>
+            <h3>Visit Us</h3>
+            <p>Our Nairobi office</p>
+            <span class="contact-method-link">Westlands, Nairobi</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Hours Banner -->
+    <section>
+      <div class="container">
+        <div class="support-banner">
+          <div class="support-banner-content">
+            <div class="support-banner-icon">🕐</div>
+            <div>
+              <h4>Support Hours</h4>
+              <p>Mon-Fri: 8AM-8PM • Sat: 9AM-6PM • Sun: 10AM-4PM (EAT)</p>
+            </div>
+          </div>
+          <a href="https://wa.me/254720123456" class="btn btn-whatsapp" target="_blank">
+            💬 Start Chat Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="contact-content">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-card">
+            <div class="contact-form-header">
+              <h2>Send us a Message</h2>
+              <p>Fill out the form below and we'll get back to you shortly</p>
+            </div>
+            
+            <form id="contact-form" data-validate>
+              <!-- Topic Selection -->
+              <div class="form-group">
+                <label class="form-label">What can we help you with?</label>
+                <div class="topic-selector">
+                  <div class="topic-option">
+                    <input type="radio" name="topic" value="booking" id="topic-booking" checked>
+                    <label for="topic-booking">
+                      <span class="topic-icon">🚗</span>
+                      <span class="topic-name">Booking Help</span>
+                    </label>
+                  </div>
+                  <div class="topic-option">
+                    <input type="radio" name="topic" value="mechanic" id="topic-mechanic">
+                    <label for="topic-mechanic">
+                      <span class="topic-icon">🔧</span>
+                      <span class="topic-name">Mechanic Support</span>
+                    </label>
+                  </div>
+                  <div class="topic-option">
+                    <input type="radio" name="topic" value="partnership" id="topic-partnership">
+                    <label for="topic-partnership">
+                      <span class="topic-icon">🤝</span>
+                      <span class="topic-name">Partnership</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Name & Email Row -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label form-label-required">Your Name</label>
+                  <input type="text" name="name" class="form-input" placeholder="John Doe" data-rules="required|min:2">
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label form-label-required">Email Address</label>
+                  <input type="email" name="email" class="form-input" placeholder="john@example.com" data-rules="required|email">
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+              </div>
+              
+              <!-- Phone & Subject Row -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label form-label-required">Phone Number</label>
+                  <input type="tel" name="phone" class="form-input" placeholder="+254 7XX XXX XXX" data-rules="required|phone">
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject</label>
+                  <select name="subject" class="form-input form-select">
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="booking-issue">Booking Issue</option>
+                    <option value="payment">Payment Question</option>
+                    <option value="complaint">File a Complaint</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="partnership">Partnership Inquiry</option>
+                    <option value="press">Press/Media</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              
+              <!-- Message -->
+              <div class="form-group">
+                <label class="form-label form-label-required">Your Message</label>
+                <textarea name="message" class="form-input" rows="5" placeholder="Tell us how we can help you..." data-rules="required|min:20"></textarea>
+                <p class="form-hint">Minimum 20 characters</p>
+                <p class="form-error" style="display: none;"></p>
+              </div>
+              
+              <!-- Booking Reference (optional) -->
+              <div class="form-group">
+                <label class="form-label">Booking Reference (if applicable)</label>
+                <input type="text" name="booking_ref" class="form-input" placeholder="e.g. GFA-2025-12345">
+              </div>
+              
+              <!-- Submit -->
+              <button type="submit" class="btn btn-primary btn-lg btn-block">
+                Send Message
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+              
+              <!-- Response Time -->
+              <div class="response-time">
+                <div class="response-item">
+                  <div class="response-item-time">~2hr</div>
+                  <div class="response-item-label">WhatsApp Response</div>
+                </div>
+                <div class="response-item">
+                  <div class="response-item-time">~4hr</div>
+                  <div class="response-item-label">Email Response</div>
+                </div>
+                <div class="response-item">
+                  <div class="response-item-time">24hr</div>
+                  <div class="response-item-label">Complex Queries</div>
+                </div>
+              </div>
+            </form>
+            
+            <!-- Success State -->
+            <div class="form-success" id="form-success">
+              <div class="form-success-icon">✓</div>
+              <h3>Message Sent!</h3>
+              <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+              <button class="btn btn-secondary" onclick="resetForm()">Send Another Message</button>
+            </div>
+          </div>
+          
+          <!-- Sidebar -->
+          <aside class="contact-sidebar">
+            <!-- Office Locations -->
+            <div class="sidebar-card">
+              <h3>📍 Our Offices</h3>
+              
+              <div class="office-item">
+                <div class="office-city">🇰🇪 Nairobi, Kenya (HQ)</div>
+                <div class="office-address">Westlands Business Park, 3rd Floor<br>Waiyaki Way, Westlands</div>
+                <div class="office-hours">Mon-Fri: 8AM-6PM</div>
+              </div>
+              
+              <div class="office-item">
+                <div class="office-city">🇰🇪 Mombasa, Kenya</div>
+                <div class="office-address">Nyali Business Center<br>Links Road, Nyali</div>
+                <div class="office-hours">Mon-Fri: 8AM-5PM</div>
+              </div>
+              
+              <div class="office-item">
+                <div class="office-city">🇳🇬 Lagos, Nigeria</div>
+                <div class="office-address">Victoria Island<br>Adeola Odeku Street</div>
+                <div class="office-hours">Mon-Fri: 9AM-6PM</div>
+              </div>
+            </div>
+            
+            <!-- FAQ Links -->
+            <div class="sidebar-card">
+              <h3>❓ Quick Answers</h3>
+              
+              <a href="faq.html#booking" class="faq-link">
+                How do I book a mechanic?
+                <span>→</span>
+              </a>
+              <a href="faq.html#payment" class="faq-link">
+                What payment methods do you accept?
+                <span>→</span>
+              </a>
+              <a href="faq.html#cancellation" class="faq-link">
+                How do I cancel a booking?
+                <span>→</span>
+              </a>
+              <a href="faq.html#mechanic" class="faq-link">
+                How do I become a mechanic?
+                <span>→</span>
+              </a>
+              <a href="faq.html" class="faq-link">
+                View all FAQs
+                <span>→</span>
+              </a>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="sidebar-card">
+              <h3>🌐 Follow Us</h3>
+              <p class="text-muted text-sm mb-4">Stay updated with the latest news and updates</p>
+              
+              <div class="social-links">
+                <a href="https://twitter.com/gofixafrica" class="social-link" target="_blank" title="Twitter">𝕏</a>
+                <a href="https://facebook.com/gofixafrica" class="social-link" target="_blank" title="Facebook">f</a>
+                <a href="https://instagram.com/gofixafrica" class="social-link" target="_blank" title="Instagram">📷</a>
+                <a href="https://linkedin.com/company/gofixafrica" class="social-link" target="_blank" title="LinkedIn">in</a>
+                <a href="https://youtube.com/@gofixafrica" class="social-link" target="_blank" title="YouTube">▶</a>
+              </div>
+            </div>
+            
+            <!-- Emergency -->
+            <div class="sidebar-card" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);">
+              <h3 style="color: var(--color-error-500);">🚨 Emergency?</h3>
+              <p class="text-sm mb-4">If you're stranded and need immediate roadside assistance:</p>
+              <a href="https://wa.me/254720123456?text=EMERGENCY: I need immediate roadside assistance!" class="btn btn-danger btn-block" target="_blank">
+                📞 Emergency Line
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔧</div>
+            <div class="logo-text">GoFix<span>Africa</span></div>
+          </a>
+          <p>Africa's trusted platform connecting car owners with verified mobile mechanics.</p>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Platform</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Book a Service</a>
+            <a href="mechanics.html" class="footer-link">Find Mechanics</a>
+            <a href="parts.html" class="footer-link">Parts</a>
+            <a href="join.html" class="footer-link">Join as Mechanic</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Support</h4>
+          <div class="footer-links">
+            <a href="faq.html" class="footer-link">FAQ</a>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+            <a href="about.html" class="footer-link">About</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Legal</h4>
+          <div class="footer-links">
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+            <a href="warranty.html" class="footer-link">Warranty</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 GoFixAfrica. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/254720123456?text=Hi, I need help with GoFixAfrica" class="float-whatsapp" target="_blank">
+    <span>💬</span>
+    <span>Chat with us</span>
+  </a>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/app.js"></script>
+  <script>
+    // Form submission handler
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simulate form submission
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.classList.add('btn-loading');
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        contactForm.style.display = 'none';
+        formSuccess.classList.add('show');
+      }, 1500);
+    });
+    
+    function resetForm() {
+      contactForm.reset();
+      contactForm.style.display = 'block';
+      formSuccess.classList.remove('show');
+      
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.classList.remove('btn-loading');
+      submitBtn.disabled = false;
+    }
+  </script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

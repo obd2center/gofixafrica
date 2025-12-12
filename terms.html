@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | GoFixAfrica</title>
+  <meta name="description" content="GoFixAfrica Terms of Service - Rules and guidelines for using our platform.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layouts.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  
+  <style>
+    .legal-hero {
+      background: var(--gradient-hero);
+      padding: var(--space-16) 0;
+      text-align: center;
+    }
+    
+    .legal-hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+    
+    .legal-hero p {
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+    }
+    
+    .legal-content {
+      padding: var(--space-12) 0 var(--space-20);
+    }
+    
+    .legal-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .legal-nav {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+    
+    .legal-nav-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      margin-bottom: var(--space-3);
+    }
+    
+    .legal-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .legal-nav-link {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-fast);
+    }
+    
+    .legal-nav-link:hover {
+      background: var(--bg-elevated);
+      color: var(--color-primary-500);
+    }
+    
+    .legal-section {
+      margin-bottom: var(--space-10);
+      scroll-margin-top: calc(var(--header-height) + var(--space-6));
+    }
+    
+    .legal-section h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-default);
+    }
+    
+    .legal-section h3 {
+      font-size: var(--text-lg);
+      margin: var(--space-6) 0 var(--space-3);
+      color: var(--text-primary);
+    }
+    
+    .legal-section p {
+      margin-bottom: var(--space-4);
+      line-height: var(--leading-relaxed);
+    }
+    
+    .legal-section ul, .legal-section ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legal-section li {
+      position: relative;
+      margin-bottom: var(--space-2);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    
+    .legal-section ul li::before {
+      content: "•";
+      position: absolute;
+      left: calc(var(--space-6) * -1);
+      color: var(--color-primary-500);
+    }
+    
+    .legal-section ol {
+      list-style: decimal;
+    }
+    
+    .legal-section ol li::before {
+      display: none;
+    }
+    
+    .legal-highlight {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--color-primary-500);
+      padding: var(--space-4) var(--space-5);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      margin: var(--space-6) 0;
+    }
+    
+    .legal-highlight p {
+      margin: 0;
+      color: var(--text-primary);
+    }
+    
+    .legal-highlight.warning {
+      border-left-color: var(--color-warning-500);
+      background: rgba(255, 184, 0, 0.1);
+    }
+    
+    .legal-highlight.danger {
+      border-left-color: var(--color-error-500);
+      background: rgba(239, 68, 68, 0.1);
+    }
+    
+    .last-updated {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-4);
+    }
+    
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    
+    .contact-box h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+    }
+    
+    .contact-box-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    
+    @media (max-width: 768px) {
+      .legal-nav {
+        position: static;
+        margin-bottom: var(--space-6);
+      }
+    }
+  </style>
+</head>
+<body class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🔧</div>
+          <div class="logo-text">GoFix<span>Africa</span></div>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="mechanics.html" class="nav-link">Find Mechanics</a>
+          <a href="parts.html" class="nav-link">Parts</a>
+          <a href="join.html" class="nav-link">Become a Mechanic</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-secondary sm:hidden">Login</a>
+          <a href="index.html#book" class="btn btn-primary lg:hidden">Book Service</a>
+        </div>
+        
+        <button class="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Hero -->
+    <section class="legal-hero">
+      <div class="container">
+        <h1>Terms of Service</h1>
+        <p>Please read these terms carefully before using GoFixAfrica</p>
+        <div class="last-updated">
+          <span>📅</span>
+          <span>Last updated: December 1, 2025</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="legal-content">
+      <div class="container">
+        <div class="legal-container">
+          <!-- Quick Navigation -->
+          <nav class="legal-nav">
+            <div class="legal-nav-title">On This Page</div>
+            <div class="legal-nav-links">
+              <a href="#acceptance" class="legal-nav-link">Acceptance of Terms</a>
+              <a href="#services" class="legal-nav-link">Our Services</a>
+              <a href="#accounts" class="legal-nav-link">User Accounts</a>
+              <a href="#customer-terms" class="legal-nav-link">Customer Terms</a>
+              <a href="#mechanic-terms" class="legal-nav-link">Mechanic Terms</a>
+              <a href="#payments" class="legal-nav-link">Payments & Fees</a>
+              <a href="#conduct" class="legal-nav-link">User Conduct</a>
+              <a href="#liability" class="legal-nav-link">Liability & Disclaimers</a>
+              <a href="#disputes" class="legal-nav-link">Dispute Resolution</a>
+              <a href="#termination" class="legal-nav-link">Termination</a>
+              <a href="#contact" class="legal-nav-link">Contact Us</a>
+            </div>
+          </nav>
+
+          <!-- Acceptance of Terms -->
+          <section class="legal-section" id="acceptance">
+            <h2>1. Acceptance of Terms</h2>
+            <p>Welcome to GoFixAfrica. These Terms of Service ("Terms") govern your access to and use of the GoFixAfrica website, mobile application, and services (collectively, the "Platform").</p>
+            <p>By creating an account, booking a service, or otherwise using our Platform, you agree to be bound by these Terms. If you do not agree to these Terms, do not use our Platform.</p>
+            
+            <div class="legal-highlight">
+              <p><strong>Key Points:</strong> By using GoFixAfrica, you agree to these terms, our Privacy Policy, and any other policies we publish. You must be at least 18 years old to use our services.</p>
+            </div>
+          </section>
+
+          <!-- Our Services -->
+          <section class="legal-section" id="services">
+            <h2>2. Our Services</h2>
+            <p>GoFixAfrica is a technology platform that connects:</p>
+            <ul>
+              <li><strong>Customers</strong> seeking automotive repair and maintenance services</li>
+              <li><strong>Mechanics</strong> offering their professional services</li>
+              <li><strong>Vendors</strong> selling auto parts and accessories</li>
+            </ul>
+            
+            <h3>2.1 Platform Role</h3>
+            <p>GoFixAfrica acts as an intermediary facilitating connections between users. We do not:</p>
+            <ul>
+              <li>Employ mechanics directly (they are independent contractors)</li>
+              <li>Guarantee the quality of any services or parts</li>
+              <li>Provide automotive repair services ourselves</li>
+              <li>Own or control the parts sold by vendors</li>
+            </ul>
+            
+            <h3>2.2 Service Availability</h3>
+            <p>Our Platform is currently available in select cities across Africa. We may expand, modify, or discontinue services in any location at our discretion.</p>
+          </section>
+
+          <!-- User Accounts -->
+          <section class="legal-section" id="accounts">
+            <h2>3. User Accounts</h2>
+            
+            <h3>3.1 Account Registration</h3>
+            <p>To use certain features, you must create an account. You agree to:</p>
+            <ul>
+              <li>Provide accurate, current, and complete information</li>
+              <li>Maintain and update your information</li>
+              <li>Keep your login credentials confidential</li>
+              <li>Notify us immediately of any unauthorized access</li>
+              <li>Accept responsibility for all activities under your account</li>
+            </ul>
+            
+            <h3>3.2 Account Types</h3>
+            <ul>
+              <li><strong>Customer Account:</strong> For individuals seeking auto services</li>
+              <li><strong>Mechanic Account:</strong> For verified professionals offering services</li>
+              <li><strong>Vendor Account:</strong> For businesses selling auto parts</li>
+            </ul>
+            
+            <h3>3.3 Verification</h3>
+            <p>Mechanics and vendors must complete our verification process, which may include identity verification, skill assessments, and background checks.</p>
+          </section>
+
+          <!-- Customer Terms -->
+          <section class="legal-section" id="customer-terms">
+            <h2>4. Customer Terms</h2>
+            
+            <h3>4.1 Booking Services</h3>
+            <p>When you book a service through GoFixAfrica:</p>
+            <ul>
+              <li>You are entering into a direct agreement with the mechanic</li>
+              <li>You agree to provide accurate vehicle and location information</li>
+              <li>You understand that price estimates may vary based on actual conditions</li>
+              <li>You agree to be present (or have an authorized representative) during service</li>
+            </ul>
+            
+            <h3>4.2 Cancellation Policy</h3>
+            <ul>
+              <li><strong>Free cancellation:</strong> More than 2 hours before scheduled time</li>
+              <li><strong>Cancellation fee:</strong> Less than 2 hours notice - KES 500 fee may apply</li>
+              <li><strong>No-show:</strong> Full service fee may be charged</li>
+            </ul>
+            
+            <h3>4.3 Reviews & Ratings</h3>
+            <p>You may leave reviews and ratings for mechanics. Reviews must be honest, based on actual experience, and comply with our content guidelines.</p>
+          </section>
+
+          <!-- Mechanic Terms -->
+          <section class="legal-section" id="mechanic-terms">
+            <h2>5. Mechanic Terms</h2>
+            
+            <h3>5.1 Independent Contractor Status</h3>
+            <p>Mechanics using GoFixAfrica are independent contractors, not employees. As a mechanic, you:</p>
+            <ul>
+              <li>Control your own schedule and availability</li>
+              <li>Provide your own tools and equipment</li>
+              <li>Are responsible for your own taxes and insurance</li>
+              <li>May provide services outside of GoFixAfrica</li>
+            </ul>
+            
+            <h3>5.2 Mechanic Obligations</h3>
+            <p>As a mechanic on our Platform, you agree to:</p>
+            <ul>
+              <li>Maintain valid certifications and licenses</li>
+              <li>Provide services professionally and safely</li>
+              <li>Communicate honestly about diagnoses and pricing</li>
+              <li>Arrive on time for scheduled appointments</li>
+              <li>Carry appropriate insurance coverage</li>
+              <li>Not discriminate against any customer</li>
+            </ul>
+            
+            <h3>5.3 Commission Structure</h3>
+            <p>GoFixAfrica charges a commission on completed services. Current rates:</p>
+            <ul>
+              <li>Standard commission: 40% of service fee</li>
+              <li>You retain: 60% of service fee</li>
+              <li>Payment: Within 24 hours via M-Pesa</li>
+            </ul>
+            
+            <div class="legal-highlight warning">
+              <p><strong>Note:</strong> Commission rates may change with 30 days notice. Continued use after changes constitutes acceptance.</p>
+            </div>
+          </section>
+
+          <!-- Payments & Fees -->
+          <section class="legal-section" id="payments">
+            <h2>6. Payments & Fees</h2>
+            
+            <h3>6.1 Payment Methods</h3>
+            <p>We accept the following payment methods:</p>
+            <ul>
+              <li>M-Pesa (primary method in Kenya)</li>
+              <li>Bank transfer</li>
+              <li>Cash (paid directly to mechanic)</li>
+            </ul>
+            
+            <h3>6.2 Pricing</h3>
+            <ul>
+              <li>Service prices are estimates and may vary based on actual work required</li>
+              <li>Mechanics must provide revised quotes before additional work</li>
+              <li>Parts costs are separate from labor charges</li>
+            </ul>
+            
+            <h3>6.3 Refunds</h3>
+            <p>Refund requests are handled on a case-by-case basis. Contact our support team within 48 hours of service completion for disputes.</p>
+          </section>
+
+          <!-- User Conduct -->
+          <section class="legal-section" id="conduct">
+            <h2>7. User Conduct</h2>
+            <p>All users agree NOT to:</p>
+            <ul>
+              <li>Violate any laws or regulations</li>
+              <li>Provide false or misleading information</li>
+              <li>Harass, threaten, or discriminate against other users</li>
+              <li>Circumvent our Platform to avoid fees</li>
+              <li>Share another user's personal information without consent</li>
+              <li>Use the Platform for any illegal purpose</li>
+              <li>Attempt to hack or disrupt our systems</li>
+              <li>Create fake accounts or reviews</li>
+            </ul>
+            
+            <div class="legal-highlight danger">
+              <p><strong>Zero Tolerance:</strong> We have zero tolerance for fraud, harassment, or unsafe behavior. Violations will result in immediate account suspension.</p>
+            </div>
+          </section>
+
+          <!-- Liability & Disclaimers -->
+          <section class="legal-section" id="liability">
+            <h2>8. Liability & Disclaimers</h2>
+            
+            <h3>8.1 Platform "As Is"</h3>
+            <p>GoFixAfrica is provided "as is" and "as available." We do not warrant that:</p>
+            <ul>
+              <li>The Platform will be uninterrupted or error-free</li>
+              <li>Any mechanic or vendor will meet your expectations</li>
+              <li>Services or parts will be fit for any particular purpose</li>
+            </ul>
+            
+            <h3>8.2 Limitation of Liability</h3>
+            <p>To the maximum extent permitted by law, GoFixAfrica shall not be liable for:</p>
+            <ul>
+              <li>Direct, indirect, incidental, or consequential damages</li>
+              <li>Loss of profits, data, or business opportunities</li>
+              <li>Damages arising from mechanic or vendor actions</li>
+              <li>Vehicle damage caused during service</li>
+              <li>Any amount exceeding the fees you paid to GoFixAfrica in the past 12 months</li>
+            </ul>
+            
+            <h3>8.3 Indemnification</h3>
+            <p>You agree to indemnify and hold GoFixAfrica harmless from any claims, damages, or expenses arising from your use of the Platform or violation of these Terms.</p>
+          </section>
+
+          <!-- Dispute Resolution -->
+          <section class="legal-section" id="disputes">
+            <h2>9. Dispute Resolution</h2>
+            
+            <h3>9.1 Between Users</h3>
+            <p>For disputes between customers and mechanics:</p>
+            <ol>
+              <li>First, try to resolve directly with the other party</li>
+              <li>If unresolved, contact GoFixAfrica support within 48 hours</li>
+              <li>We will mediate and make a good-faith determination</li>
+              <li>Our decision is final for Platform-related matters</li>
+            </ol>
+            
+            <h3>9.2 With GoFixAfrica</h3>
+            <p>For disputes with GoFixAfrica:</p>
+            <ol>
+              <li>Contact our support team to attempt resolution</li>
+              <li>If unresolved, disputes shall be settled by arbitration</li>
+              <li>Arbitration shall take place in Nairobi, Kenya</li>
+              <li>Kenyan law shall govern these Terms</li>
+            </ol>
+          </section>
+
+          <!-- Termination -->
+          <section class="legal-section" id="termination">
+            <h2>10. Termination</h2>
+            
+            <h3>10.1 By You</h3>
+            <p>You may close your account at any time by contacting support. Outstanding payments remain due.</p>
+            
+            <h3>10.2 By GoFixAfrica</h3>
+            <p>We may suspend or terminate your account if you:</p>
+            <ul>
+              <li>Violate these Terms</li>
+              <li>Engage in fraudulent activity</li>
+              <li>Receive multiple complaints from other users</li>
+              <li>Fail to complete verification (mechanics/vendors)</li>
+              <li>Remain inactive for 12+ months</li>
+            </ul>
+            
+            <h3>10.3 Effect of Termination</h3>
+            <p>Upon termination:</p>
+            <ul>
+              <li>Your access to the Platform will be revoked</li>
+              <li>Pending bookings may be cancelled</li>
+              <li>We may retain certain data as required by law</li>
+              <li>Sections on Liability, Disputes, and Indemnification survive termination</li>
+            </ul>
+          </section>
+
+          <!-- Contact -->
+          <section class="legal-section" id="contact">
+            <h2>11. Contact Us</h2>
+            <p>If you have questions about these Terms, please contact us:</p>
+            
+            <div class="contact-box">
+              <h3>GoFixAfrica Legal Team</h3>
+              <div class="contact-box-links">
+                <a href="/cdn-cgi/l/email-protection#bcd0d9dbddd0fcdbd3dad5c4dddaced5dfdd92dfd3d1" class="btn btn-secondary btn-sm">
+                  ✉️ <span class="__cf_email__" data-cfemail="c6aaa3a1a7aa86a1a9a0afbea7a0b4afa5a7e8a5a9ab">[email&#160;protected]</span>
+                </a>
+                <a href="https://wa.me/254720123456?text=Hi, I have a question about GoFixAfrica's terms of service" class="btn btn-whatsapp btn-sm" target="_blank">
+                  💬 WhatsApp Us
+                </a>
+                <a href="contact.html" class="btn btn-outline btn-sm">
+                  📝 Contact Form
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔧</div>
+            <div class="logo-text">GoFix<span>Africa</span></div>
+          </a>
+          <p>Africa's trusted platform connecting car owners with verified mobile mechanics.</p>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Platform</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Book a Service</a>
+            <a href="mechanics.html" class="footer-link">Find Mechanics</a>
+            <a href="parts.html" class="footer-link">Parts</a>
+            <a href="join.html" class="footer-link">Join as Mechanic</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Support</h4>
+          <div class="footer-links">
+            <a href="faq.html" class="footer-link">FAQ</a>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+            <a href="about.html" class="footer-link">About</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Legal</h4>
+          <div class="footer-links">
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+            <a href="warranty.html" class="footer-link">Warranty</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 GoFixAfrica. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

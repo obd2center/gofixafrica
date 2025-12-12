@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Mechanics in Nairobi | GoFixAfrica</title>
+    <meta name="description" content="Find verified mechanics near you in Nairobi. Compare ratings, specialties, and book online. Mobile mechanics that come to your location.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --secondary: #0A1628;
+            --accent: #00D4AA;
+            --warning: #FFB800;
+            --success: #00C851;
+            --bg-dark: #0A1628;
+            --bg-card: #111D32;
+            --bg-elevated: #182640;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #FF6B00 0%, #FF8A33 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+            text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+        .btn-secondary { background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+
+        /* Header */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 1rem 0;
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon { width: 44px; height: 44px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); }
+        .logo-text span { color: var(--primary); }
+        nav { display: flex; align-items: center; gap: 2rem; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+        nav a:hover { color: var(--text-primary); }
+        nav a.active { color: var(--primary); }
+        .nav-cta { display: flex; gap: 0.75rem; }
+
+        /* Geo Banner */
+        .geo-banner {
+            background: var(--gradient-primary); padding: 0.6rem 1rem;
+            display: flex; justify-content: center; align-items: center; gap: 1rem;
+            font-size: 0.85rem; font-weight: 600;
+        }
+        .geo-banner select {
+            background: rgba(255,255,255,0.2); border: none; padding: 0.3rem 0.6rem;
+            border-radius: 6px; color: white; font-weight: 600; cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header { padding: 1.5rem 0; background: var(--bg-card); border-bottom: 1px solid var(--border); }
+        .page-header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .page-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; }
+        .page-title .highlight { color: var(--primary); }
+        .page-stats { display: flex; gap: 2rem; }
+        .page-stat { text-align: center; }
+        .page-stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .page-stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Main Layout */
+        .main-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem; padding: 1.5rem 0; }
+
+        /* Filters */
+        .filters-sidebar { position: sticky; top: 90px; height: fit-content; }
+        .filter-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+        .filter-card h3 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.75rem; }
+        .filter-group { margin-bottom: 0.75rem; }
+        .filter-group:last-child { margin-bottom: 0; }
+        .filter-group label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        .filter-group select, .filter-group input[type="text"] {
+            width: 100%; padding: 0.6rem; background: var(--bg-elevated);
+            border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem;
+        }
+        .checkbox-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        .checkbox-item input { width: 16px; height: 16px; accent-color: var(--primary); }
+        .checkbox-item span { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .rep-filter { display: flex; flex-direction: column; gap: 0.4rem; }
+        .rep-option {
+            display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem;
+            background: var(--bg-elevated); border-radius: 8px; cursor: pointer;
+            border: 1px solid transparent; transition: all 0.2s;
+        }
+        .rep-option:hover, .rep-option.active { border-color: var(--primary); }
+        .rep-badge { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+        .rep-badge.legendary { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .rep-badge.excellent { background: var(--success); }
+        .rep-badge.good { background: #70E000; }
+        .rep-info { flex: 1; }
+        .rep-info strong { display: block; font-size: 0.8rem; }
+        .rep-info span { font-size: 0.65rem; color: var(--text-muted); }
+
+        /* Results */
+        .results-section { min-width: 0; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+        .results-count { color: var(--text-secondary); font-size: 0.9rem; }
+        .results-count strong { color: var(--text-primary); }
+        .sort-select { padding: 0.5rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; }
+
+        /* Mechanics Grid */
+        .mechanics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+
+        .mechanic-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+            overflow: hidden; transition: all 0.3s;
+        }
+        .mechanic-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(255, 107, 0, 0.3); }
+
+        .mechanic-header { padding: 1rem; display: flex; gap: 0.75rem; border-bottom: 1px solid var(--border); }
+        .mechanic-avatar {
+            width: 56px; height: 56px; background: var(--gradient-primary); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700;
+            color: white; position: relative; flex-shrink: 0;
+        }
+        .avatar-badge {
+            position: absolute; bottom: -3px; right: -3px; width: 20px; height: 20px;
+            border-radius: 5px; display: flex; align-items: center; justify-content: center;
+            font-size: 0.55rem; border: 2px solid var(--bg-card);
+        }
+        .badge-legendary { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .badge-excellent { background: var(--success); }
+        .badge-verified { background: var(--accent); }
+
+        .mechanic-info { flex: 1; min-width: 0; }
+        .mechanic-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.15rem; display: flex; align-items: center; gap: 0.4rem; }
+        .verified-check { width: 14px; height: 14px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; }
+        .mechanic-location { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+        .mechanic-rating { display: flex; align-items: center; gap: 0.4rem; }
+        .rating-stars { color: var(--warning); font-size: 0.8rem; }
+        .rating-text { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .mechanic-body { padding: 1rem; }
+        .mechanic-specialties { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+        .specialty-tag { padding: 0.25rem 0.6rem; background: var(--bg-elevated); border-radius: 5px; font-size: 0.75rem; color: var(--text-secondary); }
+        .specialty-tag.primary { background: rgba(255, 107, 0, 0.15); color: var(--primary); }
+
+        .mechanic-stats { display: flex; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.8rem; color: var(--text-muted); }
+        .mechanic-vendors { margin-bottom: 0.75rem; }
+        .vendors-label { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+        .vendors-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+        .vendor-chip {
+            display: flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.5rem;
+            background: rgba(0, 212, 170, 0.1); border: 1px solid rgba(0, 212, 170, 0.2);
+            border-radius: 5px; font-size: 0.7rem; color: var(--accent);
+        }
+
+        .mechanic-actions { display: flex; gap: 0.5rem; }
+        .mechanic-actions .btn { flex: 1; justify-content: center; padding: 0.6rem; font-size: 0.85rem; }
+
+        /* Reputation Display */
+        .rep-score {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem;
+            background: var(--bg-elevated); border-radius: 8px; margin-bottom: 0.75rem;
+        }
+        .rep-score-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; }
+        .rep-score-breakdown { flex: 1; display: flex; gap: 0.5rem; }
+        .rep-source { text-align: center; flex: 1; }
+        .rep-source-icon { font-size: 0.9rem; }
+        .rep-source-value { font-size: 0.7rem; font-weight: 600; display: block; }
+        .rep-source-label { font-size: 0.55rem; color: var(--text-muted); }
+
+        /* Footer */
+        footer { background: var(--secondary); padding: 3rem 0 1.5rem; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+        .footer-brand p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.75rem; max-width: 280px; }
+        .footer-column h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--text-muted); }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 0.5rem; }
+        .footer-column a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+        .footer-column a:hover { color: var(--primary); }
+        .footer-bottom { padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* WhatsApp Float */
+        .whatsapp-float { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999; }
+        .whatsapp-float a {
+            display: flex; align-items: center; gap: 0.5rem; background: #25D366;
+            color: white; padding: 0.875rem 1.25rem; border-radius: 100px;
+            text-decoration: none; font-weight: 600; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .filters-sidebar { position: static; display: none; }
+            nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mechanics-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .page-stats { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Geo Banner -->
+    <div class="geo-banner">
+        <span>📍 You're viewing mechanics in</span>
+        <select id="citySelector" onchange="changeCity(this.value)">
+            <option value="nairobi" selected>Nairobi, Kenya</option>
+            <option value="mombasa">Mombasa, Kenya</option>
+            <option value="lagos">Lagos, Nigeria</option>
+            <option value="johannesburg">Johannesburg, South Africa</option>
+            <option value="kigali">Kigali, Rwanda</option>
+            <option value="kampala">Kampala, Uganda</option>
+            <option value="dar">Dar es Salaam, Tanzania</option>
+            <option value="accra">Accra, Ghana</option>
+        </select>
+        <span>|</span>
+        <span id="mechanicCount">347 verified mechanics available</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🔧</div>
+                    <div class="logo-text">GoFix<span>Africa</span></div>
+                </a>
+                <nav>
+                    <a href="index.html#services">Services</a>
+                    <a href="index.html#how-it-works">How It Works</a>
+                    <a href="mechanics.html" class="active">Find Mechanics</a>
+                    <a href="parts.html">Parts</a>
+                    <a href="join.html">For Mechanics</a>
+                </nav>
+                <div class="nav-cta">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+                    <a href="index.html#book" class="btn btn-primary btn-sm">Book Service</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="page-header-inner">
+                <div>
+                    <h1 class="page-title">Find Mechanics in <span class="highlight" id="cityName">Nairobi</span></h1>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">Verified professionals • Fair pricing • 6-month warranty</p>
+                </div>
+                <div class="page-stats">
+                    <div class="page-stat">
+                        <div class="page-stat-value">347</div>
+                        <div class="page-stat-label">Mechanics</div>
+                    </div>
+                    <div class="page-stat">
+                        <div class="page-stat-value">89</div>
+                        <div class="page-stat-label">Parts Vendors</div>
+                    </div>
+                    <div class="page-stat">
+                        <div class="page-stat-value">4.8★</div>
+                        <div class="page-stat-label">Avg Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-card">
+                    <h3>📍 Location</h3>
+                    <div class="filter-group">
+                        <label>Area / Neighborhood</label>
+                        <select id="areaFilter">
+                            <option value="">All Areas</option>
+                            <option value="westlands">Westlands</option>
+                            <option value="kilimani">Kilimani</option>
+                            <option value="industrial">Industrial Area</option>
+                            <option value="karen">Karen</option>
+                            <option value="eastleigh">Eastleigh</option>
+                            <option value="langata">Lang'ata</option>
+                            <option value="parklands">Parklands</option>
+                            <option value="south-b">South B/C</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <h3>⭐ Reputation</h3>
+                    <div class="rep-filter">
+                        <label class="rep-option active">
+                            <input type="checkbox" checked style="display:none;">
+                            <div class="rep-badge legendary">👑</div>
+                            <div class="rep-info">
+                                <strong>Legendary</strong>
+                                <span>95+ score • Top 5%</span>
+                            </div>
+                        </label>
+                        <label class="rep-option active">
+                            <input type="checkbox" checked style="display:none;">
+                            <div class="rep-badge excellent">⭐</div>
+                            <div class="rep-info">
+                                <strong>Excellent</strong>
+                                <span>85-94 score</span>
+                            </div>
+                        </label>
+                        <label class="rep-option active">
+                            <input type="checkbox" checked style="display:none;">
+                            <div class="rep-badge good">✓</div>
+                            <div class="rep-info">
+                                <strong>Good</strong>
+                                <span>70-84 score</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <h3>🚗 Specialization</h3>
+                    <div class="filter-group">
+                        <label>Vehicle Make</label>
+                        <select id="makeFilter">
+                            <option value="">All Makes</option>
+                            <option value="toyota">Toyota</option>
+                            <option value="mercedes">Mercedes-Benz</option>
+                            <option value="bmw">BMW</option>
+                            <option value="nissan">Nissan</option>
+                            <option value="volkswagen">Volkswagen</option>
+                            <option value="honda">Honda</option>
+                            <option value="landrover">Land Rover</option>
+                            <option value="ford">Ford</option>
+                            <option value="subaru">Subaru</option>
+                            <option value="isuzu">Isuzu</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Service Type</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>General Service</span></label>
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>Engine Repair</span></label>
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>Electrical</span></label>
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>ECU Programming</span></label>
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>Diagnostics</span></label>
+                            <label class="checkbox-item"><input type="checkbox" checked> <span>AC & Cooling</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <h3>🔗 Vendor Network</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox"> <span>Has Linked Vendors</span></label>
+                        <label class="checkbox-item"><input type="checkbox"> <span>OEM Parts Access</span></label>
+                        <label class="checkbox-item"><input type="checkbox"> <span>Import Parts</span></label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Results -->
+            <section class="results-section">
+                <div class="results-header">
+                    <div class="results-count">Showing <strong>24</strong> of <strong>347</strong> mechanics</div>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <select class="sort-select">
+                            <option value="rating">Sort by: Top Rated</option>
+                            <option value="jobs">Most Jobs Completed</option>
+                            <option value="response">Fastest Response</option>
+                            <option value="distance">Nearest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mechanics-grid" id="mechanicsGrid">
+                    <!-- Mechanic 1 - James Mwangi -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar">
+                                JM
+                                <span class="avatar-badge badge-legendary">👑</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">James Mwangi <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 Westlands • 2.1 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★★</span>
+                                    <span class="rating-text">4.9 (127 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: #FFD700;">96</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">4.9</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.9</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Mercedes-Benz</span>
+                                <span class="specialty-tag primary">BMW</span>
+                                <span class="specialty-tag">ECU Programming</span>
+                                <span class="specialty-tag">Diagnostics</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 342 jobs</span>
+                                <span>⏱️ ~2hr response</span>
+                                <span>📅 8 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 AutoParts Kenya</span>
+                                    <span class="vendor-chip">📦 German Spares</span>
+                                    <span class="vendor-chip">+2</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=james-mwangi" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720111222?text=Hi James, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanic 2 - Grace Njeri -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar" style="background: linear-gradient(135deg, #8B5CF6, #A78BFA);">
+                                GN
+                                <span class="avatar-badge badge-legendary">👑</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">Grace Njeri <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 Kilimani • 1.8 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★★</span>
+                                    <span class="rating-text">4.9 (156 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: #FFD700;">97</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">5.0</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.9</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Diagnostics</span>
+                                <span class="specialty-tag primary">Electrical</span>
+                                <span class="specialty-tag">All Makes</span>
+                                <span class="specialty-tag">Hybrid/EV</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 489 jobs</span>
+                                <span>⏱️ ~30min response</span>
+                                <span>📅 12 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 Midas Kenya</span>
+                                    <span class="vendor-chip">📦 OEM Direct</span>
+                                    <span class="vendor-chip">+3</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=grace-njeri" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720333444?text=Hi Grace, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanic 3 - Peter Ochieng -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar" style="background: linear-gradient(135deg, #059669, #10B981);">
+                                PO
+                                <span class="avatar-badge badge-excellent">⭐</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">Peter Ochieng <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 Industrial Area • 4.2 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★★</span>
+                                    <span class="rating-text">4.8 (98 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: var(--success);">91</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.7</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.9</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Toyota</span>
+                                <span class="specialty-tag primary">Nissan</span>
+                                <span class="specialty-tag">Engine Rebuild</span>
+                                <span class="specialty-tag">Gearbox</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 521 jobs</span>
+                                <span>⏱️ ~1hr response</span>
+                                <span>📅 15 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 Toyota Kenya</span>
+                                    <span class="vendor-chip">📦 Sameer Africa</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=peter-ochieng" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720222333?text=Hi Peter, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanic 4 - Samuel Kiprop -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar" style="background: linear-gradient(135deg, #DC2626, #EF4444);">
+                                SK
+                                <span class="avatar-badge badge-excellent">⭐</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">Samuel Kiprop <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 Karen • 8.5 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★★</span>
+                                    <span class="rating-text">4.8 (84 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: var(--success);">89</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.6</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Land Rover</span>
+                                <span class="specialty-tag primary">Jeep</span>
+                                <span class="specialty-tag">4x4 Specialist</span>
+                                <span class="specialty-tag">Suspension</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 267 jobs</span>
+                                <span>⏱️ ~3hr response</span>
+                                <span>📅 10 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 LR Spares Nairobi</span>
+                                    <span class="vendor-chip">📦 4x4 Centre</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=samuel-kiprop" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720444555?text=Hi Samuel, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanic 5 - David Kimani -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar" style="background: linear-gradient(135deg, #0891B2, #22D3EE);">
+                                DK
+                                <span class="avatar-badge badge-excellent">⭐</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">David Kimani <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 Parklands • 3.4 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★☆</span>
+                                    <span class="rating-text">4.7 (112 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: var(--success);">87</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">4.7</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.5</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.8</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Volkswagen</span>
+                                <span class="specialty-tag primary">Audi</span>
+                                <span class="specialty-tag">AC Repair</span>
+                                <span class="specialty-tag">Cooling System</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 398 jobs</span>
+                                <span>⏱️ ~1hr response</span>
+                                <span>📅 11 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 VW Centre Nairobi</span>
+                                    <span class="vendor-chip">📦 AC Parts Hub</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=david-kimani" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720555666?text=Hi David, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanic 6 - Faith Wambui -->
+                    <div class="mechanic-card">
+                        <div class="mechanic-header">
+                            <div class="mechanic-avatar" style="background: linear-gradient(135deg, #D946EF, #E879F9);">
+                                FW
+                                <span class="avatar-badge badge-good" style="background: #70E000;">✓</span>
+                            </div>
+                            <div class="mechanic-info">
+                                <div class="mechanic-name">Faith Wambui <span class="verified-check">✓</span></div>
+                                <div class="mechanic-location">📍 South B • 5.1 km away</div>
+                                <div class="mechanic-rating">
+                                    <span class="rating-stars">★★★★☆</span>
+                                    <span class="rating-text">4.6 (67 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mechanic-body">
+                            <div class="rep-score">
+                                <div class="rep-score-value" style="color: #70E000;">82</div>
+                                <div class="rep-score-breakdown">
+                                    <div class="rep-source"><span class="rep-source-icon">👤</span><span class="rep-source-value">4.6</span><span class="rep-source-label">Customers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">🔧</span><span class="rep-source-value">4.4</span><span class="rep-source-label">Peers</span></div>
+                                    <div class="rep-source"><span class="rep-source-icon">📦</span><span class="rep-source-value">4.5</span><span class="rep-source-label">Vendors</span></div>
+                                </div>
+                            </div>
+                            <div class="mechanic-specialties">
+                                <span class="specialty-tag primary">Honda</span>
+                                <span class="specialty-tag primary">Mazda</span>
+                                <span class="specialty-tag">General Service</span>
+                                <span class="specialty-tag">Brakes</span>
+                            </div>
+                            <div class="mechanic-stats">
+                                <span>🔧 189 jobs</span>
+                                <span>⏱️ ~2hr response</span>
+                                <span>📅 6 yrs exp</span>
+                            </div>
+                            <div class="mechanic-vendors">
+                                <div class="vendors-label">Linked Parts Vendors:</div>
+                                <div class="vendors-chips">
+                                    <span class="vendor-chip">📦 Honda Parts KE</span>
+                                </div>
+                            </div>
+                            <div class="mechanic-actions">
+                                <a href="mechanic-profile.html?id=faith-wambui" class="btn btn-secondary">View Profile</a>
+                                <a href="https://wa.me/254720666777?text=Hi Faith, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp">💬 WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-secondary btn-lg" onclick="loadMore()">Load More Mechanics</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">🔧</div>
+                        <div class="logo-text">GoFix<span>Africa</span></div>
+                    </a>
+                    <p>Making car care convenient, transparent, and trustworthy across Africa.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>For Customers</h4>
+                    <ul>
+                        <li><a href="index.html#book">Book a Service</a></li>
+                        <li><a href="mechanics.html">Find Mechanics</a></li>
+                        <li><a href="parts.html">Find Parts</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>For Mechanics</h4>
+                    <ul>
+                        <li><a href="join.html">Join Network</a></li>
+                        <li><a href="login.html">Mechanic Login</a></li>
+                        <li><a href="vendor-network.html">Parts Vendors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 GoFixAfrica. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/254720123456?text=Hi, I need help finding a mechanic" target="_blank">
+            <span>💬</span>
+            <span>Need Help?</span>
+        </a>
+    </div>
+
+    <script>
+        // City data
+        const cityData = {
+            nairobi: { name: 'Nairobi', mechanics: 347, vendors: 89 },
+            mombasa: { name: 'Mombasa', mechanics: 156, vendors: 42 },
+            lagos: { name: 'Lagos', mechanics: 523, vendors: 167 },
+            johannesburg: { name: 'Johannesburg', mechanics: 445, vendors: 134 },
+            kigali: { name: 'Kigali', mechanics: 89, vendors: 23 },
+            kampala: { name: 'Kampala', mechanics: 198, vendors: 54 },
+            dar: { name: 'Dar es Salaam', mechanics: 234, vendors: 67 },
+            accra: { name: 'Accra', mechanics: 178, vendors: 45 }
+        };
+
+        function changeCity(city) {
+            const data = cityData[city];
+            document.getElementById('cityName').textContent = data.name;
+            document.getElementById('mechanicCount').textContent = `${data.mechanics} verified mechanics available`;
+            document.querySelector('.page-stat-value').textContent = data.mechanics;
+        }
+
+        function loadMore() {
+            alert('Loading more mechanics... (This would load the next page of results)');
+        }
+
+        // Rep filter toggle
+        document.querySelectorAll('.rep-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

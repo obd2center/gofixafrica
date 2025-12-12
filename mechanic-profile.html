@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Mwangi - Mercedes & BMW Specialist | GoFixAfrica</title>
+    <meta name="description" content="Book James Mwangi, a top-rated Mercedes-Benz and BMW specialist in Westlands, Nairobi. 8 years experience, 342 jobs completed. ECU programming & diagnostics expert.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --secondary: #0A1628;
+            --accent: #00D4AA;
+            --warning: #FFB800;
+            --success: #00C851;
+            --bg-dark: #0A1628;
+            --bg-card: #111D32;
+            --bg-elevated: #182640;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #FF6B00 0%, #FF8A33 100%);
+            --gradient-legendary: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.875rem 1.75rem; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+        .btn-secondary { background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-lg { padding: 1rem 2rem; font-size: 1rem; }
+
+        /* Header */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 1rem 0;
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon { width: 44px; height: 44px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); }
+        .logo-text span { color: var(--primary); }
+        .back-link { color: var(--text-secondary); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .back-link:hover { color: var(--text-primary); }
+
+        /* Profile Layout */
+        .profile-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; padding: 2rem 0; }
+
+        /* Profile Header */
+        .profile-header {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+        }
+        .profile-top { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .profile-avatar {
+            width: 100px; height: 100px; background: var(--gradient-primary); border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700;
+            color: white; position: relative; flex-shrink: 0;
+        }
+        .avatar-badge {
+            position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px;
+            background: var(--gradient-legendary); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; border: 3px solid var(--bg-card);
+        }
+        .profile-info { flex: 1; }
+        .profile-name {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700;
+            margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.75rem;
+        }
+        .verified-badge {
+            background: var(--accent); color: var(--bg-dark);
+            padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+        }
+        .profile-location { color: var(--text-secondary); font-size: 1rem; margin-bottom: 0.5rem; }
+        .profile-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .rating-stars { color: var(--warning); font-size: 1.1rem; }
+        .rating-text { font-size: 0.95rem; color: var(--text-secondary); }
+        .profile-specialties { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .specialty-tag { padding: 0.4rem 0.9rem; background: var(--bg-elevated); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+        .specialty-tag.primary { background: rgba(255, 107, 0, 0.15); color: var(--primary); }
+
+        /* Reputation Section */
+        .reputation-section {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700;
+            margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .reputation-hero { display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem; }
+        .rep-score-big {
+            text-align: center; padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 16px;
+        }
+        .rep-score-value {
+            font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 700;
+            background: var(--gradient-legendary); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; line-height: 1;
+        }
+        .rep-score-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .rep-tier {
+            display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;
+            padding: 0.5rem 1rem; background: var(--gradient-legendary); border-radius: 8px;
+            font-weight: 700; font-size: 0.85rem; color: var(--bg-dark);
+        }
+        .rep-breakdown { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .rep-source-card {
+            background: var(--bg-elevated); border-radius: 12px; padding: 1rem; text-align: center;
+        }
+        .rep-source-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .rep-source-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; }
+        .rep-source-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .rep-source-bar { height: 4px; background: var(--bg-card); border-radius: 2px; overflow: hidden; }
+        .rep-source-bar-fill { height: 100%; background: var(--gradient-primary); }
+
+        /* Linked Vendors */
+        .vendors-section {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+        }
+        .vendors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .vendor-card {
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1rem; transition: all 0.2s;
+        }
+        .vendor-card:hover { border-color: var(--accent); }
+        .vendor-header { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .vendor-avatar {
+            width: 44px; height: 44px; background: rgba(0, 212, 170, 0.15);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; flex-shrink: 0;
+        }
+        .vendor-info { flex: 1; }
+        .vendor-name { font-weight: 600; font-size: 0.95rem; }
+        .vendor-specialty { font-size: 0.8rem; color: var(--text-muted); }
+        .vendor-stats { display: flex; gap: 1rem; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .vendor-contact { display: flex; gap: 0.5rem; }
+        .vendor-contact .btn { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+
+        /* Reviews Section */
+        .reviews-section {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem;
+        }
+        .reviews-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .review-tab {
+            padding: 0.6rem 1rem; background: var(--bg-elevated); border: none;
+            border-radius: 8px; color: var(--text-secondary); font-weight: 600;
+            font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+        }
+        .review-tab.active { background: var(--primary); color: white; }
+        .review-card {
+            background: var(--bg-elevated); border-radius: 12px; padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .reviewer-info { display: flex; gap: 0.75rem; }
+        .reviewer-avatar {
+            width: 40px; height: 40px; background: var(--gradient-primary);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem; color: white;
+        }
+        .reviewer-name { font-weight: 600; font-size: 0.95rem; }
+        .reviewer-meta { font-size: 0.8rem; color: var(--text-muted); }
+        .review-rating { color: var(--warning); font-size: 0.9rem; }
+        .review-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem; }
+        .review-badge {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            padding: 0.25rem 0.6rem; background: rgba(0, 212, 170, 0.15);
+            border-radius: 5px; font-size: 0.75rem; color: var(--accent);
+        }
+
+        /* Sidebar */
+        .profile-sidebar { position: sticky; top: 90px; height: fit-content; }
+        .contact-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem;
+        }
+        .contact-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+        .contact-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+        .contact-actions .btn { width: 100%; justify-content: center; }
+        .availability {
+            display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+            padding-top: 1rem; border-top: 1px solid var(--border);
+            font-size: 0.9rem; color: var(--text-secondary);
+        }
+        .availability-dot { width: 10px; height: 10px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .stats-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem;
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .stat-item { text-align: center; padding: 0.75rem; background: var(--bg-elevated); border-radius: 10px; }
+        .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+        .services-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.5rem;
+        }
+        .services-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+        .service-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-name { font-size: 0.9rem; }
+        .service-price { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Footer */
+        footer { background: var(--secondary); padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: var(--text-muted); font-size: 0.85rem; }
+
+        @media (max-width: 1024px) {
+            .profile-layout { grid-template-columns: 1fr; }
+            .profile-sidebar { position: static; }
+            .reputation-hero { flex-direction: column; }
+            .vendors-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .profile-top { flex-direction: column; text-align: center; }
+            .profile-avatar { margin: 0 auto; }
+            .rep-breakdown { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🔧</div>
+                    <div class="logo-text">GoFix<span>Africa</span></div>
+                </a>
+                <a href="mechanics.html" class="back-link">← Back to Mechanics</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="container">
+        <div class="profile-layout">
+            <!-- Main Content -->
+            <main>
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-top">
+                        <div class="profile-avatar">
+                            JM
+                            <span class="avatar-badge">👑</span>
+                        </div>
+                        <div class="profile-info">
+                            <h1 class="profile-name">
+                                James Mwangi
+                                <span class="verified-badge">✓ Verified</span>
+                            </h1>
+                            <p class="profile-location">📍 Westlands, Nairobi, Kenya • Serves within 15km radius</p>
+                            <div class="profile-rating">
+                                <span class="rating-stars">★★★★★</span>
+                                <span class="rating-text">4.9 rating • 127 reviews • 8 years experience</span>
+                            </div>
+                            <div class="profile-specialties">
+                                <span class="specialty-tag primary">Mercedes-Benz</span>
+                                <span class="specialty-tag primary">BMW</span>
+                                <span class="specialty-tag">ECU Programming</span>
+                                <span class="specialty-tag">Diagnostics</span>
+                                <span class="specialty-tag">Engine Repair</span>
+                                <span class="specialty-tag">Electrical</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">
+                        Certified Mercedes-Benz and BMW specialist with over 8 years of experience in German vehicle diagnostics and repair. 
+                        I specialize in ECU programming, immobilizer systems, and complex electrical troubleshooting. 
+                        Former technician at DT Dobie Mercedes-Benz dealership. I come to your location fully equipped with 
+                        diagnostic tools including Star Diagnostic (C4) and ISTA for BMW. Quality work guaranteed with genuine parts from my vendor network.
+                    </p>
+                </div>
+
+                <!-- Reputation Section -->
+                <div class="reputation-section">
+                    <h2 class="section-title">⭐ Reputation Score</h2>
+                    <div class="reputation-hero">
+                        <div class="rep-score-big">
+                            <div class="rep-score-value">96</div>
+                            <div class="rep-score-label">out of 100</div>
+                            <div class="rep-tier">👑 Legendary Mechanic</div>
+                        </div>
+                        <div class="rep-breakdown">
+                            <div class="rep-source-card">
+                                <div class="rep-source-icon">👤</div>
+                                <div class="rep-source-value">4.9</div>
+                                <div class="rep-source-label">Customer Reviews</div>
+                                <div class="rep-source-bar"><div class="rep-source-bar-fill" style="width: 98%;"></div></div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">127 reviews</div>
+                            </div>
+                            <div class="rep-source-card">
+                                <div class="rep-source-icon">🔧</div>
+                                <div class="rep-source-value">4.8</div>
+                                <div class="rep-source-label">Peer Endorsements</div>
+                                <div class="rep-source-bar"><div class="rep-source-bar-fill" style="width: 96%;"></div></div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">18 mechanics</div>
+                            </div>
+                            <div class="rep-source-card">
+                                <div class="rep-source-icon">📦</div>
+                                <div class="rep-source-value">4.9</div>
+                                <div class="rep-source-label">Vendor Ratings</div>
+                                <div class="rep-source-bar"><div class="rep-source-bar-fill" style="width: 98%;"></div></div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">4 vendors</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linked Vendors -->
+                <div class="vendors-section">
+                    <h2 class="section-title">📦 Linked Parts Vendors</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        James works with these trusted parts suppliers for quality genuine and OEM parts.
+                    </p>
+                    <div class="vendors-grid">
+                        <div class="vendor-card">
+                            <div class="vendor-header">
+                                <div class="vendor-avatar">🏪</div>
+                                <div class="vendor-info">
+                                    <div class="vendor-name">AutoParts Kenya Ltd</div>
+                                    <div class="vendor-specialty">Mercedes-Benz & BMW OEM Parts</div>
+                                </div>
+                            </div>
+                            <div class="vendor-stats">
+                                <span>🤝 4 years partnership</span>
+                                <span>📦 847 parts ordered</span>
+                            </div>
+                            <div class="vendor-contact">
+                                <a href="vendor-profile.html?id=autoparts-kenya" class="btn btn-secondary">View Vendor</a>
+                                <a href="https://wa.me/254720888111" class="btn btn-whatsapp">📞</a>
+                            </div>
+                        </div>
+                        <div class="vendor-card">
+                            <div class="vendor-header">
+                                <div class="vendor-avatar">🏪</div>
+                                <div class="vendor-info">
+                                    <div class="vendor-name">German Spares Nairobi</div>
+                                    <div class="vendor-specialty">German Vehicle Specialists</div>
+                                </div>
+                            </div>
+                            <div class="vendor-stats">
+                                <span>🤝 3 years partnership</span>
+                                <span>📦 523 parts ordered</span>
+                            </div>
+                            <div class="vendor-contact">
+                                <a href="vendor-profile.html?id=german-spares" class="btn btn-secondary">View Vendor</a>
+                                <a href="https://wa.me/254720888222" class="btn btn-whatsapp">📞</a>
+                            </div>
+                        </div>
+                        <div class="vendor-card">
+                            <div class="vendor-header">
+                                <div class="vendor-avatar">🏪</div>
+                                <div class="vendor-info">
+                                    <div class="vendor-name">Midas Kenya</div>
+                                    <div class="vendor-specialty">Brakes, Filters & Service Parts</div>
+                                </div>
+                            </div>
+                            <div class="vendor-stats">
+                                <span>🤝 2 years partnership</span>
+                                <span>📦 312 parts ordered</span>
+                            </div>
+                            <div class="vendor-contact">
+                                <a href="vendor-profile.html?id=midas-kenya" class="btn btn-secondary">View Vendor</a>
+                                <a href="https://wa.me/254720888333" class="btn btn-whatsapp">📞</a>
+                            </div>
+                        </div>
+                        <div class="vendor-card">
+                            <div class="vendor-header">
+                                <div class="vendor-avatar">🏪</div>
+                                <div class="vendor-info">
+                                    <div class="vendor-name">ECU Solutions Africa</div>
+                                    <div class="vendor-specialty">ECU & Programming Tools</div>
+                                </div>
+                            </div>
+                            <div class="vendor-stats">
+                                <span>🤝 5 years partnership</span>
+                                <span>📦 156 parts ordered</span>
+                            </div>
+                            <div class="vendor-contact">
+                                <a href="vendor-profile.html?id=ecu-solutions" class="btn btn-secondary">View Vendor</a>
+                                <a href="https://wa.me/254720888444" class="btn btn-whatsapp">📞</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="reviews-section">
+                    <h2 class="section-title">💬 Reviews</h2>
+                    <div class="reviews-tabs">
+                        <button class="review-tab active">All (127)</button>
+                        <button class="review-tab">Customers (109)</button>
+                        <button class="review-tab">Peers (18)</button>
+                    </div>
+                    
+                    <!-- Review 1 -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">MK</div>
+                                <div>
+                                    <div class="reviewer-name">Michael Kamau</div>
+                                    <div class="reviewer-meta">Customer • December 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            James is exceptional! My Mercedes C200 had a complex electrical issue that two other mechanics couldn't figure out. 
+                            James came to my office in Westlands, ran diagnostics with his Star equipment, and identified the problem within 30 minutes. 
+                            Fixed it the same day. Very professional and fair pricing. Highly recommended!
+                        </p>
+                        <span class="review-badge">✓ Verified Job • Electrical Repair • Mercedes C200</span>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">SA</div>
+                                <div>
+                                    <div class="reviewer-name">Sarah Achieng</div>
+                                    <div class="reviewer-meta">Customer • November 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            My BMW 320i needed ECU programming after a battery replacement. James handled it perfectly. He explained everything 
+                            clearly and even gave me tips on battery maintenance. The price was exactly what he quoted—no surprises. Will definitely use him again.
+                        </p>
+                        <span class="review-badge">✓ Verified Job • ECU Programming • BMW 320i</span>
+                    </div>
+
+                    <!-- Review 3 - Peer -->
+                    <div class="review-card" style="border-left: 3px solid var(--accent);">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar" style="background: var(--accent);">PO</div>
+                                <div>
+                                    <div class="reviewer-name">Peter Ochieng</div>
+                                    <div class="reviewer-meta">Fellow Mechanic • October 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            I've referred several German car jobs to James when they're beyond my Toyota/Nissan expertise. 
+                            He's one of the best Mercedes technicians in Nairobi. Honest, skilled, and always delivers quality work. 
+                            Great to have him in the GoFixAfrica network.
+                        </p>
+                        <span class="review-badge">🔧 Peer Endorsement</span>
+                    </div>
+
+                    <!-- Review 4 -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">JN</div>
+                                <div>
+                                    <div class="reviewer-name">John Ngugi</div>
+                                    <div class="reviewer-meta">Customer • October 2025</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p class="review-text">
+                            Had an engine warning light on my E-Class. James diagnosed it remotely via WhatsApp photos first, 
+                            then came to my home in Lavington. Turned out to be a sensor issue—he had the part delivered same day 
+                            from his vendor. Total transparency on costs. 5 stars!
+                        </p>
+                        <span class="review-badge">✓ Verified Job • Diagnostics • Mercedes E-Class</span>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <button class="btn btn-secondary">Load More Reviews</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="profile-sidebar">
+                <!-- Contact Card -->
+                <div class="contact-card">
+                    <h3 class="contact-title">Book James Now</h3>
+                    <div class="contact-actions">
+                        <a href="https://wa.me/254720111222?text=Hi James, I found you on GoFixAfrica. I need help with my car." class="btn btn-whatsapp btn-lg">💬 WhatsApp James</a>
+                        <a href="tel:+254720111222" class="btn btn-secondary">📞 Call +254 720 111 222</a>
+                        <a href="index.html#book" class="btn btn-primary">📝 Request Quote</a>
+                    </div>
+                    <div class="availability">
+                        <span class="availability-dot"></span>
+                        <span>Available now • Usually responds in ~2 hours</span>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="stats-card">
+                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Quick Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">342</div>
+                            <div class="stat-label">Jobs Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Linked Vendors</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services & Pricing -->
+                <div class="services-card">
+                    <h3>Services & Estimates</h3>
+                    <div class="service-item">
+                        <span class="service-name">Computer Diagnostics</span>
+                        <span class="service-price">From KES 2,500</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">General Service</span>
+                        <span class="service-price">From KES 8,000</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Brake Pad Replacement</span>
+                        <span class="service-price">From KES 6,500</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">ECU Programming</span>
+                        <span class="service-price">From KES 15,000</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Electrical Repair</span>
+                        <span class="service-price">Quote on inspection</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem;">
+                        * Prices exclude parts. Final quote provided after inspection.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2025 GoFixAfrica. All rights reserved.</p>
+                <a href="index.html" class="logo">
+                    <div class="logo-icon" style="width: 32px; height: 32px; font-size: 1rem;">🔧</div>
+                    <div class="logo-text" style="font-size: 1.1rem;">GoFix<span>Africa</span></div>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Review tabs
+        document.querySelectorAll('.review-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.review-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

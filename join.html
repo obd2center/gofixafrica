@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a GoFixAfrica Mechanic | Earn More, Work Flexibly</title>
+  <meta name="description" content="Join GoFixAfrica as a verified mechanic. Set your own schedule, earn competitive pay, and grow your reputation across Africa.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layouts.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  
+  <style>
+    /* Page-specific styles */
+    .join-hero {
+      background: var(--gradient-hero);
+      padding: var(--space-12) 0 var(--space-20);
+      text-align: center;
+    }
+    
+    .join-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(0, 212, 170, 0.15);
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--color-accent-500);
+      margin-bottom: var(--space-6);
+    }
+    
+    .join-hero h1 {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-4);
+    }
+    
+    .join-hero h1 span {
+      color: var(--color-primary-500);
+    }
+    
+    .join-hero p {
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto var(--space-8);
+    }
+    
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-item-value {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary-500);
+    }
+    
+    .stat-item-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    
+    /* Benefits Section */
+    .benefits-section {
+      padding: var(--space-16) 0;
+      background: var(--bg-card);
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+    
+    .benefit-card {
+      padding: var(--space-6);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-3xl);
+      border: 1px solid var(--border-default);
+    }
+    
+    .benefit-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .benefit-card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+    }
+    
+    .benefit-card p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    /* Registration Form Section */
+    .form-section {
+      padding: var(--space-16) 0;
+    }
+    
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-4xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    /* Progress Stepper */
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-10);
+      position: relative;
+    }
+    
+    .stepper::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      right: 40px;
+      height: 2px;
+      background: var(--bg-elevated);
+      z-index: 0;
+    }
+    
+    .stepper-progress {
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      height: 2px;
+      background: var(--gradient-primary);
+      z-index: 1;
+      transition: width 0.4s var(--ease-out);
+    }
+    
+    .step-indicator {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: var(--bg-elevated);
+      border: 2px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-bold);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      transition: var(--transition-base);
+    }
+    
+    .step-indicator.active .step-number {
+      background: var(--gradient-primary);
+      border-color: var(--color-primary-500);
+      color: white;
+      box-shadow: var(--shadow-glow-primary);
+    }
+    
+    .step-indicator.completed .step-number {
+      background: var(--color-success-500);
+      border-color: var(--color-success-500);
+      color: white;
+    }
+    
+    .step-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      text-align: center;
+    }
+    
+    .step-indicator.active .step-label {
+      color: var(--color-primary-500);
+      font-weight: var(--font-semibold);
+    }
+    
+    /* Form Steps */
+    .form-step {
+      display: none;
+      animation: fadeIn 0.3s var(--ease-out);
+    }
+    
+    .form-step.active {
+      display: block;
+    }
+    
+    .form-step-title {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+    
+    .form-step-subtitle {
+      color: var(--text-muted);
+      margin-bottom: var(--space-8);
+    }
+    
+    /* Specialization Grid */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+    
+    @media (max-width: 640px) {
+      .spec-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .spec-option {
+      position: relative;
+    }
+    
+    .spec-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .spec-option label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .spec-option label:hover {
+      border-color: var(--border-hover);
+    }
+    
+    .spec-option input:checked + label {
+      border-color: var(--color-primary-500);
+      background: rgba(255, 107, 0, 0.1);
+    }
+    
+    .spec-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition-fast);
+    }
+    
+    .spec-option input:checked + label .spec-checkbox {
+      background: var(--color-primary-500);
+      border-color: var(--color-primary-500);
+    }
+    
+    .spec-option input:checked + label .spec-checkbox::after {
+      content: "✓";
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .spec-text {
+      flex: 1;
+    }
+    
+    .spec-name {
+      font-weight: var(--font-medium);
+      font-size: var(--text-sm);
+    }
+    
+    .spec-desc {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    /* File Upload */
+    .file-upload {
+      border: 2px dashed var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .file-upload:hover {
+      border-color: var(--color-primary-500);
+      background: rgba(255, 107, 0, 0.05);
+    }
+    
+    .file-upload-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-3);
+    }
+    
+    .file-upload-text {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+    }
+    
+    .file-upload-hint {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    
+    .file-upload input {
+      display: none;
+    }
+    
+    /* Success State */
+    .success-state {
+      text-align: center;
+      padding: var(--space-8) 0;
+    }
+    
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: var(--gradient-accent);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto var(--space-6);
+      animation: scaleIn 0.5s var(--ease-bounce);
+    }
+    
+    .success-title {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+    
+    .success-message {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-8);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .next-steps {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: left;
+      margin-bottom: var(--space-8);
+    }
+    
+    .next-steps h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-4);
+    }
+    
+    .next-step-item {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    
+    .next-step-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .next-step-number {
+      width: 24px;
+      height: 24px;
+      background: var(--bg-card);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+      color: var(--color-accent-500);
+      flex-shrink: 0;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--border-default);
+    }
+    
+    /* FAQ Section */
+    .faq-section {
+      padding: var(--space-16) 0;
+      background: var(--bg-card);
+    }
+    
+    .faq-grid {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .faq-item {
+      border-bottom: 1px solid var(--border-default);
+    }
+    
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-5) 0;
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    
+    .faq-question:hover {
+      color: var(--color-primary-500);
+    }
+    
+    .faq-icon {
+      font-size: var(--text-xl);
+      transition: transform 0.3s;
+    }
+    
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+    
+    .faq-answer {
+      padding-bottom: var(--space-5);
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+      display: none;
+    }
+    
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+    
+    /* Input with prefix */
+    .input-prefix {
+      display: flex;
+      align-items: center;
+    }
+    
+    .input-prefix-text {
+      height: var(--input-height-md);
+      padding: 0 var(--space-4);
+      background: var(--bg-elevated);
+      border: var(--border-width) solid var(--border-default);
+      border-right: none;
+      border-radius: var(--input-radius) 0 0 var(--input-radius);
+      display: flex;
+      align-items: center;
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    
+    .input-prefix .form-input {
+      border-radius: 0 var(--input-radius) var(--input-radius) 0;
+    }
+  </style>
+</head>
+<body class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🔧</div>
+          <div class="logo-text">GoFix<span>Africa</span></div>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="mechanics.html" class="nav-link">Find Mechanics</a>
+          <a href="parts.html" class="nav-link">Parts</a>
+          <a href="join.html" class="nav-link active">Become a Mechanic</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-secondary sm:hidden">Login</a>
+          <a href="login.html" class="btn btn-primary lg:hidden">Get Started</a>
+        </div>
+        
+        <button class="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Hero Section -->
+    <section class="join-hero">
+      <div class="container">
+        <div class="join-hero-badge">
+          <span>🚀</span>
+          <span>Now Recruiting in 8 African Countries</span>
+        </div>
+        
+        <h1>Earn More as a <span>Verified Mechanic</span></h1>
+        <p>Join Africa's fastest-growing mobile mechanic platform. Set your own schedule, get connected with customers, and build your reputation.</p>
+        
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-item-value">KES 85K+</div>
+            <div class="stat-item-label">Avg Monthly Earnings</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item-value">2,847</div>
+            <div class="stat-item-label">Active Mechanics</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item-value">60%</div>
+            <div class="stat-item-label">You Keep</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item-value">4.8★</div>
+            <div class="stat-item-label">Platform Rating</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Why Join Us</p>
+          <h2 class="section-title">Benefits of Being a GoFixAfrica Mechanic</h2>
+        </div>
+        
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">💰</div>
+            <h3>Competitive Earnings</h3>
+            <p>Keep 60% of every job. Top mechanics earn KES 150,000+ monthly. Get paid directly to M-Pesa within 24 hours.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">📅</div>
+            <h3>Flexible Schedule</h3>
+            <p>Work when you want, where you want. Accept jobs that fit your schedule. No minimum hours required.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">📈</div>
+            <h3>Grow Your Reputation</h3>
+            <p>Build a verified profile with customer reviews. Become a Legendary mechanic and attract premium clients.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">🔗</div>
+            <h3>Parts Network Access</h3>
+            <p>Get wholesale pricing from verified vendors. Order parts directly through the app with same-day delivery.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">📱</div>
+            <h3>Easy Job Management</h3>
+            <p>Accept jobs via WhatsApp. Track earnings, manage customers, and grow your business from your phone.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">🎓</div>
+            <h3>Training & Support</h3>
+            <p>Access free training resources. Get certified in new skills. 24/7 support for any issues.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section class="form-section" id="register">
+      <div class="container">
+        <div class="form-container">
+          <div class="section-header">
+            <p class="section-subtitle">Get Started</p>
+            <h2 class="section-title">Register as a Mechanic</h2>
+            <p class="section-description">Complete your application in under 5 minutes</p>
+          </div>
+          
+          <div class="form-card">
+            <!-- Progress Stepper -->
+            <div class="stepper">
+              <div class="stepper-progress" data-progress-bar style="width: 0%"></div>
+              
+              <div class="step-indicator active" data-step-indicator>
+                <div class="step-number">1</div>
+                <div class="step-label">Personal</div>
+              </div>
+              
+              <div class="step-indicator" data-step-indicator>
+                <div class="step-number">2</div>
+                <div class="step-label">Experience</div>
+              </div>
+              
+              <div class="step-indicator" data-step-indicator>
+                <div class="step-number">3</div>
+                <div class="step-label">Documents</div>
+              </div>
+              
+              <div class="step-indicator" data-step-indicator>
+                <div class="step-number">4</div>
+                <div class="step-label">Verify</div>
+              </div>
+            </div>
+            
+            <!-- Form -->
+            <form data-multistep-form data-validate>
+              <!-- Step 1: Personal Information -->
+              <div class="form-step active" data-step="1">
+                <h3 class="form-step-title">Personal Information</h3>
+                <p class="form-step-subtitle">Tell us about yourself</p>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Full Name</label>
+                  <input type="text" name="fullname" class="form-input" placeholder="Enter your full name" data-rules="required|min:3" data-validate-on="blur">
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Phone Number</label>
+                  <div class="input-prefix">
+                    <span class="input-prefix-text">+254</span>
+                    <input type="tel" name="phone" class="form-input" placeholder="7XX XXX XXX" data-rules="required|phone" data-validate-on="blur">
+                  </div>
+                  <p class="form-hint">We'll send you a verification code</p>
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Email (Optional)</label>
+                  <input type="email" name="email" class="form-input" placeholder="your@email.com" data-rules="email">
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">ID/Passport Number</label>
+                  <input type="text" name="idnumber" class="form-input" placeholder="Enter your ID number" data-rules="required|min:6">
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Location / Area</label>
+                  <select name="location" class="form-input form-select" data-rules="required">
+                    <option value="">Select your area</option>
+                    <optgroup label="Nairobi">
+                      <option value="westlands">Westlands</option>
+                      <option value="kilimani">Kilimani</option>
+                      <option value="industrial-area">Industrial Area</option>
+                      <option value="karen">Karen</option>
+                      <option value="eastleigh">Eastleigh</option>
+                      <option value="parklands">Parklands</option>
+                      <option value="south-b">South B / South C</option>
+                      <option value="langata">Lang'ata</option>
+                    </optgroup>
+                    <optgroup label="Mombasa">
+                      <option value="mombasa-cbd">Mombasa CBD</option>
+                      <option value="nyali">Nyali</option>
+                      <option value="bamburi">Bamburi</option>
+                    </optgroup>
+                  </select>
+                  <p class="form-error" style="display: none;"></p>
+                </div>
+                
+                <div class="form-actions">
+                  <div></div>
+                  <button type="button" class="btn btn-primary" data-step-next>
+                    Continue
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Step 2: Experience -->
+              <div class="form-step" data-step="2">
+                <h3 class="form-step-title">Your Experience</h3>
+                <p class="form-step-subtitle">Tell us about your skills and expertise</p>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Years of Experience</label>
+                  <select name="experience" class="form-input form-select" data-rules="required">
+                    <option value="">Select experience</option>
+                    <option value="1-2">1-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-10">6-10 years</option>
+                    <option value="10+">10+ years</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Specializations</label>
+                  <p class="form-hint mb-4">Select all that apply</p>
+                  
+                  <div class="spec-grid">
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="general" id="spec-general">
+                      <label for="spec-general">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">🔧 General Service</span>
+                          <span class="spec-desc">Oil change, filters, tune-ups</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="brakes" id="spec-brakes">
+                      <label for="spec-brakes">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">🛞 Brakes & Tyres</span>
+                          <span class="spec-desc">Pads, discs, alignment</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="electrical" id="spec-electrical">
+                      <label for="spec-electrical">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">⚡ Electrical</span>
+                          <span class="spec-desc">Wiring, alternators, starters</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="diagnostics" id="spec-diagnostics">
+                      <label for="spec-diagnostics">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">🔍 Diagnostics</span>
+                          <span class="spec-desc">Computer diagnostics, fault codes</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="engine" id="spec-engine">
+                      <label for="spec-engine">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">⚙️ Engine Repair</span>
+                          <span class="spec-desc">Rebuild, overhaul, timing</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="ecu" id="spec-ecu">
+                      <label for="spec-ecu">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">💻 ECU Programming</span>
+                          <span class="spec-desc">Coding, tuning, immobilizers</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="ac" id="spec-ac">
+                      <label for="spec-ac">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">❄️ AC & Cooling</span>
+                          <span class="spec-desc">AC repair, radiators, fans</span>
+                        </span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="specs" value="gearbox" id="spec-gearbox">
+                      <label for="spec-gearbox">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-text">
+                          <span class="spec-name">🔩 Gearbox</span>
+                          <span class="spec-desc">Manual, auto, CVT repair</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Vehicle Makes (Primary)</label>
+                  <p class="form-hint mb-4">Which brands do you specialize in?</p>
+                  
+                  <div class="spec-grid">
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="toyota" id="make-toyota">
+                      <label for="make-toyota">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">Toyota / Lexus</span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="mercedes" id="make-mercedes">
+                      <label for="make-mercedes">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">Mercedes-Benz</span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="bmw" id="make-bmw">
+                      <label for="make-bmw">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">BMW</span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="nissan" id="make-nissan">
+                      <label for="make-nissan">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">Nissan / Infiniti</span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="vw" id="make-vw">
+                      <label for="make-vw">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">VW / Audi</span>
+                      </label>
+                    </div>
+                    
+                    <div class="spec-option">
+                      <input type="checkbox" name="makes" value="landrover" id="make-landrover">
+                      <label for="make-landrover">
+                        <span class="spec-checkbox"></span>
+                        <span class="spec-name">Land Rover / Jaguar</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-secondary" data-step-prev>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                  </button>
+                  <button type="button" class="btn btn-primary" data-step-next>
+                    Continue
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Step 3: Documents -->
+              <div class="form-step" data-step="3">
+                <h3 class="form-step-title">Upload Documents</h3>
+                <p class="form-step-subtitle">We need a few documents to verify your identity</p>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">ID / Passport Photo</label>
+                  <label class="file-upload">
+                    <input type="file" name="id_photo" accept="image/*,.pdf">
+                    <div class="file-upload-icon">📄</div>
+                    <div class="file-upload-text">Click to upload or drag and drop</div>
+                    <div class="file-upload-hint">PNG, JPG or PDF (max. 5MB)</div>
+                  </label>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Certificates (Optional)</label>
+                  <label class="file-upload">
+                    <input type="file" name="certificates" accept="image/*,.pdf" multiple>
+                    <div class="file-upload-icon">🎓</div>
+                    <div class="file-upload-text">Upload training certificates</div>
+                    <div class="file-upload-hint">Multiple files allowed</div>
+                  </label>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Profile Photo</label>
+                  <label class="file-upload">
+                    <input type="file" name="profile_photo" accept="image/*">
+                    <div class="file-upload-icon">📸</div>
+                    <div class="file-upload-text">Upload a clear photo of yourself</div>
+                    <div class="file-upload-hint">This will be shown on your profile</div>
+                  </label>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-secondary" data-step-prev>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                  </button>
+                  <button type="button" class="btn btn-primary" data-step-next>
+                    Continue
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Step 4: Verification -->
+              <div class="form-step" data-step="4">
+                <h3 class="form-step-title">Verify Your Phone</h3>
+                <p class="form-step-subtitle">We'll send a 6-digit code to your phone</p>
+                
+                <div class="alert alert-info mb-6">
+                  <span class="alert-icon">📱</span>
+                  <div class="alert-content">
+                    <div class="alert-title">Verification Code Sent</div>
+                    <div class="alert-text">Enter the code sent to +254 7XX XXX XXX</div>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label form-label-required">Enter OTP Code</label>
+                  <input type="text" name="otp" class="form-input text-center" placeholder="000000" maxlength="6" style="font-size: var(--text-2xl); letter-spacing: 0.5em;">
+                  <p class="form-hint text-center mt-3">
+                    Didn't receive the code? <a href="#" class="link">Resend</a>
+                  </p>
+                </div>
+                
+                <div class="form-group mt-8">
+                  <label class="form-check">
+                    <input type="checkbox" name="terms" class="form-check-input" data-rules="required">
+                    <span class="form-check-label">
+                      I agree to the <a href="terms.html" class="link">Terms of Service</a> and <a href="privacy.html" class="link">Privacy Policy</a>
+                    </span>
+                  </label>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-secondary" data-step-prev>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                  </button>
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    Complete Registration
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Success State (Hidden by default) -->
+              <div class="form-step" data-step="5">
+                <div class="success-state">
+                  <div class="success-icon">✓</div>
+                  <h3 class="success-title">Application Submitted!</h3>
+                  <p class="success-message">Thank you for applying to become a GoFixAfrica mechanic. We'll review your application within 24-48 hours.</p>
+                  
+                  <div class="next-steps">
+                    <h4>What happens next?</h4>
+                    <div class="next-step-item">
+                      <span class="next-step-number">1</span>
+                      <span>Our team will review your documents</span>
+                    </div>
+                    <div class="next-step-item">
+                      <span class="next-step-number">2</span>
+                      <span>You'll receive a WhatsApp message once approved</span>
+                    </div>
+                    <div class="next-step-item">
+                      <span class="next-step-number">3</span>
+                      <span>Complete a short onboarding call</span>
+                    </div>
+                    <div class="next-step-item">
+                      <span class="next-step-number">4</span>
+                      <span>Start receiving job requests!</span>
+                    </div>
+                  </div>
+                  
+                  <a href="index.html" class="btn btn-primary btn-lg">
+                    Back to Home
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Questions</p>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        
+        <div class="faq-grid">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How much can I earn as a GoFixAfrica mechanic?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Earnings vary based on your skills, availability, and location. On average, active mechanics earn KES 60,000-150,000 per month. Top-rated "Legendary" mechanics with specialized skills like ECU programming can earn significantly more. You keep 60% of every job, and payments are sent to M-Pesa within 24 hours.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What tools and equipment do I need?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              You'll need your own basic hand tools and diagnostic equipment appropriate for your specializations. For general mechanics, a basic OBD2 scanner is recommended. Specialist mechanics (ECU, electrical) should have their specific tools. We provide guidance on recommended equipment during onboarding.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How do I get jobs?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Jobs are sent to you via WhatsApp based on your location, specializations, and availability. You can accept or decline any job. Higher-rated mechanics get priority for premium jobs. Building a good reputation means more consistent work.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What if I need parts for a job?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              As a GoFixAfrica mechanic, you get access to our verified vendor network with wholesale pricing. You can order parts directly through our platform with same-day delivery in major cities. The cost is added to the customer's bill or you can source parts yourself.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is there a minimum number of hours I must work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              No! You're an independent contractor with full flexibility. Work as much or as little as you want. Set your own availability in the app. However, maintaining consistent availability helps build your reputation and get better jobs.
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How does the reputation system work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Your reputation score (0-100) is based on customer reviews, peer endorsements from other mechanics, and vendor ratings. Scores above 95 earn "Legendary" status with premium visibility. Consistently good work, timely arrivals, and honest pricing build your reputation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔧</div>
+            <div class="logo-text">GoFix<span>Africa</span></div>
+          </a>
+          <p>Africa's trusted platform connecting car owners with verified mobile mechanics. Quality service, fair prices, at your doorstep.</p>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">For Customers</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Book a Service</a>
+            <a href="mechanics.html" class="footer-link">Find Mechanics</a>
+            <a href="parts.html" class="footer-link">Parts Marketplace</a>
+            <a href="faq.html" class="footer-link">FAQs</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">For Mechanics</h4>
+          <div class="footer-links">
+            <a href="join.html" class="footer-link">Become a Mechanic</a>
+            <a href="#" class="footer-link">How It Works</a>
+            <a href="#" class="footer-link">Earnings</a>
+            <a href="#" class="footer-link">Support</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 GoFixAfrica. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/254720123456?text=Hi, I want to become a GoFixAfrica mechanic" class="float-whatsapp" target="_blank">
+    <span>💬</span>
+    <span>Need Help?</span>
+  </a>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        
+        // Open clicked if wasn't open
+        if (!wasOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+  </script>
+  <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

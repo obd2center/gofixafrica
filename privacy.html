@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | GoFixAfrica</title>
+  <meta name="description" content="GoFixAfrica Privacy Policy - Learn how we collect, use, and protect your personal information in compliance with GDPR, Kenya DPA, Nigeria NDPR, and other data protection laws.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layouts.css">
+  <link rel="stylesheet" href="assets/css/utilities.css">
+  
+  <style>
+    .legal-hero {
+      background: var(--gradient-hero);
+      padding: var(--space-16) 0;
+      text-align: center;
+    }
+    
+    .legal-hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+    
+    .legal-hero p {
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+    }
+    
+    .legal-content {
+      padding: var(--space-12) 0 var(--space-20);
+    }
+    
+    .legal-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .legal-nav {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+    
+    .legal-nav-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      margin-bottom: var(--space-3);
+    }
+    
+    .legal-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .legal-nav-link {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-fast);
+    }
+    
+    .legal-nav-link:hover {
+      background: var(--bg-elevated);
+      color: var(--color-primary-500);
+    }
+    
+    .legal-section {
+      margin-bottom: var(--space-10);
+      scroll-margin-top: calc(var(--header-height) + var(--space-6));
+    }
+    
+    .legal-section h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-default);
+    }
+    
+    .legal-section h3 {
+      font-size: var(--text-lg);
+      margin: var(--space-6) 0 var(--space-3);
+      color: var(--text-primary);
+    }
+    
+    .legal-section p {
+      margin-bottom: var(--space-4);
+      line-height: var(--leading-relaxed);
+    }
+    
+    .legal-section ul {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legal-section li {
+      position: relative;
+      margin-bottom: var(--space-2);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    
+    .legal-section li::before {
+      content: "•";
+      position: absolute;
+      left: calc(var(--space-6) * -1);
+      color: var(--color-primary-500);
+    }
+    
+    .legal-highlight {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--color-primary-500);
+      padding: var(--space-4) var(--space-5);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      margin: var(--space-6) 0;
+    }
+    
+    .legal-highlight p {
+      margin: 0;
+      color: var(--text-primary);
+    }
+    
+    .legal-highlight.gdpr {
+      border-left-color: var(--color-accent-500);
+      background: rgba(0, 212, 170, 0.1);
+    }
+    
+    .legal-highlight.warning {
+      border-left-color: var(--color-warning-500);
+      background: rgba(255, 184, 0, 0.1);
+    }
+    
+    .legal-table {
+      width: 100%;
+      margin: var(--space-6) 0;
+      border-collapse: collapse;
+    }
+    
+    .legal-table th,
+    .legal-table td {
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--border-default);
+      font-size: var(--text-sm);
+    }
+    
+    .legal-table th {
+      background: var(--bg-elevated);
+      font-weight: var(--font-semibold);
+      color: var(--text-primary);
+    }
+    
+    .legal-table td {
+      color: var(--text-secondary);
+    }
+    
+    .last-updated {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-4);
+    }
+    
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    
+    .contact-box h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+    }
+    
+    .contact-box-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    
+    .jurisdiction-banner {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(255, 107, 0, 0.1));
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .jurisdiction-banner-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .jurisdiction-banner-text h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+    
+    .jurisdiction-banner-text p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .jurisdiction-banner-text a {
+      color: var(--color-primary-500);
+    }
+    
+    .lawful-basis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+    
+    .lawful-basis-card {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+    }
+    
+    .lawful-basis-card h4 {
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .lawful-basis-card p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .dpo-card {
+      background: var(--gradient-hero);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin: var(--space-8) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+    
+    .dpo-avatar {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+    
+    .dpo-info h4 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-1);
+    }
+    
+    .dpo-info p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-3);
+    }
+    
+    .dpo-contact {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    
+    .rights-accordion {
+      margin: var(--space-6) 0;
+    }
+    
+    .rights-item {
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-3);
+      overflow: hidden;
+    }
+    
+    .rights-item-header {
+      padding: var(--space-4);
+      background: var(--bg-elevated);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+    
+    .rights-item-header:hover {
+      background: var(--bg-card);
+    }
+    
+    .rights-item-header h4 {
+      font-size: var(--text-base);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .rights-item-header .icon {
+      transition: transform 0.2s;
+    }
+    
+    .rights-item.open .rights-item-header .icon {
+      transform: rotate(180deg);
+    }
+    
+    .rights-item-content {
+      padding: 0 var(--space-4);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s, padding 0.3s;
+    }
+    
+    .rights-item.open .rights-item-content {
+      padding: var(--space-4);
+      max-height: 500px;
+    }
+    
+    .rights-item-content p {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    
+    @media (max-width: 768px) {
+      .legal-nav {
+        position: static;
+        margin-bottom: var(--space-6);
+      }
+      
+      .jurisdiction-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .dpo-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .dpo-contact {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="page">
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🔧</div>
+          <div class="logo-text">GoFix<span>Africa</span></div>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="mechanics.html" class="nav-link">Find Mechanics</a>
+          <a href="parts.html" class="nav-link">Parts</a>
+          <a href="join.html" class="nav-link">Become a Mechanic</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-secondary sm:hidden">Login</a>
+          <a href="index.html#book" class="btn btn-primary lg:hidden">Book Service</a>
+        </div>
+        
+        <button class="mobile-menu-toggle" aria-label="Menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="legal-hero">
+      <div class="container">
+        <h1>Privacy Policy</h1>
+        <p>How we collect, use, and protect your information</p>
+        <div class="last-updated">
+          <span>📅</span>
+          <span>Last updated: December 1, 2025</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="legal-content">
+      <div class="container">
+        <div class="legal-container">
+          <div class="jurisdiction-banner" id="jurisdiction-banner">
+            <div class="jurisdiction-banner-icon">🛡️</div>
+            <div class="jurisdiction-banner-text">
+              <h4>Your Data Protection Rights</h4>
+              <p>Based on your location, your data is protected under <strong id="applicable-law">applicable data protection laws</strong>. 
+              <a href="#your-rights">View your rights →</a></p>
+            </div>
+          </div>
+
+          <nav class="legal-nav">
+            <div class="legal-nav-title">On This Page</div>
+            <div class="legal-nav-links">
+              <a href="#introduction" class="legal-nav-link">Introduction</a>
+              <a href="#data-controller" class="legal-nav-link">Data Controller</a>
+              <a href="#information-we-collect" class="legal-nav-link">Information We Collect</a>
+              <a href="#lawful-basis" class="legal-nav-link">Legal Basis for Processing</a>
+              <a href="#how-we-use" class="legal-nav-link">How We Use Your Information</a>
+              <a href="#sharing" class="legal-nav-link">Information Sharing</a>
+              <a href="#international-transfers" class="legal-nav-link">International Transfers</a>
+              <a href="#data-retention" class="legal-nav-link">Data Retention</a>
+              <a href="#data-security" class="legal-nav-link">Data Security</a>
+              <a href="#your-rights" class="legal-nav-link">Your Rights</a>
+              <a href="#cookies" class="legal-nav-link">Cookies & Tracking</a>
+              <a href="#children" class="legal-nav-link">Children's Privacy</a>
+              <a href="#changes" class="legal-nav-link">Policy Changes</a>
+              <a href="#contact" class="legal-nav-link">Contact Us</a>
+              <a href="#complaints" class="legal-nav-link">Complaints</a>
+            </div>
+          </nav>
+
+          <section class="legal-section" id="introduction">
+            <h2>1. Introduction</h2>
+            <p>GoFixAfrica Limited ("GoFixAfrica," "we," "our," or "us") is committed to protecting your privacy and ensuring the security of your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, mobile application, and services (collectively, the "Platform").</p>
+            <p>This policy is designed to comply with applicable data protection laws including:</p>
+            <ul>
+              <li><strong>Kenya:</strong> Data Protection Act, 2019</li>
+              <li><strong>Nigeria:</strong> Nigeria Data Protection Regulation (NDPR) 2019 & Nigeria Data Protection Act, 2023</li>
+              <li><strong>South Africa:</strong> Protection of Personal Information Act (POPIA), 2013</li>
+              <li><strong>Ghana:</strong> Data Protection Act, 2012 (Act 843)</li>
+              <li><strong>Uganda:</strong> Data Protection and Privacy Act, 2019</li>
+              <li><strong>Rwanda:</strong> Law N° 058/2021 on Personal Data Protection</li>
+              <li><strong>European Union:</strong> General Data Protection Regulation (GDPR)</li>
+            </ul>
+            <p>By using our Platform, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our practices, please do not use our Platform.</p>
+            
+            <div class="legal-highlight gdpr">
+              <p><strong>GDPR Notice:</strong> If you are located in the European Economic Area (EEA), United Kingdom, or Switzerland, additional rights and protections apply to you under the GDPR. These are highlighted throughout this policy.</p>
+            </div>
+          </section>
+
+          <section class="legal-section" id="data-controller">
+            <h2>2. Data Controller</h2>
+            <p>The data controller responsible for your personal data is:</p>
+            <div class="legal-highlight">
+              <p><strong>GoFixAfrica Limited</strong><br>
+              Westlands Business Park, 3rd Floor<br>
+              Waiyaki Way, Westlands<br>
+              Nairobi, Kenya<br>
+              Registration No: PVT-XXXXXXX</p>
+            </div>
+            
+            <div class="dpo-card">
+              <div class="dpo-avatar">👤</div>
+              <div class="dpo-info">
+                <h4>Data Protection Officer (DPO)</h4>
+                <p>For any questions about this policy or how we handle your data, please contact our Data Protection Officer:</p>
+                <div class="dpo-contact">
+                  <a href="mailto:dpo@gofixafrica.com" class="btn btn-secondary btn-sm">✉️ dpo@gofixafrica.com</a>
+                  <a href="tel:+254720123456" class="btn btn-outline btn-sm">📞 +254 720 123 456</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="legal-section" id="information-we-collect">
+            <h2>3. Information We Collect</h2>
+            
+            <h3>3.1 Personal Information You Provide</h3>
+            <p>We collect information you voluntarily provide when using our Platform:</p>
+            
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Data Types</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Identity Data</strong></td>
+                  <td>Name, National ID/Passport number, profile photo</td>
+                  <td>Account creation, verification</td>
+                </tr>
+                <tr>
+                  <td><strong>Contact Data</strong></td>
+                  <td>Email, phone number, address</td>
+                  <td>Communication, service delivery</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Data</strong></td>
+                  <td>Make, model, year, registration</td>
+                  <td>Service matching, history</td>
+                </tr>
+                <tr>
+                  <td><strong>Financial Data</strong></td>
+                  <td>M-Pesa number, bank details, transaction history</td>
+                  <td>Payment processing</td>
+                </tr>
+                <tr>
+                  <td><strong>Professional Data</strong></td>
+                  <td>Certifications, skills, work history (mechanics)</td>
+                  <td>Verification, matching</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>3.2 Information Collected Automatically</h3>
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Data Types</th>
+                  <th>Legal Basis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Device Data</strong></td>
+                  <td>Device type, OS, unique identifiers, browser</td>
+                  <td>Legitimate interest (security)</td>
+                </tr>
+                <tr>
+                  <td><strong>Usage Data</strong></td>
+                  <td>Pages visited, features used, time spent</td>
+                  <td>Legitimate interest (improvement)</td>
+                </tr>
+                <tr>
+                  <td><strong>Location Data</strong></td>
+                  <td>GPS coordinates, IP-based location</td>
+                  <td>Consent (for precise location)</td>
+                </tr>
+                <tr>
+                  <td><strong>Cookie Data</strong></td>
+                  <td>Session IDs, preferences, analytics</td>
+                  <td>Consent (non-essential cookies)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>3.3 Special Categories of Data</h3>
+            <p>We do not intentionally collect special categories of personal data (e.g., racial/ethnic origin, health data, biometric data). If such data is inadvertently collected, we will delete it unless required by law to retain it.</p>
+          </section>
+
+          <section class="legal-section" id="lawful-basis">
+            <h2>4. Legal Basis for Processing</h2>
+            <p>Under GDPR and similar data protection laws, we must have a lawful basis to process your personal data. We rely on the following bases:</p>
+            
+            <div class="lawful-basis-grid">
+              <div class="lawful-basis-card">
+                <h4>📝 Consent</h4>
+                <p>You have given clear consent for us to process your personal data for specific purposes (e.g., marketing, location tracking).</p>
+              </div>
+              <div class="lawful-basis-card">
+                <h4>📋 Contract</h4>
+                <p>Processing is necessary to perform our contract with you or to take steps before entering a contract (e.g., providing services).</p>
+              </div>
+              <div class="lawful-basis-card">
+                <h4>⚖️ Legal Obligation</h4>
+                <p>Processing is necessary to comply with legal requirements (e.g., tax records, fraud prevention).</p>
+              </div>
+              <div class="lawful-basis-card">
+                <h4>🎯 Legitimate Interest</h4>
+                <p>Processing is necessary for our legitimate interests, provided these don't override your rights (e.g., security, improvement).</p>
+              </div>
+              <div class="lawful-basis-card">
+                <h4>🆘 Vital Interests</h4>
+                <p>Processing is necessary to protect someone's life (e.g., emergency roadside assistance).</p>
+              </div>
+              <div class="lawful-basis-card">
+                <h4>🏛️ Public Task</h4>
+                <p>Processing is necessary to perform a task in the public interest (rarely applicable).</p>
+              </div>
+            </div>
+            
+            <div class="legal-highlight warning">
+              <p><strong>Right to Withdraw Consent:</strong> Where we rely on consent, you can withdraw it at any time by contacting us or using the settings in your account. Withdrawal does not affect the lawfulness of processing before withdrawal.</p>
+            </div>
+          </section>
+
+          <section class="legal-section" id="how-we-use">
+            <h2>5. How We Use Your Information</h2>
+            <p>We process your personal data for the following purposes:</p>
+            
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Purpose</th>
+                  <th>Data Used</th>
+                  <th>Legal Basis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Account Management</strong></td>
+                  <td>Identity, Contact</td>
+                  <td>Contract</td>
+                </tr>
+                <tr>
+                  <td><strong>Service Delivery</strong></td>
+                  <td>Identity, Contact, Vehicle, Location</td>
+                  <td>Contract</td>
+                </tr>
+                <tr>
+                  <td><strong>Payment Processing</strong></td>
+                  <td>Identity, Financial</td>
+                  <td>Contract</td>
+                </tr>
+                <tr>
+                  <td><strong>Mechanic Verification</strong></td>
+                  <td>Identity, Professional</td>
+                  <td>Contract, Legal Obligation</td>
+                </tr>
+                <tr>
+                  <td><strong>Customer Support</strong></td>
+                  <td>Identity, Contact, Usage</td>
+                  <td>Contract, Legitimate Interest</td>
+                </tr>
+                <tr>
+                  <td><strong>Platform Improvement</strong></td>
+                  <td>Usage, Device</td>
+                  <td>Legitimate Interest</td>
+                </tr>
+                <tr>
+                  <td><strong>Marketing Communications</strong></td>
+                  <td>Identity, Contact</td>
+                  <td>Consent</td>
+                </tr>
+                <tr>
+                  <td><strong>Fraud Prevention</strong></td>
+                  <td>All categories</td>
+                  <td>Legal Obligation, Legitimate Interest</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="legal-section" id="sharing">
+            <h2>6. Information Sharing</h2>
+            <p>We share your personal data in the following circumstances:</p>
+
+            <h3>6.1 With Other Users</h3>
+            <ul>
+              <li><strong>Customers:</strong> Your name, location, and vehicle info is shared with mechanics you book</li>
+              <li><strong>Mechanics:</strong> Your profile, ratings, and contact info is visible to customers</li>
+              <li><strong>Vendors:</strong> Limited business information is shared as needed</li>
+            </ul>
+
+            <h3>6.2 With Service Providers (Data Processors)</h3>
+            <p>We engage third-party service providers who process data on our behalf under strict contractual terms:</p>
+            <ul>
+              <li><strong>Payment Processors:</strong> M-Pesa (Safaricom), banks, payment gateways</li>
+              <li><strong>Cloud Providers:</strong> Amazon Web Services (AWS), Google Cloud</li>
+              <li><strong>Analytics:</strong> Google Analytics (with IP anonymization)</li>
+              <li><strong>Communication:</strong> Twilio (SMS), SendGrid (email)</li>
+              <li><strong>Verification:</strong> Background check providers</li>
+            </ul>
+
+            <h3>6.3 Legal Disclosures</h3>
+            <p>We may disclose data when required by law, court order, or to protect our rights, safety, or property.</p>
+
+            <div class="legal-highlight">
+              <p><strong>We Never Sell Your Data:</strong> GoFixAfrica does not sell, rent, or trade your personal information to third parties for their marketing purposes.</p>
+            </div>
+          </section>
+
+          <section class="legal-section" id="international-transfers">
+            <h2>7. International Data Transfers</h2>
+            <p>Your personal data may be transferred to and processed in countries other than your country of residence. We operate across Africa and use service providers located globally.</p>
+            
+            <h3>7.1 Safeguards</h3>
+            <p>When transferring data internationally, we ensure appropriate safeguards are in place:</p>
+            <ul>
+              <li><strong>Adequacy Decisions:</strong> Transfers to countries with adequate data protection</li>
+              <li><strong>Standard Contractual Clauses (SCCs):</strong> EU-approved contract terms with recipients</li>
+              <li><strong>Binding Corporate Rules:</strong> Internal rules for intra-group transfers</li>
+              <li><strong>Consent:</strong> Your explicit consent for specific transfers</li>
+            </ul>
+            
+            <div class="legal-highlight gdpr">
+              <p><strong>GDPR Note:</strong> For transfers from the EEA, we rely on Standard Contractual Clauses approved by the European Commission. Copies are available upon request from our DPO.</p>
+            </div>
+          </section>
+
+          <section class="legal-section" id="data-retention">
+            <h2>8. Data Retention</h2>
+            <p>We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected:</p>
+            
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Data Type</th>
+                  <th>Retention Period</th>
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Account Data</td>
+                  <td>Duration of account + 2 years</td>
+                  <td>Legal claims limitation period</td>
+                </tr>
+                <tr>
+                  <td>Transaction Records</td>
+                  <td>7 years</td>
+                  <td>Tax and accounting requirements</td>
+                </tr>
+                <tr>
+                  <td>Service History</td>
+                  <td>5 years</td>
+                  <td>Warranty and dispute resolution</td>
+                </tr>
+                <tr>
+                  <td>Marketing Preferences</td>
+                  <td>Until consent withdrawn</td>
+                  <td>Compliance with preferences</td>
+                </tr>
+                <tr>
+                  <td>Analytics Data</td>
+                  <td>26 months</td>
+                  <td>Platform improvement</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="legal-section" id="data-security">
+            <h2>9. Data Security</h2>
+            <p>We implement technical and organizational measures to protect your personal data:</p>
+            
+            <h3>9.1 Technical Measures</h3>
+            <ul>
+              <li>TLS/SSL encryption for data in transit</li>
+              <li>AES-256 encryption for data at rest</li>
+              <li>Secure password hashing (bcrypt)</li>
+              <li>Regular security audits and penetration testing</li>
+              <li>Web Application Firewall (WAF)</li>
+              <li>Intrusion detection systems</li>
+            </ul>
+            
+            <h3>9.2 Organizational Measures</h3>
+            <ul>
+              <li>Role-based access control (RBAC)</li>
+              <li>Employee background checks and training</li>
+              <li>Data protection impact assessments (DPIAs)</li>
+              <li>Incident response procedures</li>
+            </ul>
+            
+            <h3>9.3 Breach Notification</h3>
+            <p>In the event of a personal data breach that poses a risk to your rights and freedoms, we will:</p>
+            <ul>
+              <li>Notify the relevant supervisory authority within 72 hours</li>
+              <li>Notify affected individuals without undue delay if high risk</li>
+              <li>Document all breaches in our internal register</li>
+            </ul>
+          </section>
+
+          <section class="legal-section" id="your-rights">
+            <h2>10. Your Rights</h2>
+            <p>Depending on your location, you have the following rights regarding your personal data:</p>
+            
+            <div id="jurisdiction-info-container"></div>
+            
+            <div class="rights-accordion">
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>📄 Right to Access</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to request a copy of the personal data we hold about you. We will provide this information within 30 days (or sooner as required by local law). The first copy is free; additional copies may incur a reasonable fee.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>✏️ Right to Rectification</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to request correction of inaccurate personal data or completion of incomplete data. You can update most information directly in your account settings.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>🗑️ Right to Erasure (Right to be Forgotten)</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to request deletion of your personal data in certain circumstances, such as when the data is no longer necessary, you withdraw consent, or the processing is unlawful. Note: We may retain some data for legal compliance.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>⏸️ Right to Restrict Processing</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to request that we limit how we use your data while we verify its accuracy, evaluate an objection you've raised, or if you need the data for legal claims.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>📦 Right to Data Portability</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to receive your personal data in a structured, commonly used, machine-readable format (e.g., JSON, CSV) and to transmit it to another controller without hindrance.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>🚫 Right to Object</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right to object to processing based on legitimate interests or for direct marketing purposes. For direct marketing, we will stop immediately. For legitimate interests, we will stop unless we have compelling grounds.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>🤖 Rights Related to Automated Decision-Making</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>You have the right not to be subject to decisions based solely on automated processing (including profiling) that produce legal or similarly significant effects. You can request human intervention, express your point of view, and contest decisions.</p>
+                </div>
+              </div>
+              
+              <div class="rights-item">
+                <div class="rights-item-header" onclick="toggleRight(this)">
+                  <h4>↩️ Right to Withdraw Consent</h4>
+                  <span class="icon">▼</span>
+                </div>
+                <div class="rights-item-content">
+                  <p>Where we process data based on your consent, you can withdraw that consent at any time. This won't affect the lawfulness of processing before withdrawal. To withdraw consent, use your account settings or contact our DPO.</p>
+                </div>
+              </div>
+            </div>
+            
+            <h3>10.1 How to Exercise Your Rights</h3>
+            <p>To exercise any of these rights, you can:</p>
+            <ul>
+              <li>Use the Data Request form below</li>
+              <li>Email our DPO at <a href="mailto:dpo@gofixafrica.com" class="link">dpo@gofixafrica.com</a></li>
+              <li>Use the privacy settings in your account</li>
+              <li>Contact us via WhatsApp</li>
+            </ul>
+            
+            <div id="dsr-form-container" style="margin-top: var(--space-8);"></div>
+          </section>
+
+          <section class="legal-section" id="cookies">
+            <h2>11. Cookies & Tracking Technologies</h2>
+            <p>We use cookies and similar technologies to enhance your experience. Under applicable laws, we obtain your consent before placing non-essential cookies.</p>
+            
+            <h3>11.1 Types of Cookies</h3>
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Purpose</th>
+                  <th>Consent Required</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Essential</strong></td>
+                  <td>Required for Platform functionality (login, security, preferences)</td>
+                  <td>No (Strictly necessary)</td>
+                </tr>
+                <tr>
+                  <td><strong>Functional</strong></td>
+                  <td>Remember your settings and preferences</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td><strong>Analytics</strong></td>
+                  <td>Understand usage patterns and improve services</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td><strong>Marketing</strong></td>
+                  <td>Deliver relevant advertisements</td>
+                  <td>Yes</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <h3>11.2 Managing Cookies</h3>
+            <p>You can manage your cookie preferences by:</p>
+            <ul>
+              <li>Using our Cookie Preferences center (appears on first visit)</li>
+              <li>Clicking "Cookie Settings" in the footer</li>
+              <li>Configuring your browser settings</li>
+            </ul>
+            
+            <button class="btn btn-secondary" onclick="GoFixAfricaLegal.CookieConsent.showPreferencesModal()">
+              🍪 Manage Cookie Preferences
+            </button>
+          </section>
+
+          <section class="legal-section" id="children">
+            <h2>12. Children's Privacy</h2>
+            <p>Our Platform is not intended for children under the age of 18 (or the applicable age of digital consent in your jurisdiction). We do not knowingly collect personal data from children.</p>
+            <p>If we become aware that we have collected data from a child without parental consent, we will delete it promptly. If you believe a child has provided us with personal data, please contact our DPO immediately.</p>
+          </section>
+
+          <section class="legal-section" id="changes">
+            <h2>13. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors.</p>
+            <p>For significant changes, we will:</p>
+            <ul>
+              <li>Post a prominent notice on our Platform</li>
+              <li>Send an email notification to registered users</li>
+              <li>Request renewed consent where required</li>
+              <li>Update the "Last updated" date</li>
+            </ul>
+          </section>
+
+          <section class="legal-section" id="contact">
+            <h2>14. Contact Us</h2>
+            <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
+            
+            <div class="contact-box">
+              <h3>Data Protection Contacts</h3>
+              <div class="contact-box-links">
+                <a href="mailto:dpo@gofixafrica.com" class="btn btn-secondary btn-sm">
+                  ✉️ DPO: dpo@gofixafrica.com
+                </a>
+                <a href="mailto:privacy@gofixafrica.com" class="btn btn-secondary btn-sm">
+                  ✉️ Privacy: privacy@gofixafrica.com
+                </a>
+                <a href="https://wa.me/254720123456?text=Hi, I have a privacy question" class="btn btn-whatsapp btn-sm" target="_blank">
+                  💬 WhatsApp
+                </a>
+                <a href="contact.html" class="btn btn-outline btn-sm">
+                  📝 Contact Form
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section class="legal-section" id="complaints">
+            <h2>15. Complaints</h2>
+            <p>If you are not satisfied with how we handle your personal data or respond to your requests, you have the right to lodge a complaint with your local supervisory authority:</p>
+            
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Country</th>
+                  <th>Authority</th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇰🇪 Kenya</td>
+                  <td>Office of the Data Protection Commissioner (ODPC)</td>
+                  <td><a href="https://www.odpc.go.ke" target="_blank" class="link">www.odpc.go.ke</a></td>
+                </tr>
+                <tr>
+                  <td>🇳🇬 Nigeria</td>
+                  <td>Nigeria Data Protection Commission (NDPC)</td>
+                  <td><a href="https://ndpc.gov.ng" target="_blank" class="link">ndpc.gov.ng</a></td>
+                </tr>
+                <tr>
+                  <td>🇿🇦 South Africa</td>
+                  <td>Information Regulator</td>
+                  <td><a href="https://www.inforegulator.org.za" target="_blank" class="link">inforegulator.org.za</a></td>
+                </tr>
+                <tr>
+                  <td>🇬🇭 Ghana</td>
+                  <td>Data Protection Commission</td>
+                  <td><a href="https://www.dataprotection.org.gh" target="_blank" class="link">dataprotection.org.gh</a></td>
+                </tr>
+                <tr>
+                  <td>🇺🇬 Uganda</td>
+                  <td>Personal Data Protection Office (PDPO)</td>
+                  <td><a href="https://pdpo.go.ug" target="_blank" class="link">pdpo.go.ug</a></td>
+                </tr>
+                <tr>
+                  <td>🇷🇼 Rwanda</td>
+                  <td>National Cyber Security Authority (NCSA)</td>
+                  <td><a href="https://ncsa.gov.rw" target="_blank" class="link">ncsa.gov.rw</a></td>
+                </tr>
+                <tr>
+                  <td>🇪🇺 EU/EEA</td>
+                  <td>Your local Data Protection Authority</td>
+                  <td><a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" class="link">Find your DPA</a></td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <p>We encourage you to contact us first so we can try to resolve your concerns directly.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🔧</div>
+            <div class="logo-text">GoFix<span>Africa</span></div>
+          </a>
+          <p>Africa's trusted platform connecting car owners with verified mobile mechanics.</p>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Platform</h4>
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Book a Service</a>
+            <a href="mechanics.html" class="footer-link">Find Mechanics</a>
+            <a href="parts.html" class="footer-link">Parts</a>
+            <a href="join.html" class="footer-link">Join as Mechanic</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Support</h4>
+          <div class="footer-links">
+            <a href="faq.html" class="footer-link">FAQ</a>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+            <a href="about.html" class="footer-link">About</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="footer-heading">Legal</h4>
+          <div class="footer-links">
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+            <a href="warranty.html" class="footer-link">Warranty</a>
+            <a href="#" class="footer-link" onclick="GoFixAfricaLegal.CookieConsent.showPreferencesModal(); return false;">Cookie Settings</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 GoFixAfrica. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/legal-compliance.js"></script>
+  <script>
+    function toggleRight(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.GoFixAfricaLegal) {
+        const dpInfo = GoFixAfricaLegal.getDataProtectionInfo();
+        document.getElementById('applicable-law').textContent = dpInfo.law;
+      }
+    });
+  </script>
+</body>
+</html>

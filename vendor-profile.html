@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoParts Kenya Ltd - Mercedes & BMW OEM Parts | GoFixAfrica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --accent: #00D4AA;
+            --warning: #FFB800;
+            --success: #00C851;
+            --bg-dark: #0A1628;
+            --bg-card: #111D32;
+            --bg-elevated: #182640;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #FF6B00 0%, #FF8A33 100%);
+            --gradient-accent: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn-secondary { background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-whatsapp { background: #25D366; color: white; }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 1rem 0; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon { width: 44px; height: 44px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); }
+        .logo-text span { color: var(--primary); }
+        .back-link { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+        .profile-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; padding: 2rem 0; }
+        .profile-header { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; }
+        .profile-top { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .profile-avatar { width: 100px; height: 100px; background: var(--gradient-accent); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; flex-shrink: 0; }
+        .profile-info { flex: 1; }
+        .profile-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .verified-badge { background: var(--accent); color: var(--bg-dark); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+        .profile-location { color: var(--text-secondary); font-size: 1rem; margin-bottom: 0.5rem; }
+        .profile-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .rating-stars { color: var(--warning); font-size: 1.1rem; }
+        .rating-text { font-size: 0.95rem; color: var(--text-secondary); }
+        .profile-specialties { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .specialty-tag { padding: 0.4rem 0.9rem; background: var(--bg-elevated); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+        .specialty-tag.primary { background: rgba(0, 212, 170, 0.15); color: var(--accent); }
+        .section-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .stats-hero { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--bg-elevated); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .mechanics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .mechanic-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; transition: all 0.2s; }
+        .mechanic-card:hover { border-color: var(--primary); }
+        .mechanic-header { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; }
+        .mechanic-avatar { width: 48px; height: 48px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: white; position: relative; }
+        .avatar-badge { position: absolute; bottom: -3px; right: -3px; width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; border: 2px solid var(--bg-elevated); }
+        .badge-legendary { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .badge-excellent { background: var(--success); }
+        .mechanic-info { flex: 1; }
+        .mechanic-name { font-weight: 600; font-size: 0.95rem; }
+        .mechanic-specialty { font-size: 0.8rem; color: var(--text-muted); }
+        .mechanic-stats { display: flex; gap: 1rem; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .mechanic-link { font-size: 0.8rem; color: var(--primary); text-decoration: none; }
+        .parts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .part-card { background: var(--bg-elevated); border-radius: 12px; padding: 1rem; text-align: center; }
+        .part-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .part-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .part-brands { font-size: 0.75rem; color: var(--text-muted); }
+        .category-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .category-chip { padding: 0.5rem 1rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; }
+        .category-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(0, 212, 170, 0.1); }
+        .profile-sidebar { position: sticky; top: 90px; height: fit-content; }
+        .contact-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+        .contact-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+        .contact-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+        .contact-actions .btn { width: 100%; justify-content: center; }
+        .info-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+        .info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+        .info-item { display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); }
+        .areas-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .area-tag { padding: 0.3rem 0.6rem; background: var(--bg-elevated); border-radius: 5px; font-size: 0.8rem; color: var(--text-secondary); }
+        footer { background: var(--bg-card); padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: var(--text-muted); font-size: 0.85rem; }
+        @media (max-width: 1024px) { .profile-layout { grid-template-columns: 1fr; } .stats-hero { grid-template-columns: repeat(3, 1fr); } .mechanics-grid { grid-template-columns: repeat(2, 1fr); } .parts-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .profile-top { flex-direction: column; text-align: center; } .profile-avatar { margin: 0 auto; } .stats-hero, .mechanics-grid, .parts-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo"><div class="logo-icon">🔧</div><div class="logo-text">GoFix<span>Africa</span></div></a>
+                <a href="mechanics.html" class="back-link">← Back to Mechanics</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="profile-layout">
+            <main>
+                <div class="profile-header">
+                    <div class="profile-top">
+                        <div class="profile-avatar">🏭</div>
+                        <div class="profile-info">
+                            <h1 class="profile-name">AutoParts Kenya Ltd <span class="verified-badge">✓ Verified Vendor</span></h1>
+                            <p class="profile-location">📍 Industrial Area, Nairobi • Enterprise Road, Godown 14</p>
+                            <div class="profile-rating"><span class="rating-stars">★★★★★</span><span class="rating-text">4.9 rating • 23 linked mechanics • Est. 2012</span></div>
+                            <div class="profile-specialties">
+                                <span class="specialty-tag primary">Mercedes-Benz</span>
+                                <span class="specialty-tag primary">BMW</span>
+                                <span class="specialty-tag">OEM Parts</span>
+                                <span class="specialty-tag">Genuine Parts</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">AutoParts Kenya Ltd is a leading supplier of genuine and OEM parts for German vehicles in East Africa. With over 12 years in the business, we've built strong relationships with mechanics across Nairobi. We specialize in Mercedes-Benz, BMW, Audi, and Volkswagen parts, sourcing directly from Germany and Dubai. Same-day delivery available within Nairobi.</p>
+                </div>
+                <div class="stats-hero">
+                    <div class="stat-card"><div class="stat-value">4.9</div><div class="stat-label">Rating</div></div>
+                    <div class="stat-card"><div class="stat-value">15K+</div><div class="stat-label">Parts Sold</div></div>
+                    <div class="stat-card"><div class="stat-value">23</div><div class="stat-label">Linked Mechanics</div></div>
+                    <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Years in Business</div></div>
+                    <div class="stat-card"><div class="stat-value">~2hr</div><div class="stat-label">Avg Response</div></div>
+                </div>
+                <div class="section-card">
+                    <h2 class="section-title">🔧 Linked Mechanics (23)</h2>
+                    <div class="mechanics-grid">
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar">JM<span class="avatar-badge badge-legendary">👑</span></div><div class="mechanic-info"><div class="mechanic-name">James Mwangi</div><div class="mechanic-specialty">Mercedes-Benz, BMW</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 4 years</span><span>📦 847 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar" style="background: linear-gradient(135deg, #8B5CF6, #A78BFA);">GN<span class="avatar-badge badge-legendary">👑</span></div><div class="mechanic-info"><div class="mechanic-name">Grace Njeri</div><div class="mechanic-specialty">Diagnostics, Electrical</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 3 years</span><span>📦 623 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar" style="background: linear-gradient(135deg, #059669, #10B981);">PO<span class="avatar-badge badge-excellent">⭐</span></div><div class="mechanic-info"><div class="mechanic-name">Peter Ochieng</div><div class="mechanic-specialty">Toyota, Nissan</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 5 years</span><span>📦 1,247 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar" style="background: linear-gradient(135deg, #0891B2, #22D3EE);">DK<span class="avatar-badge badge-excellent">⭐</span></div><div class="mechanic-info"><div class="mechanic-name">David Kimani</div><div class="mechanic-specialty">VW, Audi</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 2 years</span><span>📦 412 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar" style="background: linear-gradient(135deg, #DC2626, #EF4444);">SK<span class="avatar-badge badge-excellent">⭐</span></div><div class="mechanic-info"><div class="mechanic-name">Samuel Kirui</div><div class="mechanic-specialty">BMW Specialist</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 3 years</span><span>📦 534 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                        <div class="mechanic-card">
+                            <div class="mechanic-header"><div class="mechanic-avatar" style="background: linear-gradient(135deg, #7C3AED, #8B5CF6);">FW<span class="avatar-badge badge-excellent">⭐</span></div><div class="mechanic-info"><div class="mechanic-name">Faith Wambui</div><div class="mechanic-specialty">Honda, Mazda</div></div></div>
+                            <div class="mechanic-stats"><span>🤝 2 years</span><span>📦 298 parts</span></div>
+                            <a href="mechanic-profile.html" class="mechanic-link">View Profile →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h2 class="section-title">📦 Parts Catalog</h2>
+                    <div class="category-chips">
+                        <span class="category-chip active">All Parts</span>
+                        <span class="category-chip">Engine</span>
+                        <span class="category-chip">Brakes</span>
+                        <span class="category-chip">Suspension</span>
+                        <span class="category-chip">Electrical</span>
+                    </div>
+                    <div class="parts-grid">
+                        <div class="part-card"><div class="part-icon">⚙️</div><div class="part-name">Engine Parts</div><div class="part-brands">Pistons, Gaskets, Timing</div></div>
+                        <div class="part-card"><div class="part-icon">🛞</div><div class="part-name">Brakes</div><div class="part-brands">Pads, Discs, Calipers</div></div>
+                        <div class="part-card"><div class="part-icon">🔩</div><div class="part-name">Suspension</div><div class="part-brands">Shocks, Springs, Arms</div></div>
+                        <div class="part-card"><div class="part-icon">⚡</div><div class="part-name">Electrical</div><div class="part-brands">Sensors, ECUs, Modules</div></div>
+                        <div class="part-card"><div class="part-icon">💡</div><div class="part-name">Lighting</div><div class="part-brands">Headlights, Taillights</div></div>
+                        <div class="part-card"><div class="part-icon">🌡️</div><div class="part-name">Cooling</div><div class="part-brands">Radiators, Fans, Pumps</div></div>
+                        <div class="part-card"><div class="part-icon">🔧</div><div class="part-name">Transmission</div><div class="part-brands">Gearbox, Clutch, Diff</div></div>
+                        <div class="part-card"><div class="part-icon">🔋</div><div class="part-name">Battery</div><div class="part-brands">Batteries, Alternators</div></div>
+                    </div>
+                </div>
+            </main>
+            <aside class="profile-sidebar">
+                <div class="contact-card">
+                    <h3 class="contact-title">Contact AutoParts Kenya</h3>
+                    <div class="contact-actions">
+                        <a href="https://wa.me/254720888111?text=Hi, I found you on GoFixAfrica. I need parts." class="btn btn-whatsapp">💬 WhatsApp</a>
+                        <a href="tel:+254720888111" class="btn btn-secondary">📞 +254 720 888 111</a>
+                        <a href="/cdn-cgi/l/email-protection#b5c6d4d9d0c6f5d4c0c1dac5d4c7c1c6ded0dbccd49bd6da9bded0" class="btn btn-secondary">✉️ Email</a>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3>Business Hours</h3>
+                    <div class="info-item"><span>Mon - Fri:</span><span>8:00 AM - 6:00 PM</span></div>
+                    <div class="info-item"><span>Saturday:</span><span>8:00 AM - 2:00 PM</span></div>
+                    <div class="info-item"><span>Sunday:</span><span>Closed</span></div>
+                </div>
+                <div class="info-card">
+                    <h3>Delivery Areas</h3>
+                    <div class="areas-list">
+                        <span class="area-tag">Westlands</span>
+                        <span class="area-tag">Industrial Area</span>
+                        <span class="area-tag">Kilimani</span>
+                        <span class="area-tag">Parklands</span>
+                        <span class="area-tag">Karen</span>
+                        <span class="area-tag">Lavington</span>
+                        <span class="area-tag">+8 more</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem;">Same-day delivery within Nairobi</p>
+                </div>
+                <div class="info-card">
+                    <h3>Payment Methods</h3>
+                    <div class="info-item"><span>💳</span><span>M-Pesa, Bank Transfer</span></div>
+                    <div class="info-item"><span>💵</span><span>Cash on Delivery</span></div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2025 GoFixAfrica. All rights reserved.</p>
+                <a href="index.html" class="logo"><div class="logo-icon" style="width: 32px; height: 32px; font-size: 1rem;">🔧</div><div class="logo-text" style="font-size: 1.1rem;">GoFix<span>Africa</span></div></a>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/legal-compliance.js"></script>
+</body>
+</html>

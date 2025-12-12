@@ -1,0 +1,38 @@
+🚀 Initial commit: GoFixAfrica automotive marketplace
+
+✨ Features:
+- Complete design system (CSS variables, components, layouts, utilities)
+- 13 responsive HTML pages
+- Multi-jurisdiction data protection compliance (GDPR, Kenya DPA, Nigeria NDPR, etc.)
+- Cookie consent management system
+- WhatsApp-first booking flow
+- Mechanic registration with multi-step form
+- Parts marketplace with filters
+- Booking confirmation with animations
+
+📄 Pages included:
+- Landing page with booking form
+- Mechanics listing & profiles
+- Vendor profiles
+- Parts marketplace
+- Authentication (login/register)
+- Mechanic registration
+- Booking confirmation
+- Privacy policy (GDPR-compliant)
+- Terms of service
+- Contact page
+
+🛡️ Legal compliance:
+- Kenya Data Protection Act, 2019
+- Nigeria NDPR & NDP Act, 2023
+- South Africa POPIA
+- Ghana Data Protection Act
+- Uganda Data Protection Act
+- Rwanda Law N° 058/2021
+- EU GDPR
+
+🎨 Design:
+- Mobile-first responsive design
+- Dark theme with orange/teal accents
+- Space Grotesk & Outfit typography
+- Smooth CSS animations
